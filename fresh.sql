@@ -65,16 +65,20 @@ CREATE TABLE `adv` (
   `username` varchar(16) NOT NULL DEFAULT '' COMMENT '创建者名',
   `image` varchar(255) NOT NULL DEFAULT '',
   `link` varchar(255) NOT NULL DEFAULT '' COMMENT '链接',
-  `position` varchar(10) NOT NULL DEFAULT '' COMMENT '广告位置',
+  `position` varchar(50) NOT NULL DEFAULT '' COMMENT '广告位置',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `is_enabled` tinyint(1) NOT NULL DEFAULT '1' COMMENT '用户状态  0 禁用，1正常',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `delete_time` timestamp NULL DEFAULT NULL,
   `start_time` timestamp NULL DEFAULT NULL,
   `end_time` timestamp NULL DEFAULT NULL,
+  `sort` int(11) NOT NULL DEFAULT '100' COMMENT '排序',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `create_time` (`create_time`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='广告表';
+  UNIQUE KEY `create_time` (`create_time`) USING BTREE,
+  KEY `start_time` (`start_time`),
+  KEY `end_time` (`end_time`),
+  KEY `position` (`position`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='广告表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -83,7 +87,7 @@ CREATE TABLE `adv` (
 
 LOCK TABLES `adv` WRITE;
 /*!40000 ALTER TABLE `adv` DISABLE KEYS */;
-INSERT INTO `adv` VALUES (3,'admini','fresh/2020-07/backgorund.jpg','fds','home','2020-07-05 08:28:47',0,'2020-07-05 08:28:43',NULL,'2020-07-21 16:00:00','2020-07-29 16:00:00'),(4,'admini','fresh/2020-07/backgorund.jpg','241','detail','2020-07-05 08:31:51',1,'2020-07-05 08:31:51',NULL,'2020-07-20 16:00:00','2020-07-28 16:00:00');
+INSERT INTO `adv` VALUES (1,'admini','fresh/2020-07/23-58-54.png','','home','2020-07-05 12:00:22',1,'2020-07-05 11:40:32',NULL,'2020-06-30 16:00:00','2020-07-07 16:00:00',1),(2,'admini','fresh/2020-07/23-58-57.png','','home','2020-07-05 12:00:43',1,'2020-07-05 11:40:42',NULL,'2020-06-30 16:00:00','2020-07-14 16:00:00',5),(3,'admini','fresh/2020-07/23-59-01.png','','home','2020-07-05 12:00:40',1,'2020-07-05 11:40:52',NULL,'2020-06-30 16:00:00','2020-07-10 16:00:00',4),(4,'admini','fresh/2020-07/ad1.gif','','home_notice','2020-07-05 11:41:09',1,'2020-07-05 11:41:09',NULL,'2020-06-30 16:00:00','2020-07-22 16:00:00',100),(5,'admini','fresh/2020-07/23-59-07.gif','','home','2020-07-05 11:41:26',1,'2020-07-05 11:41:26',NULL,'2020-07-01 16:00:00','2020-07-23 16:00:00',100),(6,'admini','fresh/2020-07/23-59-04.png','','home','2020-07-05 12:00:34',1,'2020-07-05 11:41:39',NULL,'2020-07-01 16:00:00','2020-07-30 16:00:00',3),(7,'admini','fresh/2020-07/backgorund.jpg','','home','2020-07-05 12:00:29',1,'2020-07-05 11:50:19',NULL,'2020-06-30 16:00:00','2020-07-15 16:00:00',2);
 /*!40000 ALTER TABLE `adv` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -475,4 +479,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-05 16:38:04
+-- Dump completed on 2020-07-05 20:04:49

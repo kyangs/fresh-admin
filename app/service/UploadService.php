@@ -10,26 +10,33 @@ class UploadService
 {
 
     const ACL_PUBLIC_READ = 'public-read';
-    private $s3UploadClient;
-    private $bucketName;
+    private static $s3UploadClient;
+    private static $bucketName;
 
     /**
      * 构造方法
      * Qiniu constructor.
      */
-    public function __construct()
+    private function __construct()
     {
-        $this->s3UploadClient = new S3Client([
-            'version'                 => 'latest',
-            'region'                  => 'us-east-1',
-            'endpoint'                => config('filesystem.disks.minio.endpoint'),
-            'use_path_style_endpoint' => true,
-            'credentials'             => [
-                'key'    => config('filesystem.disks.minio.accessId'),
-                'secret' => config('filesystem.disks.minio.accessSecret'),
-            ],
-        ]);
-        $this->bucketName     = config('filesystem.disks.minio.bucket');
+
+    }
+
+    private static function init()
+    {
+        if (empty(self::$s3UploadClient)) {
+            self::$s3UploadClient = new S3Client([
+                'version'                 => 'latest',
+                'region'                  => 'us-east-1',
+                'endpoint'                => config('filesystem.disks.minio.endpoint'),
+                'use_path_style_endpoint' => true,
+                'credentials'             => [
+                    'key'    => config('filesystem.disks.minio.accessId'),
+                    'secret' => config('filesystem.disks.minio.accessSecret'),
+                ],
+            ]);
+            self::$bucketName     = config('filesystem.disks.minio.bucket');
+        }
     }
 
     /**
@@ -41,15 +48,15 @@ class UploadService
      * @throws \Exception
      */
 
-    public function upload($sourceFile, $sourceName = '', $type = 'image/jpeg')
+    public static function upload($sourceFile, $sourceName = '', $type = 'image/jpeg')
     {
-
         try {
+            self::init();
             //$module, $sourceFilePath, $originName, $acl = self::ACL_PUBLIC_READ
             // 要上传图片的本地路径
             $uploadFilePath = date('Y-m') . '/' . $sourceName;
-            $result         = $this->s3UploadClient->putObject([
-                'Bucket'      => $this->bucketName,
+            $result         = self::$s3UploadClient->putObject([
+                'Bucket'      => self::$bucketName,
                 'Key'         => $uploadFilePath,
                 'SourceFile'  => $sourceFile,
                 'ACL'         => self::ACL_PUBLIC_READ,
@@ -57,7 +64,7 @@ class UploadService
             ]);
 
             return [
-                'path'      => $this->bucketName . '/' . $uploadFilePath,
+                'path'      => self::$bucketName . '/' . $uploadFilePath,
                 'full_path' => $result->get('ObjectURL'),
             ];
         } catch (\Exception $e) {
@@ -66,19 +73,13 @@ class UploadService
     }
 
 
-    public function getEndpoint()
+    public static function getEndpoint()
     {
-        return rtrim($this->s3UploadClient->getEndpoint(), '/') . '/';
+        return rtrim(config('filesystem.disks.minio.endpoint'), '/') . '/';
     }
 
-    public function objectExist($path)
+    public static function fullPath($path)
     {
-        return $this->s3UploadClient->doesObjectExist($this->bucketName, trim($path, $this->bucketName));
+        return self::getEndpoint() . $path;
     }
-
-    public function getObjectUrl($path)
-    {
-        return $this->s3UploadClient->getObjectUrl($this->bucketName, trim(trim($path, $this->bucketName),'/'));
-    }
-
 }

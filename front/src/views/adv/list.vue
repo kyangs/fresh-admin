@@ -60,6 +60,11 @@
                     width="80">
             </el-table-column>
             <el-table-column
+                    prop="sort"
+                    label="排序"
+                    width="80">
+            </el-table-column>
+            <el-table-column
                     label="广告位置">
                 <template slot-scope="scope">
                     {{ params.position[scope.row.position] }}
@@ -83,7 +88,9 @@
                 title="广告新增/编辑"
                 :visible.sync="dialogVisible"
                 width="40%" :close-on-click-modal="false">
-            <el-form :inline="true" :model="data_from" class="demo-form-inline" label-width="80px">
+            <el-form :inline="true" :model="data_from"
+                     label-position="right"
+                     label-width="80px">
                 <el-form-item label="位置">
                     <el-select v-model="data_from.position" clearable placeholder="位置">
                         <el-option v-for="(v,k) in params.position"
@@ -121,6 +128,9 @@
                             start-placeholder="开始日期"
                             end-placeholder="结束日期">
                     </el-date-picker>
+                </el-form-item>
+                <el-form-item label="排序">
+                    <el-input v-model="data_from.sort" clearable placeholder="排序"></el-input>
                 </el-form-item>
                 <el-form-item label="状态">
                     <el-radio v-model="data_from.is_enabled" label="1" key="1" :value="1">启用</el-radio>
@@ -167,6 +177,7 @@
                     image: '',
                     full_path: '',
                     link: '',
+                    sort: 100,
                     time_range: [],
                 },
                 origin_data_from: {
@@ -176,6 +187,7 @@
                     image: '',
                     full_path: '',
                     link: '',
+                    sort: 100,
                     time_range: [],
                 },
             }

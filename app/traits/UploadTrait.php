@@ -60,9 +60,8 @@ trait UploadTrait
      */
     public function upload()
     {
-        $upload = new  UploadService;
         $file = request()->file('file');
-        return json_ok($upload->upload($file->getPathname(), $file->getOriginalName(), $file->getMime()));
+        return json_ok(UploadService::upload($file->getPathname(), $file->getOriginalName(), $file->getMime()));
     }
 
 

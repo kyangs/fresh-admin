@@ -15,9 +15,15 @@ use think\db\exception\ModelNotFoundException;
  * @package app\service
  * @author  kyangs@163.com
  */
-class AdvService
+class AdvService extends BaseService
 {
 
+
+    public function findAbleAdv()
+    {
+        $adv = (new Adv)->findAbleAdv($this->time());
+        return $adv;
+    }
 
     /**
      * @param $request
@@ -40,10 +46,9 @@ class AdvService
         if (!empty($request->username)) {
             $adv = $adv->where('username', 'like', '%' . $request->username . '%');
         }
-        $list   = $adv->select()->toArray();
-        $upload = new UploadService;
+        $list = $adv->select()->toArray();
         foreach ($list as &$item) {
-            $item['full_path']  = $upload->getObjectUrl($item['image']);
+            $item['full_path']  = UploadService::fullPath($item['image']);
             $item['is_enabled'] = strval($item['is_enabled']);
         }
         return $list;
@@ -59,6 +64,7 @@ class AdvService
             'start_time' => $start,
             'is_enabled' => $request->is_enabled,
             'end_time'   => $end,
+            'sort'       => $request->sort,
             'username'   => $user->username,
         ];
 
@@ -81,6 +87,6 @@ class AdvService
 
         if (empty($request->id)) throw new \Exception('参数错误', 1);
 
-        return (new Adv)->where(['id'=>$request->id])->delete();
+        return (new Adv)->where(['id' => $request->id])->delete();
     }
 }

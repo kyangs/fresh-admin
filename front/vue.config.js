@@ -10,7 +10,7 @@ const name = defaultSettings.title || '后台管理系统' // page title
 
 const port = process.env.port || process.env.npm_config_port || 9527 // dev port
 
-const host = 'http://www.fresh.com'
+const host = 'http://api.fresh.com'
 
 module.exports = {
   configureWebpack: {
