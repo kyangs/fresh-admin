@@ -105,19 +105,27 @@
                 </el-form-item>
 
                 <el-form-item label="图片">
-                    <el-upload
-                            class="upload-demo"
-                            drag
-                            v-model="data_from.image"
-                            action=""
-                            :show-file-list="false"
-                            :http-request="uploadImage">
-                        <el-image v-if="data_from.full_path" :src="data_from.full_path"
-                                  style="width: 360px;height: 220px"
-                                  class="avatar">
-                        </el-image>
-                        <i v-else class="el-icon-upload"></i>
-                    </el-upload>
+                    <el-button type="primary" @click="selectFile">
+                        选择图片<i class="el-icon-upload el-icon--right"></i>
+                    </el-button>
+                    <el-image v-if="data_from.full_path" :src="data_from.full_path"
+                               style="width: 360px;height: 220px"
+                              class="avatar">
+                    </el-image>
+
+<!--                    <el-upload-->
+<!--                            class="upload-demo"-->
+<!--                            drag-->
+<!--                            v-model="data_from.image"-->
+<!--                            action=""-->
+<!--                            :show-file-list="false"-->
+<!--                            :http-request="uploadImage">-->
+<!--                        <el-image v-if="data_from.full_path" :src="data_from.full_path"-->
+<!--                                  style="width: 360px;height: 220px"-->
+<!--                                  class="avatar">-->
+<!--                        </el-image>-->
+<!--                        <i v-else class="el-icon-upload"></i>-->
+<!--                    </el-upload>-->
                 </el-form-item>
 
                 <el-form-item label="时间" >
@@ -146,23 +154,25 @@
             <el-button type="primary" @click="saveAdv(data_from,true)">确 定</el-button>
             </span>
         </el-dialog>
+        <File ref="file_upload"></File>
     </div>
 
 </template>
 
 <script>
-    import waves from '@/directive/waves'
     import request from '@/utils/jsonrequest'
+    import File from '@/components/File'
 
     export default {
         name: 'List',
-        directives: {
-            waves
+        components: {
+          File
         },
         data() {
             return {
                 form_data: new FormData(),
                 dialogVisible: false,
+                show_file_dialog: false,
                 table: {
                     list: []
                 },
@@ -200,6 +210,11 @@
             this.initParam()
         },
         methods: {
+            selectFile:function(){
+              const _this = this
+
+                _this.$refs["file_upload"].openDialog(true)
+            },
             switchEnabled:function(row){
                 const _this = this
                 request({
