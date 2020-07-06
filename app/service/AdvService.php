@@ -34,29 +34,21 @@ class AdvService extends BaseService
      */
     public function listByFilter($request)
     {
-        $adv = new Adv;
-        if (!empty($request->position)) {
-            $adv = $adv->where('position', '=', $request->position);
-        }
-        if (!empty($request->time_range)) {
-            list($start, $end) = $request->time_range;
-            $adv = $adv->where('start_time', '>=', $start);
-            $adv = $adv->where('end_time', '<=', $end);
-        }
-        if (!empty($request->username)) {
-            $adv = $adv->where('username', 'like', '%' . $request->username . '%');
-        }
-        $list = $adv->select()->toArray();
-        foreach ($list as &$item) {
-            $item['full_path']  = UploadService::fullPath($item['image']);
-            $item['is_enabled'] = strval($item['is_enabled']);
-        }
-        return $list;
+        return (new Adv)->listByFilter($request);
     }
 
+    /** 新增或保存广告
+     * @param $request
+     * @param $user
+     * @return Adv|\think\Model
+     * @throws \Exception
+     */
     public function saveAdv($request, $user)
     {
-        list($start, $end) = $request->time_range ?: ['', ''];
+        if (empty($request->position)) throw new \Exception('请选择位置！', 1);
+        if (empty($request->image)) throw new \Exception('请选择图片！', 1);
+        if (empty($request->time_range)) throw new \Exception('请选择时间范围！', 1);
+        list($start, $end) = $request->time_range;
         $data = [
             'position'   => $request->position,
             'image'      => $request->image,
@@ -68,12 +60,9 @@ class AdvService extends BaseService
             'username'   => $user->username,
         ];
 
-        if (!empty($request->id)) {
-            Adv::update($data, ['id' => $request->id]);
-            return;
-        }
+        if (!empty($request->id)) return Adv::update($data, ['id' => $request->id]);
 
-        Adv::create($data);
+        return Adv::create($data);
     }
 
 
@@ -88,5 +77,20 @@ class AdvService extends BaseService
         if (empty($request->id)) throw new \Exception('参数错误', 1);
 
         return (new Adv)->where(['id' => $request->id])->delete();
+    }
+
+
+    /** 启用，禁用广告
+     * @param $request
+     * @return array
+     * @throws \Exception
+     */
+    public function enable($request)
+    {
+        if (empty($request->id)) throw new \Exception('参数错误', 1);
+
+        return [
+            'is_enabled' => (new Adv)->enable($request->id, $request->is_enabled),
+        ];
     }
 }

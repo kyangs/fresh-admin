@@ -99,6 +99,19 @@ export const constantRoutes = [
         meta: { title: '广告列表', icon: 'dashboard' }
       }
     ]
+  },
+  {
+    path: '/category/list',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/category/list',
+        component: () => import('@/views/category/list'),
+        name: 'category/list',
+        meta: { title: '分类列表', icon: 'dashboard' }
+      }
+    ]
   }
 ]
 

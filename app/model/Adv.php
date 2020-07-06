@@ -31,12 +31,55 @@ class Adv extends Model
                      ->where('end_time', '>=', $time)
                      ->where(['position' => $position])
                      ->where(['is_enabled' => 1])
-                     ->order('sort','asc')
+                     ->order('sort', 'asc')
                      ->select() as $item) {
             $item['full_path']         = UploadService::fullPath($item['image']);
             $data[$item['position']][] = $item;
         }
         return $data;
+    }
+
+
+    /** 通过条件搜索
+     * @param $request
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function listByFilter($request)
+    {
+        $_this = $this;
+        if (!empty($request->position)) {
+            $_this = $_this->where('position', '=', $request->position);
+        }
+        if (!empty($request->time_range)) {
+            list($start, $end) = $request->time_range;
+            $_this = $_this->where('start_time', '>=', $start);
+            $_this = $_this->where('end_time', '<=', $end);
+        }
+        if (!empty($request->username)) {
+            $_this = $_this->where('username', 'like', '%' . $request->username . '%');
+        }
+        $list = $_this->select()->toArray();
+        foreach ($list as &$item) {
+            $item['full_path']  = UploadService::fullPath($item['image']);
+            $item['is_enabled'] = strval($item['is_enabled']);
+        }
+        return $list;
+    }
+
+
+    /** 启用禁用
+     * @param $id
+     * @param $status
+     * @return string
+     */
+    public function enable($id, $status)
+    {
+        $isEnabled = intval($status) == 1 ? '0' : '1';
+        self::update(['is_enabled' => $isEnabled], ['id' => $id]);
+        return $isEnabled;
     }
 }
 

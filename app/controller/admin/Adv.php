@@ -36,6 +36,15 @@ class Adv extends Base
     {
         return json_ok((new AdvService)->listByFilter($this->params));
     }
+    /**
+     * 获取登录用户信息
+     * @Route("enable", method="POST")
+     * @throws \Exception
+     */
+    public function enable()
+    {
+        return json_ok((new AdvService)->enable($this->params));
+    }
 
     /**
      * 获取登录用户信息
