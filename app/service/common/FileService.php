@@ -21,18 +21,12 @@ class FileService extends BaseService
      */
     public function getFileList($post)
     {
-        $groupList = (new FileGroup)->listByFilter();
-        $first     = current($groupList);
-        if (!isset($first['id'])) {
-            $post->group_id = $first['id'];
-        }
-        $file = (new File)->listByFilter($post);
-        foreach ($file as &$f) {
-            $f['file_full_url'] = UploadService::fullPath($f['file_url']);
+        $fileList = (new File)->listByFilter($post);
+        foreach ($fileList as &$f) {
+            $f['full_url'] = UploadService::fullPath($f['file_url']);
         }
         return [
-            'table_data' => $file,
-            'group_list' => $groupList,
+            'file_list' => $fileList,
         ];
     }
 

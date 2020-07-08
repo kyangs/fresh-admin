@@ -3,6 +3,7 @@ declare (strict_types=1);
 
 namespace app\traits;
 
+use app\model\common\FileGroup;
 use app\service\ImageHashService;
 use app\service\UploadService;
 use think\facade\SnowFlake;
@@ -61,6 +62,9 @@ trait UploadTrait
     public function upload()
     {
         $file = request()->file('file');
+        list($path, $fullPath) = UploadService::upload($file->getPathname(), $file->getOriginalName(), $file->getMime());
+        $fileGroup = new FileGroup;
+
         return json_ok(UploadService::upload($file->getPathname(), $file->getOriginalName(), $file->getMime()));
     }
 

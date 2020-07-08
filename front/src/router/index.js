@@ -95,7 +95,6 @@ export const constantRoutes = [
       {
         path: '/adv/list',
         component: () => import('@/views/adv/list'),
-        name: 'adv/list',
         meta: { title: '广告列表', icon: 'dashboard' }
       }
     ]
@@ -108,7 +107,6 @@ export const constantRoutes = [
       {
         path: '/category/list',
         component: () => import('@/views/category/list'),
-        name: 'category/list',
         meta: { title: '分类列表', icon: 'dashboard' }
       }
     ]

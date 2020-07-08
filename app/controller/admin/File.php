@@ -35,6 +35,15 @@ class File extends Base
      */
     public function getList()
     {
+        return json_ok((new FileService)->getGroup($this->params));
+    }
+    /**
+     * 获取信息
+     * @Route("list", method="POST")
+     * @throws \Exception
+     */
+    public function getFileList()
+    {
         return json_ok((new FileService)->getFileList($this->params));
     }
 

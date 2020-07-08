@@ -8,7 +8,6 @@ const state = {
 const mutations = {
   SET_ROUTES: (state, routes) => {
     state.addRoutes = routes
-    console.log(routes)
     state.routes = constantRoutes.concat(routes)
   }
 }
@@ -21,7 +20,6 @@ const actions = {
         item.component = () => import('@/layout')
         item.children.map(function(child) {
           const child_component = child.component
-          console.log(child)
           child.component = () => import(`@/views/${child_component}`)
         })
       })

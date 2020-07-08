@@ -22,8 +22,8 @@ class File extends Model
     public function listByFilter($filter)
     {
         $_this = $this;
-        if (isset($filter->group_id)) {
-            $_this = $_this->where(['group_id' => $filter->group_id]);
+        if (isset($filter->id)) {
+            $_this = $_this->where(['group_id' => $filter->id]);
         }
         return $_this->order('id', 'desc')->select()->toArray();
     }

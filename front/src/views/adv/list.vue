@@ -281,22 +281,7 @@
                     _this.$message.error('保存失败')
                 })
             },
-            uploadImage: function (file) {
-                const formData = new FormData(); // 生成文件对象
-                formData.append('file', file.file)
-                const _this = this
-                request({
-                    headers: {
-                        'enctype': 'multipart/form-data'
-                    },
-                    url: '/admin/upload/upload',
-                    method: 'post',
-                    data: formData
-                }).then(function (res) {
-                    _this.data_from.full_path = res.data.full_path
-                    _this.data_from.image = res.data.path
-                })
-            },
+
             initParam() {
                 const _this = this
 
