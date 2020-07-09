@@ -37,6 +37,7 @@
                                         <el-upload
                                                 class="avatar-uploader"
                                                 action=""
+                                                multiple
                                                 :show-file-list="false"
                                                 :http-request="uploadImage">
                                             <i class="el-icon-plus avatar-uploader-icon"></i>
@@ -54,7 +55,8 @@
                                             </el-image>
                                             <p class="demonstration">
                                                 <el-checkbox
-                                                        :label="k">{{v.file_name}}</el-checkbox>
+                                                        :label="k">{{v.file_name}}
+                                                </el-checkbox>
                                             </p>
                                         </div>
                                     </el-col>
@@ -94,7 +96,7 @@
                 current_index: 0,
                 check_list: [],
                 callback: '',
-                default_active:'0',
+                default_active: '0',
             }
         },
         watch: {},
@@ -108,7 +110,9 @@
                     return
                 }
                 const rows = []
-                _this.check_list.forEach(v=>{rows.push(_this.file_list[v])})
+                _this.check_list.forEach(v => {
+                    rows.push(_this.file_list[v])
+                })
                 _this.$emit(_this.callback, rows);
                 _this.fileDialogVisible = false
             },
@@ -208,15 +212,15 @@
     .avatar-uploader-icon {
         font-size: 28px;
         color: #8c939d;
-        width: 180px;
-        height: 200px;
-        line-height: 200px;
+        width: 120px;
+        height: 156px;
+        line-height: 156px;
         text-align: center;
     }
 
     .image-row {
-        width: 180px;
-        height: 200px;
+        width: 140px;
+        height: 160px;
         float: contour;
         text-align: center;
         border: 1px dashed #d9d9d9;
@@ -225,8 +229,8 @@
 
     .image-view {
         padding: 10px;;
-        width: 160px;
-        height: 140px;
+        width: 100px;
+        height: 120px;
     }
 
     .demonstration {
