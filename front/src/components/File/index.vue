@@ -19,7 +19,7 @@
             <el-container style="height: 500px; border: 1px solid #eee">
                 <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
                     <el-main>
-                        <el-menu @select="handleSelect" default-active="0">
+                        <el-menu @select="handleSelect" :default-active="default_active">
                             <el-menu-item v-for="(v,k) in group_list" :index="k.toString()" :key="v.id">
                                 <i class="el-icon-document"></i>
                                 <span slot="title">{{ v.group_name }}</span>
@@ -94,6 +94,7 @@
                 current_index: 0,
                 check_list: [],
                 callback: '',
+                default_active:'0',
             }
         },
         watch: {},
@@ -114,8 +115,8 @@
             handleSelect(key, keyPath) {
                 this.current_index = parseInt(key)
                 const _this = this
-                _this.check_list = []
-                const group = _this.group_list[_this.current_index]
+                const group = _this.group_list[this.current_index]
+                _this.default_active = key.toString()
                 request({
                     url: '/admin/file/list',
                     method: 'post',
@@ -136,7 +137,11 @@
                     data: _this.file_data
                 }).then(function (res) {
                     if (res.code === 10000) {
-                        _this.$message.error('新增成功')
+                        _this.$message.success('新增成功')
+                        _this.file_data.group_name = ''
+                        _this.file_data.sort = ''
+                        _this.group_list = res.data.group_list
+                        _this.handleSelect('0')
                         return
                     }
                     _this.$message.error('获取失败')
@@ -154,6 +159,7 @@
                         _this.handleSelect(0)
                         _this.fileDialogVisible = true
                         _this.callback = callback
+                        _this.check_list = []
                         return
                     }
                     _this.$message.error('获取图片失败')
@@ -221,7 +227,6 @@
         padding: 10px;;
         width: 160px;
         height: 140px;
-        cursor: pointer;
     }
 
     .demonstration {

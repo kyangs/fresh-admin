@@ -34,13 +34,11 @@ class FileGroup extends Model
     public function saveGroup($post)
     {
         $row = $this->where(['group_name' => $post->group_name])->value('id');
-        if (!empty($row)) {
-            throw new \Exception('组名已经存在', 1);
-        }
-        $data = [
+        if (!empty($row))  throw new \Exception('组名已经存在', 1);
+
+        return self::create([
             'group_name' => $post->group_name,
             'sort'       => $post->sort,
-        ];
-        return self::create($data);
+        ]);
     }
 }

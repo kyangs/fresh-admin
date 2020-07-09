@@ -52,12 +52,12 @@ class FileService extends BaseService
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
+     * @throws \Exception
      */
     public function saveGroup($post)
     {
         $FileGroup = new FileGroup();
-        return [
-            'group' => $FileGroup->saveGroup($post),
-        ];
+        $FileGroup->saveGroup($post);
+        return $this->getGroup($post);
     }
 }
