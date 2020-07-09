@@ -48,6 +48,7 @@
                                     <el-col :span="6" v-for="(v,k) in file_list" :key="v.id">
                                         <div class="image-row">
                                             <el-image
+                                                    @click="handleClickImage(k)"
                                                     class="image-view"
                                                     :alt="v.file_size"
                                                     :src="v.full_url"
@@ -103,6 +104,9 @@
         created() {
         },
         methods: {
+            handleClickImage:function(index){
+                console.log(index)
+            },
             handleSelectImage() {
                 const _this = this
                 if (_this.check_list.length === 0) {
@@ -231,6 +235,7 @@
         padding: 10px;;
         width: 100px;
         height: 120px;
+        cursor: pointer;
     }
 
     .demonstration {
