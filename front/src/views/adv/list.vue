@@ -49,7 +49,7 @@
                     </el-image>
                 </template>
             </el-table-column>
-            <el-table-column  label="广告位置"  width="200">
+            <el-table-column label="广告位置" width="200">
                 <template slot-scope="scope">
                     {{ params.position[scope.row.position] }}
                 </template>
@@ -60,7 +60,7 @@
                     width="80">
             </el-table-column>
             <el-table-column label="状态" width="160">
-                <template slot-scope="scope" >
+                <template slot-scope="scope">
                     <el-switch
                             v-model="scope.row.is_enabled==='1'"
                             active-text="启用"
@@ -91,7 +91,7 @@
                 title="广告新增/编辑"
                 :visible.sync="dialogVisible"
                 width="40%" :close-on-click-modal="false">
-            <el-form  :model="data_from"
+            <el-form :model="data_from"
                      label-position="right"
                      label-width="120px">
                 <el-form-item label="位置">
@@ -109,26 +109,12 @@
                         选择图片<i class="el-icon-upload el-icon--right"></i>
                     </el-button>
                     <el-image v-if="data_from.full_path" :src="data_from.full_path"
-                               style="width: 360px;height: 220px"
+                              style="width: 160px;height: 180px"
                               class="avatar">
                     </el-image>
-
-<!--                    <el-upload-->
-<!--                            class="upload-demo"-->
-<!--                            drag-->
-<!--                            v-model="data_from.image"-->
-<!--                            action=""-->
-<!--                            :show-file-list="false"-->
-<!--                            :http-request="uploadImage">-->
-<!--                        <el-image v-if="data_from.full_path" :src="data_from.full_path"-->
-<!--                                  style="width: 360px;height: 220px"-->
-<!--                                  class="avatar">-->
-<!--                        </el-image>-->
-<!--                        <i v-else class="el-icon-upload"></i>-->
-<!--                    </el-upload>-->
                 </el-form-item>
 
-                <el-form-item label="时间" >
+                <el-form-item label="时间">
                     <el-date-picker
                             clearable
                             style="width: 360px;"
@@ -154,7 +140,7 @@
             <el-button type="primary" @click="saveAdv(data_from,true)">确 定</el-button>
             </span>
         </el-dialog>
-        <File ref="file_upload"></File>
+        <File ref="file_upload" @getFileList="getFileList"></File>
     </div>
 
 </template>
@@ -166,7 +152,7 @@
     export default {
         name: 'List',
         components: {
-          File
+            File
         },
         data() {
             return {
@@ -210,12 +196,17 @@
             this.initParam()
         },
         methods: {
-            selectFile:function(){
-              const _this = this
-
+            selectFile: function () {
+                const _this = this
                 _this.$refs["file_upload"].openDialog(true)
             },
-            switchEnabled:function(row){
+            getFileList(rows) {
+                const _this = this
+                const row = rows[0]
+                _this.data_from.full_path = row.full_url
+                _this.data_from.image = row.file_url
+            },
+            switchEnabled: function (row) {
                 const _this = this
                 request({
                     url: '/admin/adv/enable',
@@ -230,7 +221,7 @@
                     _this.$message.error('操作失败')
                 })
             },
-            deleteAdv:function(row){
+            deleteAdv: function (row) {
                 let _this = this
                 this.$confirm('此操作将永久删除, 是否继续?', '提示', {
                     confirmButtonText: '确定',
@@ -261,7 +252,7 @@
                 if (submit === false) {
                     _this.dialogVisible = true
                     Object.assign(_this.data_from, _this.origin_data_from)
-                    if (Object.keys(row).length > 0){
+                    if (Object.keys(row).length > 0) {
                         Object.assign(_this.data_from, row)
                         _this.data_from.time_range = [row.start_time, row.end_time]
                     }

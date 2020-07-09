@@ -3,6 +3,7 @@ declare (strict_types=1);
 
 namespace app\traits;
 
+use app\model\common\File;
 use app\model\common\FileGroup;
 use app\service\ImageHashService;
 use app\service\UploadService;
@@ -61,11 +62,25 @@ trait UploadTrait
      */
     public function upload()
     {
-        $file = request()->file('file');
-        list($path, $fullPath) = UploadService::upload($file->getPathname(), $file->getOriginalName(), $file->getMime());
         $fileGroup = new FileGroup;
-
-        return json_ok(UploadService::upload($file->getPathname(), $file->getOriginalName(), $file->getMime()));
+        $groupID   = $fileGroup->where(['id' => request()->post(['id'])])->value('id');
+        if (empty($groupID)) throw new \Exception('分组不存在', 1);
+        $file                 = request()->file('file');
+        $res                  = UploadService::upload(
+            $file->getPathname(),
+            $file->getOriginalName(),
+            $file->getMime());
+        $fileRow              = File::create([
+            'group_id'  => $groupID,
+            'file_url'  => $res['path'],
+            'file_name' => $file->getOriginalName(),
+            'file_size' => $file->getSize(),
+            'file_type' => $file->getMime(),
+            'extension' => $file->getExtension(),
+        ])->toArray();
+        $fileRow['full_url']  = $res['full_path'];
+        $fileRow['file_size'] = round($fileRow['file_size'] / 1024, 2) . 'KB';;
+        return json_ok($fileRow);
     }
 
 

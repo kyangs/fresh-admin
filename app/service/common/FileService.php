@@ -23,7 +23,8 @@ class FileService extends BaseService
     {
         $fileList = (new File)->listByFilter($post);
         foreach ($fileList as &$f) {
-            $f['full_url'] = UploadService::fullPath($f['file_url']);
+            $f['full_url']  = UploadService::fullPath($f['file_url']);
+            $f['file_size'] = round($f['file_size'] / 1024, 2) . 'KB';
         }
         return [
             'file_list' => $fileList,
