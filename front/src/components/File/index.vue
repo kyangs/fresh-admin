@@ -4,7 +4,7 @@
         <el-dialog
                 title="图片管理"
                 :visible.sync="fileDialogVisible"
-                width="50%" :close-on-click-modal="false">
+                width="55%" :close-on-click-modal="false">
             <el-form :inline="true" :model="file_data" class="demo-form-inline">
                 <el-form-item label="组名">
                     <el-input v-model="file_data.group_name" placeholder="组名"></el-input>
@@ -53,7 +53,8 @@
                                                     fit="fill">
                                             </el-image>
                                             <p class="demonstration">
-                                                <el-checkbox :label="v">{{v.file_name}}</el-checkbox>
+                                                <el-checkbox
+                                                        :label="k">{{v.file_name}}</el-checkbox>
                                             </p>
                                         </div>
                                     </el-col>
@@ -92,6 +93,7 @@
                 file_list: [],
                 current_index: 0,
                 check_list: [],
+                callback: '',
             }
         },
         watch: {},
@@ -104,7 +106,9 @@
                     _this.$message.error('请选择文件')
                     return
                 }
-                _this.$emit('getFileList', _this.check_list);
+                const rows = []
+                _this.check_list.forEach(v=>{rows.push(_this.file_list[v])})
+                _this.$emit(_this.callback, rows);
                 _this.fileDialogVisible = false
             },
             handleSelect(key, keyPath) {
@@ -138,7 +142,7 @@
                     _this.$message.error('获取失败')
                 })
             },
-            openDialog(val) {
+            openDialog(callback) {
                 const _this = this
                 request({
                     url: '/admin/file/group-list',
@@ -148,7 +152,8 @@
                     if (res.code === 10000) {
                         _this.group_list = res.data.group_list
                         _this.handleSelect(0)
-                        _this.fileDialogVisible = val
+                        _this.fileDialogVisible = true
+                        _this.callback = callback
                         return
                     }
                     _this.$message.error('获取图片失败')
@@ -197,7 +202,7 @@
     .avatar-uploader-icon {
         font-size: 28px;
         color: #8c939d;
-        width: 160px;
+        width: 180px;
         height: 200px;
         line-height: 200px;
         text-align: center;

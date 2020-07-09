@@ -105,13 +105,12 @@
                 </el-form-item>
 
                 <el-form-item label="图片">
+                    <el-image v-if="data_from.full_path" :src="data_from.full_path"
+                              style="width: 80px;height: 80px">
+                    </el-image>
                     <el-button type="primary" @click="selectFile">
                         选择图片<i class="el-icon-upload el-icon--right"></i>
                     </el-button>
-                    <el-image v-if="data_from.full_path" :src="data_from.full_path"
-                              style="width: 160px;height: 180px"
-                              class="avatar">
-                    </el-image>
                 </el-form-item>
 
                 <el-form-item label="时间">
@@ -198,7 +197,7 @@
         methods: {
             selectFile: function () {
                 const _this = this
-                _this.$refs["file_upload"].openDialog(true)
+                _this.$refs["file_upload"].openDialog('getFileList')
             },
             getFileList(rows) {
                 const _this = this
