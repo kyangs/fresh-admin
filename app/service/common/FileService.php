@@ -21,14 +21,12 @@ class FileService extends BaseService
      */
     public function getFileList($post)
     {
-        $fileList = (new File)->listByFilter($post);
-        foreach ($fileList as &$f) {
+        $filePage = (new File)->listByFilter($post);
+        foreach ($filePage['data'] as &$f) {
             $f['full_url']  = UploadService::fullPath($f['file_url']);
             $f['file_size'] = round($f['file_size'] / 1024, 2) . 'KB';
         }
-        return [
-            'file_list' => $fileList,
-        ];
+        return $filePage;
     }
 
     /**组列表

@@ -13,11 +13,13 @@
                     <el-input v-model="group_data.sort" placeholder="排序"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="addFileGroup(group_data,true)">保存</el-button>
+                    <el-button type="primary" @click="addFileGroup(group_data,true)">保存组</el-button>
+
                     <el-popconfirm
+                            v-if="group_data.id"
                             @onConfirm="deleteFileGroup(group_data)"
                             title="当前组被删除后，此组里的图片会被同时删除，您确定吗？">
-                        <el-button slot="reference" type="danger">删除</el-button>
+                        <el-button slot="reference" type="danger">删除组</el-button>
                     </el-popconfirm>
 
                 </el-form-item>
@@ -37,37 +39,43 @@
                 </el-aside>
 
                 <el-container>
-                    <el-header style="text-align: right; font-size: 12px">
-                        <el-checkbox :indeterminate="is_indeterminate" v-model="check_all" @change="handleCheckAllChange">全选</el-checkbox>
+                    <el-header style="text-align: right; font-size: 12px;height: 42px">
+                        <el-form :inline="true" class="demo-form-inline">
+                            <el-form-item>
+                                <el-upload
+                                        style="padding: 2px"
+                                        multiple
+                                        action=""
+                                        :show-file-list="false"
+                                        :http-request="uploadImage">
+                                    <el-button type="success">点击开始上传</el-button>
+                                </el-upload>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-checkbox :indeterminate="is_indeterminate" v-model="check_all"
+                                             @change="handleCheckAllChange">全选
+                                </el-checkbox>
+                            </el-form-item>
+                        </el-form>
                     </el-header>
                     <el-main>
                         <div class="demo-image">
                             <el-row :gutter="20">
-                                <el-col :span="6">
-                                    <div class="grid-content bg-purple">
-                                        <el-upload
-                                                class="avatar-uploader"
-                                                action=""
-                                                multiple
-                                                :show-file-list="false"
-                                                :http-request="uploadImage">
-                                            <i class="el-icon-plus avatar-uploader-icon"></i>
-                                        </el-upload>
-                                    </div>
-                                </el-col>
                                 <el-checkbox-group v-model="check_list">
-                                    <el-col :span="6" v-for="(v,k) in file_list" :key="v.id">
+                                    <el-col :span="6" v-for="(v,k) in file_page.data" :key="v.id">
                                         <div class="image-row">
                                             <el-image
                                                     @click="handleClickImage(k)"
                                                     class="image-view"
-                                                    :alt="v.file_size"
+                                                    :title="v.file_name"
                                                     :src="v.full_url"
+                                                    :preview-src-list="[v.full_url]"
                                                     fit="fill">
                                             </el-image>
                                             <p class="demonstration">
                                                 <el-checkbox
-                                                        :label="k">{{v.file_name}}
+                                                        :label="k">
+                                                    <el-row style="width: 100px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{v.file_name}}</el-row>
                                                 </el-checkbox>
                                             </p>
                                         </div>
@@ -76,11 +84,22 @@
                             </el-row>
                         </div>
                     </el-main>
+                    <el-footer style="height: 32px">
+                        <el-pagination
+                                @size-change="handleSizeChange"
+                                @current-change="handleCurrentChange"
+                                :current-page="file_page.current_page"
+                                :page-sizes="[100, 200, 300, 400]"
+                                :page-size="file_page.per_page"
+                                layout="sizes, prev, pager, next"
+                                :total="file_page.total">
+                        </el-pagination>
+                    </el-footer>
                 </el-container>
             </el-container>
             <span slot="footer" class="dialog-footer">
+            <el-link @click="deleteSelectImage" v-if="check_list.length > 0" type="danger">删除</el-link>
             <el-button @click="fileDialogVisible = false">取消</el-button>
-            <el-button @click="deleteSelectImage">删除</el-button>
             <el-button type="primary" @click="handleSelectImage">确定</el-button>
             </span>
         </el-dialog>
@@ -102,15 +121,21 @@
                 fileDialogVisible: this.show_file_dialog,
                 levelList: null,
                 check_all: false,
-                is_indeterminate: true,
+                is_indeterminate: false,
                 fileSelection: [],
+                file_list: [],
                 group_data: {
                     id: '',
                     group_name: '',
                     sort: '',
                 },
                 group_list: [],
-                file_list: [],
+                file_page: {
+                    current_page: 1,
+                    total: 0,
+                    per_page: 100,
+                    data: [],
+                },
                 current_index: 0,
                 check_list: [],
                 callback: '',
@@ -124,12 +149,20 @@
             handleCheckAllChange(val) {
                 const _this = this
                 _this.check_list = [];
-                if (val){
-                    _this.file_list.forEach((v,k)=>{
+                if (val) {
+                    _this.file_page.data.forEach((v, k) => {
                         this.check_list.push(k)
                     });
                 }
-                this.is_indeterminate = false;
+            },
+            handleCurrentChange(val) {
+                this.file_page.current_page = val
+                this.queryFileList()
+            },
+            handleSizeChange(val) {
+                this.file_page.per_page = val
+                this.file_page.current_page = 1
+                this.queryFileList()
             },
             handleClickImage: function (index) {
                 console.log(index)
@@ -142,7 +175,7 @@
                 }
                 const rows = []
                 _this.check_list.forEach(v => {
-                    rows.push(_this.file_list[v])
+                    rows.push(_this.file_page.data[v])
                 })
                 _this.$emit(_this.callback, rows);
                 _this.fileDialogVisible = false
@@ -162,8 +195,28 @@
                     data: param
                 }).then(function (res) {
                     if (res.code === 10000) {
-                        _this.file_list = res.data.file_list
+                        _this.file_page = res.data
                         _this.check_list = []
+                        return
+                    }
+                    _this.$message.error('获取失败')
+                })
+            },
+            queryFileList() {
+                const _this = this
+                const params = {
+                    pageSize: _this.file_page.per_page,
+                    page: _this.file_page.current_page
+                }
+                Object.assign(params, _this.group_list[this.current_index])
+                request({
+                    url: '/admin/file/list',
+                    method: 'post',
+                    data: params
+                }).then(function (res) {
+                    if (res.code === 10000) {
+                        _this.file_page = res.data
+                        _this.check_list = [];
                         return
                     }
                     _this.$message.error('获取失败')
@@ -173,19 +226,10 @@
                 this.current_index = parseInt(key)
                 const _this = this
                 _this.check_all = false
-                const group = _this.group_list[this.current_index]
                 _this.default_active = key.toString()
-                request({
-                    url: '/admin/file/list',
-                    method: 'post',
-                    data: group
-                }).then(function (res) {
-                    if (res.code === 10000) {
-                        _this.file_list = res.data.file_list
-                        return
-                    }
-                    _this.$message.error('获取失败')
-                })
+                this.file_page.current_page = 1
+                _this.queryFileList()
+                _this.check_list = []
             },
             deleteFileGroup(row) {
                 const _this = this
@@ -285,19 +329,6 @@
         overflow: hidden;
     }
 
-    .avatar-uploader .el-upload:hover {
-        border-color: #409EFF;
-    }
-
-    .avatar-uploader-icon {
-        font-size: 28px;
-        color: #8c939d;
-        width: 120px;
-        height: 156px;
-        line-height: 156px;
-        text-align: center;
-    }
-
     .image-row {
         width: 140px;
         height: 160px;
@@ -322,13 +353,20 @@
     .image-check {
         word-break: break-all;
     }
+
     .el-header {
         background-color: #B3C0D1;
         color: #333;
-        line-height: 60px;
+        line-height: 42px;
     }
 
     .el-aside {
         color: #333;
+    }
+
+    .el-footer {
+        color: #333;
+        text-align: center;
+        line-height: 16px;
     }
 </style>
