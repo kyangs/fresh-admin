@@ -172,6 +172,7 @@
             handleSelect(key, keyPath) {
                 this.current_index = parseInt(key)
                 const _this = this
+                _this.check_all = false
                 const group = _this.group_list[this.current_index]
                 _this.default_active = key.toString()
                 request({
