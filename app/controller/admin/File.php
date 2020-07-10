@@ -60,5 +60,30 @@ class File extends Base
             return json_error(10001,$exception->getMessage());
         }
     }
+    /**
+     * 删除组
+     * @Route("group-delete", method="POST")
+     * @throws \Exception
+     */
+    public function groupDelete()
+    {
+        try {
+            return json_ok((new FileService)->deleteGroup($this->params));
+        }catch (\Exception $exception){
+            return json_error(10001,$exception->getMessage());
+        }
+    }
+    /**
+     * 删除文件
+     * @Route("delete", method="POST")
+     * @throws \Exception
+     */
+    public function deleteFile(){
+        try {
+            return json_ok((new FileService)->deleteFile($this->params));
+        }catch (\Exception $exception){
+            return json_error(10001,$exception->getMessage());
+        }
+    }
 
 }

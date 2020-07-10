@@ -25,6 +25,19 @@ class File extends Model
         if (isset($filter->id)) {
             $_this = $_this->where(['group_id' => $filter->id]);
         }
-        return $_this->order('id', 'desc')->select()->toArray();
+        return $_this->where(['is_delete'=>'0'])->order('id', 'desc')->select()->toArray();
+    }
+
+    /**
+     * @param $idList
+     * @return File|bool
+     */
+    public function deleteFile($idList)
+    {
+        if (empty($idList)) return false;
+        return self::update([
+            'is_delete' => 1,
+        ], ['id' => $idList]);
+
     }
 }

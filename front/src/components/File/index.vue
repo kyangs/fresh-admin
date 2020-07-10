@@ -5,22 +5,30 @@
                 title="图片管理"
                 :visible.sync="fileDialogVisible"
                 width="55%" :close-on-click-modal="false">
-            <el-form :inline="true" :model="file_data" class="demo-form-inline">
+            <el-form :inline="true" :model="group_data" class="demo-form-inline">
                 <el-form-item label="组名">
-                    <el-input v-model="file_data.group_name" placeholder="组名"></el-input>
+                    <el-input v-model="group_data.group_name" placeholder="组名"></el-input>
                 </el-form-item>
                 <el-form-item label="排序">
-                    <el-input v-model="file_data.sort" placeholder="排序"></el-input>
+                    <el-input v-model="group_data.sort" placeholder="排序"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="addFileGroup">新增分组</el-button>
+                    <el-button type="primary" @click="addFileGroup(group_data,true)">保存</el-button>
+                    <el-popconfirm
+                            @onConfirm="deleteFileGroup(group_data)"
+                            title="当前组被删除后，此组里的图片会被同时删除，您确定吗？">
+                        <el-button slot="reference" type="danger">删除</el-button>
+                    </el-popconfirm>
+
                 </el-form-item>
             </el-form>
             <el-container style="height: 500px; border: 1px solid #eee">
                 <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
                     <el-main>
                         <el-menu @select="handleSelect" :default-active="default_active">
-                            <el-menu-item v-for="(v,k) in group_list" :index="k.toString()" :key="v.id">
+                            <el-menu-item v-for="(v,k) in group_list"
+                                          @click="addFileGroup(v,false)"
+                                          :index="k.toString()" :key="v.id">
                                 <i class="el-icon-document"></i>
                                 <span slot="title">{{ v.group_name }}</span>
                             </el-menu-item>
@@ -29,6 +37,9 @@
                 </el-aside>
 
                 <el-container>
+                    <el-header style="text-align: right; font-size: 12px">
+                        <el-checkbox :indeterminate="is_indeterminate" v-model="check_all" @change="handleCheckAllChange">全选</el-checkbox>
+                    </el-header>
                     <el-main>
                         <div class="demo-image">
                             <el-row :gutter="20">
@@ -68,10 +79,13 @@
                 </el-container>
             </el-container>
             <span slot="footer" class="dialog-footer">
-            <el-button @click="fileDialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="handleSelectImage">确 定</el-button>
+            <el-button @click="fileDialogVisible = false">取消</el-button>
+            <el-button @click="deleteSelectImage">删除</el-button>
+            <el-button type="primary" @click="handleSelectImage">确定</el-button>
             </span>
         </el-dialog>
+
+
     </div>
 </template>
 
@@ -87,8 +101,11 @@
             return {
                 fileDialogVisible: this.show_file_dialog,
                 levelList: null,
+                check_all: false,
+                is_indeterminate: true,
                 fileSelection: [],
-                file_data: {
+                group_data: {
+                    id: '',
                     group_name: '',
                     sort: '',
                 },
@@ -104,7 +121,14 @@
         created() {
         },
         methods: {
-            handleClickImage:function(index){
+            handleCheckAllChange(val) {
+                const _this = this
+                _this.file_list.forEach((v,k)=>{
+                    this.check_list.push(k)
+                });
+                this.is_indeterminate = false;
+            },
+            handleClickImage: function (index) {
                 console.log(index)
             },
             handleSelectImage() {
@@ -119,6 +143,28 @@
                 })
                 _this.$emit(_this.callback, rows);
                 _this.fileDialogVisible = false
+            },
+            deleteSelectImage() {
+                const _this = this
+                const param = {
+                    id_list: [],
+                    group: Object.assign({}, _this.group_data),
+                }
+                _this.check_list.forEach(v => {
+                    param.id_list.push(_this.file_list[v].id)
+                })
+                request({
+                    url: '/admin/file/delete',
+                    method: 'post',
+                    data: param
+                }).then(function (res) {
+                    if (res.code === 10000) {
+                        _this.file_list = res.data.file_list
+                        _this.check_list = []
+                        return
+                    }
+                    _this.$message.error('获取失败')
+                })
             },
             handleSelect(key, keyPath) {
                 this.current_index = parseInt(key)
@@ -137,23 +183,49 @@
                     _this.$message.error('获取失败')
                 })
             },
-            addFileGroup() {
+            deleteFileGroup(row) {
                 const _this = this
                 request({
-                    url: '/admin/file/group',
+                    url: '/admin/file/group-delete',
                     method: 'post',
-                    data: _this.file_data
+                    data: row
                 }).then(function (res) {
                     if (res.code === 10000) {
-                        _this.$message.success('新增成功')
-                        _this.file_data.group_name = ''
-                        _this.file_data.sort = ''
+                        _this.$message.success('删除成功')
                         _this.group_list = res.data.group_list
                         _this.handleSelect('0')
                         return
                     }
-                    _this.$message.error('获取失败')
+                    _this.$message.error('删除失败')
                 })
+            },
+            addFileGroup(row, submit) {
+                const _this = this
+                if (submit === false) {
+                    this.group_data = Object.assign({}, row)
+                    return
+                }
+                request({
+                    url: '/admin/file/group',
+                    method: 'post',
+                    data: row
+                }).then(function (res) {
+                    if (res.code === 10000) {
+                        _this.$message.success('操作成功')
+                        _this.group_data.group_name = ''
+                        _this.group_data.sort = ''
+                        _this.group_list = res.data.group_list
+                        _this.handleSelect('0')
+                        return
+                    }
+                    _this.$message.error('操作失败')
+                })
+            },
+            initData() {
+                this.group_data.group_name = ''
+                this.group_data.sort = ''
+                this.group_data.id = ''
+                this.check_list = []
             },
             openDialog(callback) {
                 const _this = this
@@ -167,7 +239,7 @@
                         _this.handleSelect(0)
                         _this.fileDialogVisible = true
                         _this.callback = callback
-                        _this.check_list = []
+                        _this.initData()
                         return
                     }
                     _this.$message.error('获取图片失败')
@@ -245,5 +317,14 @@
 
     .image-check {
         word-break: break-all;
+    }
+    .el-header {
+        background-color: #B3C0D1;
+        color: #333;
+        line-height: 60px;
+    }
+
+    .el-aside {
+        color: #333;
     }
 </style>
