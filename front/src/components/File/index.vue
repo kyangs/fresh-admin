@@ -123,9 +123,12 @@
         methods: {
             handleCheckAllChange(val) {
                 const _this = this
-                _this.file_list.forEach((v,k)=>{
-                    this.check_list.push(k)
-                });
+                _this.check_list = [];
+                if (val){
+                    _this.file_list.forEach((v,k)=>{
+                        this.check_list.push(k)
+                    });
+                }
                 this.is_indeterminate = false;
             },
             handleClickImage: function (index) {
