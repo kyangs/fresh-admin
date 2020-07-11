@@ -60,11 +60,12 @@ class CategoryService extends BaseService
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public static function showHomeAndEnable(){
-        $res = Category::categoryByFilter([
-            'parent_id'=>'0',
-            'show_home'=>'1',
-            'is_enabled'=>'1',
+    public static function showHomeAndEnable()
+    {
+        $res    = Category::categoryByFilter([
+            'parent_id'  => '0',
+            'show_home'  => '1',
+            'is_enabled' => '1',
         ]);
         $images = File::findByIds(array_column($res, 'image_id'));
         foreach ($res as &$item) {
@@ -75,6 +76,7 @@ class CategoryService extends BaseService
         }
         return $res;
     }
+
     /** 子类列表，以父类id 为key
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -142,4 +144,33 @@ class CategoryService extends BaseService
     {
         return Category::deleteByIds([$request->id]);
     }
+
+    /**
+     * @param $request
+     */
+    public static function categoryList($request)
+    {
+        $categoryList = Category::categoryByFilter(['is_enabled' => '1']);
+        $image        = File::findByIds(array_column($categoryList, 'image_id'), true);
+
+        $childMap     = [];
+        $parent       = [];
+        foreach ($categoryList as $item) {
+
+            if (isset($image[$item['image_id']])) {
+                $item['full_url'] = $image[$item['image_id']];
+            }
+            if ($item['parent_id'] == 0) {
+                $parent[] = $item;
+                continue;
+            }
+            $childMap[$item['parent_id']][] = $item;
+        }
+        foreach ($parent as &$item) {
+            $item['children'] = isset($childMap[$item['id']]) ? $childMap[$item['id']] : [];
+        }
+        return $parent;
+    }
+
+
 }

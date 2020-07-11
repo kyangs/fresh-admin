@@ -41,8 +41,11 @@ class Category extends Model
     public static function categoryByFilter($filter)
     {
         $_this = (new self());
-        if (isset($filter['parent_id'])) {
-            $_this = $_this->where(['parent_id' => $filter['parent_id']]);
+        if (isset($filter['parent_id']) && intval($filter['parent_id']) === 0) {
+            $_this = $_this->where(['parent_id' => '0']);
+        }
+        if (isset($filter['parent_id']) && intval($filter['parent_id']) > 0) {
+            $_this = $_this->where('parent_id', '>', '0');
         }
         if (isset($filter['show_home'])) {
             $_this = $_this->where(['show_home' => $filter['show_home']]);
