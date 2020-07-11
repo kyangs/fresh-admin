@@ -33,16 +33,17 @@ class FileGroup extends Model
      */
     public function saveGroup($post)
     {
-        $data =[
+        if (empty($post->group_nam)) throw new \Exception('请输入组名', 1);
+        $data = [
             'group_name' => $post->group_name,
             'sort'       => $post->sort,
         ];
-        if (!empty($post->id)){
+        if (!empty($post->id)) {
 
-            return self::update($data,['id'=>$post->id]);
+            return self::update($data, ['id' => $post->id]);
         }
         $row = $this->where(['group_name' => $post->group_name])->value('id');
-        if (!empty($row))  throw new \Exception('组名已经存在', 1);
+        if (!empty($row)) throw new \Exception('组名已经存在', 1);
 
         return self::create($data);
     }
@@ -52,10 +53,11 @@ class FileGroup extends Model
      * @return bool
      * @throws \Exception
      */
-    public function deleteGroup($post){
-        if (!empty($post->id)){
-            return self::where(['id'=>$post->id])->delete();
+    public function deleteGroup($post)
+    {
+        if (!empty($post->id)) {
+            return self::where(['id' => $post->id])->delete();
         }
-         throw new \Exception('参数错误', 1);
+        throw new \Exception('参数错误', 1);
     }
 }

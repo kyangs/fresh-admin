@@ -46,12 +46,12 @@ class AdvService extends BaseService
     public function saveAdv($request, $user)
     {
         if (empty($request->position)) throw new \Exception('请选择位置！', 1);
-        if (empty($request->image)) throw new \Exception('请选择图片！', 1);
+        if (empty($request->image_id)) throw new \Exception('请选择图片！', 1);
         if (empty($request->time_range)) throw new \Exception('请选择时间范围！', 1);
         list($start, $end) = $request->time_range;
         $data = [
             'position'   => $request->position,
-            'image'      => $request->image,
+            'image_id'   => $request->image_id,
             'link'       => $request->link,
             'start_time' => $start,
             'is_enabled' => $request->is_enabled,

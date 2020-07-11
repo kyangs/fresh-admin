@@ -34,12 +34,7 @@
                 height="550"
                 border
                 style="width: 100%">
-            <el-table-column label="操作" width="120">
-                <template slot-scope="scope">
-                    <el-link type="success" @click="saveAdv(scope.row,false)">编辑</el-link>
-                    <el-link type="warning" @click="deleteAdv(scope.row,false)">删除</el-link>
-                </template>
-            </el-table-column>
+
             <el-table-column label="图片" width="120">
                 <template slot-scope="scope">
                     <el-image :src="scope.row.full_path"
@@ -84,6 +79,13 @@
                     prop="create_time"
                     label="创建日期"
                     width="160">
+            </el-table-column>
+
+            <el-table-column label="操作" width="120">
+                <template slot-scope="scope">
+                    <el-link type="success" @click="saveAdv(scope.row,false)">编辑</el-link>
+                    <el-link type="warning" @click="deleteAdv(scope.row,false)">删除</el-link>
+                </template>
             </el-table-column>
         </el-table>
 
@@ -173,7 +175,7 @@
                     id: '',
                     is_enabled: '1',
                     position: '',
-                    image: '',
+                    image_id: 0,
                     full_path: '',
                     link: '',
                     sort: 100,
@@ -183,7 +185,7 @@
                     id: '',
                     is_enabled: '1',
                     position: '',
-                    image: '',
+                    image_id: 0,
                     full_path: '',
                     link: '',
                     sort: 100,
@@ -193,6 +195,7 @@
         },
         created() {
             this.initParam()
+            this.listQuery()
         },
         methods: {
             selectFile: function () {
@@ -203,7 +206,7 @@
                 const _this = this
                 const row = rows[0]
                 _this.data_from.full_path = row.full_url
-                _this.data_from.image = row.file_url
+                _this.data_from.image_id = row.id
             },
             switchEnabled: function (row) {
                 const _this = this

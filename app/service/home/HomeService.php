@@ -6,6 +6,7 @@ namespace app\service\home;
 
 use app\model\Adv;
 use app\service\BaseService;
+use app\service\common\CategoryService;
 
 class HomeService extends BaseService
 {
@@ -13,8 +14,11 @@ class HomeService extends BaseService
     /**
      *
      */
-    public function home(){
-        $adv = (new Adv)->findAbleAdv($this->time());
-        return $adv;
+    public function home()
+    {
+        return [
+            'adv_list'      => (new Adv)->findAbleAdv($this->time()),
+            'category_list' => CategoryService::showHomeAndEnable(),
+        ];
     }
 }

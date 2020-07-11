@@ -49,7 +49,7 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (1,'admini','d93a5def7511da3d0f2d171d9c344e91','123@163.com','123','15237156573','https://hardphp.oss-cn-beijing.aliyuncs.com\\images/20200115\\1ed50a8ff67bedbe1d4794705868a234.jpg','127.0.0.1',1594001387,'39.149.12.184',1594001387,1,1,1540975213,0),(2,'admina','00b091d5bbbcbea4a371242e61d644a3','123@163.com','王五一','15237156573','https://hardphp.oss-cn-beijing.aliyuncs.com/vedios/20191220/044a612bd5f0874e669e0755f51ca93e.jpg','127.0.0.1',1540975213,'123.149.208.76',1579146396,1,1,1540975213,0);
+INSERT INTO `admin` VALUES (1,'admini','d93a5def7511da3d0f2d171d9c344e91','123@163.com','123','15237156573','https://hardphp.oss-cn-beijing.aliyuncs.com\\images/20200115\\1ed50a8ff67bedbe1d4794705868a234.jpg','127.0.0.1',1594392311,'39.149.12.184',1594392311,1,1,1540975213,0),(2,'admina','00b091d5bbbcbea4a371242e61d644a3','123@163.com','王五一','15237156573','https://hardphp.oss-cn-beijing.aliyuncs.com/vedios/20191220/044a612bd5f0874e669e0755f51ca93e.jpg','127.0.0.1',1540975213,'123.149.208.76',1579146396,1,1,1540975213,0);
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -63,7 +63,7 @@ DROP TABLE IF EXISTS `adv`;
 CREATE TABLE `adv` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `username` varchar(16) NOT NULL DEFAULT '' COMMENT '创建者名',
-  `image` varchar(255) NOT NULL DEFAULT '',
+  `image_id` int(11) NOT NULL DEFAULT '0',
   `link` varchar(255) NOT NULL DEFAULT '' COMMENT '链接',
   `position` varchar(50) NOT NULL DEFAULT '' COMMENT '广告位置',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -78,7 +78,7 @@ CREATE TABLE `adv` (
   KEY `start_time` (`start_time`),
   KEY `end_time` (`end_time`),
   KEY `position` (`position`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='广告表';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='广告表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -87,7 +87,7 @@ CREATE TABLE `adv` (
 
 LOCK TABLES `adv` WRITE;
 /*!40000 ALTER TABLE `adv` DISABLE KEYS */;
-INSERT INTO `adv` VALUES (1,'admini','fresh/2020-07/23-58-54.png','','home','2020-07-06 02:30:31',1,'2020-07-05 11:40:32',NULL,'2020-06-30 16:00:00','2020-07-07 16:00:00',1),(2,'admini','fresh/2020-07/23-58-57.png','','home','2020-07-06 02:30:28',1,'2020-07-05 11:40:42',NULL,'2020-06-30 16:00:00','2020-07-14 16:00:00',5),(3,'admini','fresh/2020-07/23-59-01.png','','home','2020-07-05 12:00:40',1,'2020-07-05 11:40:52',NULL,'2020-06-30 16:00:00','2020-07-10 16:00:00',4),(4,'admini','fresh/2020-07/ad1.gif','','home_notice','2020-07-05 11:41:09',1,'2020-07-05 11:41:09',NULL,'2020-06-30 16:00:00','2020-07-22 16:00:00',100),(5,'admini','fresh/2020-07/23-59-07.gif','','home','2020-07-05 11:41:26',1,'2020-07-05 11:41:26',NULL,'2020-07-01 16:00:00','2020-07-23 16:00:00',100),(6,'admini','fresh/2020-07/23-59-04.png','','home','2020-07-05 12:00:34',1,'2020-07-05 11:41:39',NULL,'2020-07-01 16:00:00','2020-07-30 16:00:00',3),(7,'admini','fresh/2020-07/backgorund.jpg','','home','2020-07-05 12:00:29',1,'2020-07-05 11:50:19',NULL,'2020-06-30 16:00:00','2020-07-15 16:00:00',2);
+INSERT INTO `adv` VALUES (8,'admini',4,'','home','2020-07-11 06:56:41',1,'2020-07-11 06:56:32',NULL,'2020-07-01 16:00:00','2020-07-23 16:00:00',1),(9,'admini',1,'','home','2020-07-11 06:57:20',1,'2020-07-11 06:57:20',NULL,'2020-06-30 16:00:00','2020-07-30 16:00:00',100),(10,'admini',33,'','home','2020-07-11 06:57:42',1,'2020-07-11 06:57:42',NULL,'2020-07-01 16:00:00','2020-07-30 16:00:00',100),(11,'admini',6,'','home_notice','2020-07-11 07:02:51',1,'2020-07-11 07:02:51',NULL,'2020-06-30 16:00:00','2020-07-16 16:00:00',100);
 /*!40000 ALTER TABLE `adv` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -302,8 +302,11 @@ CREATE TABLE `category` (
   `wxapp_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '小程序id',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `show_home` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否首页显示 ',
+  `is_enabled` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否启用 ',
+  `creator` varchar(100) NOT NULL DEFAULT '' COMMENT '创建人者 ',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -312,6 +315,7 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
+INSERT INTO `category` VALUES (2,'安心蔬菜',0,14,1,0,'2020-07-11 06:47:22','2020-07-11 06:50:32',1,1,'admini'),(3,'肉禽蛋',0,15,2,0,'2020-07-11 07:26:27','2020-07-11 07:26:27',1,1,'admini'),(4,'生鲜海鲜',0,13,3,0,'2020-07-11 07:26:51','2020-07-11 07:26:53',1,1,'admini'),(5,'时令水果',0,12,4,0,'2020-07-11 07:27:12','2020-07-11 07:27:12',1,1,'admini'),(6,'粮油调味',0,10,5,0,'2020-07-11 07:38:45','2020-07-11 07:38:45',1,1,'admini'),(7,'乳品早点',0,16,6,0,'2020-07-11 07:39:07','2020-07-11 07:39:07',1,1,'admini'),(8,'酒水饮料',0,7,7,0,'2020-07-11 07:39:22','2020-07-11 07:39:22',1,1,'admini'),(9,'速冻食品',0,9,8,0,'2020-07-11 07:40:30','2020-07-11 07:49:05',1,1,'admini'),(11,'家具个护',0,16,9,0,'2020-07-11 07:58:47','2020-07-11 07:59:08',1,1,'admini'),(12,'生鲜饮食',0,11,10,0,'2020-07-11 07:59:05','2020-07-11 07:59:05',1,1,'admini');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -363,7 +367,7 @@ CREATE TABLE `file` (
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `file_name` (`file_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -372,6 +376,7 @@ CREATE TABLE `file` (
 
 LOCK TABLES `file` WRITE;
 /*!40000 ALTER TABLE `file` DISABLE KEYS */;
+INSERT INTO `file` VALUES (1,'',4,'fresh/2020-07/23-58-54.png','23-58-54.png',32480,'image/webp','tmp',0,0,'2020-07-09 14:46:12','2020-07-09 14:46:12'),(2,'',4,'fresh/2020-07/23-58-57.png','23-58-57.png',28916,'image/webp','tmp',0,0,'2020-07-09 14:46:21','2020-07-09 14:46:21'),(3,'',4,'fresh/2020-07/23-59-01.png','23-59-01.png',37044,'image/webp','tmp',0,0,'2020-07-09 14:46:25','2020-07-09 14:46:25'),(4,'',4,'fresh/2020-07/23-59-04.png','23-59-04.png',49810,'image/webp','tmp',0,0,'2020-07-09 14:46:29','2020-07-09 14:46:29'),(5,'',4,'fresh/2020-07/23-59-07.gif','23-59-07.gif',496065,'image/gif','tmp',0,0,'2020-07-09 14:46:33','2020-07-09 14:46:33'),(6,'',4,'fresh/2020-07/ad1.gif','ad1.gif',843855,'image/gif','tmp',0,0,'2020-07-09 14:46:55','2020-07-09 14:46:55'),(7,'',5,'fresh/2020-07/00-00-08.png','00-00-08.png',6186,'image/webp','tmp',0,0,'2020-07-09 14:47:44','2020-07-09 14:47:44'),(8,'',5,'fresh/2020-07/00-00-22.png','00-00-22.png',5910,'image/webp','tmp',0,0,'2020-07-09 14:47:47','2020-07-09 14:47:47'),(9,'',5,'fresh/2020-07/00-00-25.png','00-00-25.png',7438,'image/webp','tmp',0,0,'2020-07-09 14:47:49','2020-07-09 14:47:49'),(10,'',5,'fresh/2020-07/00-00-31.png','00-00-31.png',6510,'image/webp','tmp',0,0,'2020-07-09 14:48:05','2020-07-09 14:48:05'),(11,'',5,'fresh/2020-07/00-00-34.png','00-00-34.png',5726,'image/webp','tmp',0,0,'2020-07-09 14:48:09','2020-07-09 14:48:09'),(12,'',5,'fresh/2020-07/00-00-37.png','00-00-37.png',7210,'image/webp','tmp',0,0,'2020-07-09 14:48:12','2020-07-09 14:48:12'),(13,'',5,'fresh/2020-07/00-00-40.png','00-00-40.png',8730,'image/webp','tmp',0,0,'2020-07-09 14:48:16','2020-07-09 14:48:16'),(14,'',5,'fresh/2020-07/00-00-49.png','00-00-49.png',7470,'image/webp','tmp',0,0,'2020-07-09 14:48:19','2020-07-09 14:48:19'),(15,'',5,'fresh/2020-07/00-00-43.png','00-00-43.png',8748,'image/webp','tmp',0,0,'2020-07-09 14:48:26','2020-07-09 14:48:26'),(16,'',5,'fresh/2020-07/00-00-28.png','00-00-28.png',6926,'image/webp','tmp',0,0,'2020-07-09 14:48:49','2020-07-09 14:48:49'),(17,'',3,'fresh/2020-07/00-07-44.png','00-07-44.png',17316,'image/webp','tmp',0,0,'2020-07-09 14:55:15','2020-07-09 14:55:15'),(18,'',3,'fresh/2020-07/00-07-48.png','00-07-48.png',49068,'image/webp','tmp',1,0,'2020-07-09 14:55:15','2020-07-11 07:34:39'),(19,'',3,'fresh/2020-07/00-07-57.jpg','00-07-57.jpg',65606,'image/jpeg','tmp',1,0,'2020-07-09 14:55:27','2020-07-11 07:34:39'),(20,'',3,'fresh/2020-07/00-07-53.png','00-07-53.png',84844,'image/webp','tmp',0,0,'2020-07-09 14:55:27','2020-07-09 14:55:27'),(21,'',3,'fresh/2020-07/00-07-58.jpg','00-07-58.jpg',73798,'image/jpeg','tmp',0,0,'2020-07-09 14:55:28','2020-07-09 14:55:28'),(22,'',3,'fresh/2020-07/00-07-59.jpg','00-07-59.jpg',73594,'image/jpeg','tmp',0,0,'2020-07-09 14:55:28','2020-07-09 14:55:28'),(23,'',3,'fresh/2020-07/00-07-60.jpg','00-07-60.jpg',81765,'image/jpeg','tmp',0,0,'2020-07-09 14:55:28','2020-07-09 14:55:28'),(24,'',3,'fresh/2020-07/00-07-56.png','00-07-56.png',174810,'image/webp','tmp',0,0,'2020-07-09 14:55:28','2020-07-09 14:55:28'),(25,'',3,'fresh/2020-07/00-07-53.png','00-07-53.png',84844,'image/webp','tmp',0,0,'2020-07-10 16:22:30','2020-07-10 16:22:30'),(26,'',3,'fresh/2020-07/微信图片_20200210092256.jpg','微信图片_20200210092256.jpg',85506,'image/jpeg','tmp',1,0,'2020-07-10 16:41:57','2020-07-11 07:31:32'),(27,'',3,'fresh/2020-07/微信图片_20200210092250.png','微信图片_20200210092250.png',166575,'image/png','tmp',1,0,'2020-07-10 16:41:57','2020-07-11 07:31:32'),(28,'',3,'fresh/2020-07/微信图片_20200210092237.png','微信图片_20200210092237.png',175108,'image/png','tmp',1,0,'2020-07-10 16:41:58','2020-07-11 07:32:36'),(29,'',5,'fresh/2020-07/微信图片_20200315103547.jpg','微信图片_20200315103547.jpg',60347,'image/jpeg','tmp',1,0,'2020-07-10 16:44:57','2020-07-11 07:29:28'),(30,'',5,'fresh/2020-07/wx.jpg','wx.jpg',46851,'image/jpeg','tmp',1,0,'2020-07-10 16:44:57','2020-07-11 07:29:28'),(31,'',5,'fresh/2020-07/wx.png','wx.png',146108,'image/png','tmp',1,0,'2020-07-10 16:44:58','2020-07-11 07:29:28'),(32,'',5,'fresh/2020-07/20190731214117.png','20190731214117.png',160673,'image/png','tmp',1,0,'2020-07-10 16:45:16','2020-07-11 07:29:28'),(33,'',4,'fresh/2020-07/backgorund.jpg','backgorund.jpg',601375,'image/jpeg','tmp',0,0,'2020-07-11 06:57:34','2020-07-11 06:57:34');
 /*!40000 ALTER TABLE `file` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -393,7 +398,7 @@ CREATE TABLE `file_group` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `group_name` (`group_name`),
   KEY `type_index` (`group_type`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -402,7 +407,7 @@ CREATE TABLE `file_group` (
 
 LOCK TABLES `file_group` WRITE;
 /*!40000 ALTER TABLE `file_group` DISABLE KEYS */;
-INSERT INTO `file_group` VALUES (3,'','商品',1,0,'2020-07-06 07:59:55','2020-07-06 07:59:55');
+INSERT INTO `file_group` VALUES (3,'','商品',100,0,'2020-07-06 07:59:55','2020-07-11 07:27:43'),(4,'','广告图',99,0,'2020-07-09 14:44:33','2020-07-11 07:27:53'),(5,'','分类图',1,0,'2020-07-09 14:47:32','2020-07-11 07:27:25');
 /*!40000 ALTER TABLE `file_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -573,4 +578,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-06 16:11:21
+-- Dump completed on 2020-07-11 16:02:55

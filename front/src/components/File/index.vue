@@ -75,7 +75,9 @@
                                             <p class="demonstration">
                                                 <el-checkbox
                                                         :label="k">
-                                                    <el-row style="width: 100px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{v.file_name}}</el-row>
+                                                    <el-row style="width: 100px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                                        {{v.file_name}}
+                                                    </el-row>
                                                 </el-checkbox>
                                             </p>
                                         </div>
@@ -184,10 +186,13 @@
                 const _this = this
                 const param = {
                     id_list: [],
-                    group: Object.assign({}, _this.group_data),
+                    group: Object.assign({
+                        pageSize: _this.file_page.per_page,
+                        page: _this.file_page.current_page
+                    }, _this.group_data),
                 }
                 _this.check_list.forEach(v => {
-                    param.id_list.push(_this.file_list[v].id)
+                    param.id_list.push(_this.file_page.data[v].id)
                 })
                 request({
                     url: '/admin/file/delete',
