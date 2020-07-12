@@ -25,7 +25,14 @@
               <el-input v-model="temp.password" clearable />
             </el-form-item>
             <el-form-item label="头像" prop="img">
-              <Uploadone v-model="temp.img" :config="config" :header="header" />
+              <el-upload
+                      class="avatar-uploader"
+                      action=""
+                      :show-file-list="false"
+                      :http-request="uploadImage">
+                <img v-if="temp.full_avatar" :src="temp.full_avatar" class="avatar">
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              </el-upload>
             </el-form-item>
             <el-form-item label="姓名" prop="realname">
               <el-input v-model="temp.realname" clearable />
@@ -58,11 +65,8 @@
 import Uploadone from '@/components/Upload/singleImage'
 import { getListAll } from '@/api/roles'
 import { getinfo, save } from '@/api/user'
-import { formatImgToArr } from '@/utils'
 import { validUsername, validPassword, validPhone, validEmail } from '@/utils/validate'
-import myconfig from '@/settings.js'
-import { getToken } from '@/utils/auth'
-
+import request from '@/utils/jsonrequest'
 export default {
   name: 'AdminForm',
   components: { Uploadone },
@@ -107,18 +111,15 @@ export default {
         is_enabled: 1,
         phone: '',
         email: '',
-        img: ''
+        img: '',
+        full_avatar: '',
       },
       config: {
         fileName: 'img',
         limit: 1,
         multiple: true,
         accept: 'image/*',
-        action: myconfig.uploadUrl.img
-      },
-      header: {
-        'x-access-appid': myconfig.appid,
-        'x-access-token': getToken()
+        action: '',
       },
       dialogFormVisible: false,
       rules: {
@@ -148,6 +149,22 @@ export default {
 
   },
   methods: {
+    uploadImage: function (file) {
+      const formData = new FormData(); // 生成文件对象
+      formData.append('file', file.file)
+      const _this = this
+      request({
+        headers: {
+          'enctype': 'multipart/form-data'
+        },
+        url: '/admin/upload/avatar',
+        method: 'post',
+        data: formData
+      }).then(function (res) {
+        _this.temp.img = res.data.path
+        _this.temp.full_avatar = res.data.full_url
+      })
+    },
     handleClose(done) {
       if (this.btnLoading) {
         return
@@ -173,7 +190,8 @@ export default {
         is_enabled: 1,
         phone: '',
         email: '',
-        img: ''
+        img: '',
+        full_avatar: '',
       }
     },
     handleCreate() {
@@ -199,6 +217,7 @@ export default {
           _this.temp.email = response.data.email
           _this.temp.password = ''
           _this.temp.img = response.data.img
+          _this.temp.full_avatar = response.data.full_avatar
         }
       })
       this.$nextTick(() => {
@@ -234,3 +253,29 @@ export default {
   }
 }
 </script>
+
+<style>
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+</style>

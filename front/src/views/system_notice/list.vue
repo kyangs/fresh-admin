@@ -5,7 +5,7 @@
             <el-form-item label="创建人">
                 <el-input v-model="query_from.username" placeholder="创建人" clearable></el-input>
             </el-form-item>
-            <el-form-item label="时间">
+            <el-form-item label="生效时间">
                 <el-date-picker
                         clearable
                         v-model="query_from.time_range"
@@ -49,7 +49,7 @@
                 </template>
             </el-table-column>
 
-            <el-table-column label="时间">
+            <el-table-column label="生效时间">
                 <template slot-scope="scope">
                     {{ scope.row.start_time}}~{{ scope.row.end_time}}
                 </template>
@@ -88,7 +88,7 @@
                     <el-input v-model="data_from.tag" style="width: 360px;" clearable placeholder="链接"></el-input>
                 </el-form-item>
 
-                <el-form-item label="起止时间">
+                <el-form-item label="生效时间">
                     <el-date-picker
                             clearable
                             style="width: 360px;"

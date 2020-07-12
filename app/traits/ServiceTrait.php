@@ -3,6 +3,7 @@ declare (strict_types=1);
 
 namespace app\traits;
 
+use app\service\UploadService;
 use \think\facade\Snowflake;
 use \think\helper\Arr;
 use \think\helper\Str;
@@ -25,7 +26,9 @@ trait ServiceTrait
      */
     public static function getInfoById($id, $field = [], $where = true)
     {
-        return self::$repository::getInfoById($id, $field, $where);
+        $row = self::$repository::getInfoById($id, $field, $where);
+        $row['full_avatar'] = UploadService::fullPath($row['img']);
+        return $row;
     }
 
     /**
@@ -51,7 +54,11 @@ trait ServiceTrait
      */
     public static function getLists($where = true, $myorder = ['id' => 'desc'], $page = 1, $psize = 20, $field = [])
     {
-        return self::$repository::getLists($where, $myorder, $page, $psize, $field);
+        $data = self::$repository::getLists($where, $myorder, $page, $psize, $field);
+        foreach ($data as &$item){
+            $item['full_avatar'] = UploadService::fullPath($item['img']);
+        }
+        return $data;
     }
 
     /**

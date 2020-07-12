@@ -4,14 +4,17 @@ declare (strict_types=1);
 namespace app\controller\admin;
 
 use app\controller\admin\Base;
+use app\service\AdminService;
 use app\service\AuthGroupService;
 use app\service\AuthRuleService;
+use app\service\UploadService;
 use app\traits\ControllerTrait;
 use think\annotation\route\Middleware;
 use think\annotation\route\Group;
 use think\annotation\Route;
 use app\middleware\CheckAdmin;
 use app\util\TreeUtil;
+use app\model\Admin as AdminModel;
 
 /**
  * 管理员管理
@@ -46,6 +49,7 @@ class Admin extends Base
         $user['realname']    = $this->user->realname;
         $user['phone']       = $this->user->phone;
         $user['img']         = $this->user->img;
+        $user['full_avatar'] = UploadService::fullPath($this->user->img);
         $user['group_id']    = $this->user->group_id;
         $user['create_time'] = $this->user->create_time;
         $user['login_time']  = $this->user->login_time ? date('Y-m-d H:i:s', $this->user->login_time) : '';
@@ -154,5 +158,21 @@ class Admin extends Base
         }
 
         return $data;
+    }
+
+    /**
+     * 保存
+     * @Route("modify", method="POST")
+     * @throws \Exception
+     */
+    public function modify()
+    {
+        try {
+            AdminService::saveAdmin($this->request, $this->user);
+            return json_ok();
+        } catch (\Exception $exception) {
+            return json_error(10002, $exception->getMessage());
+        }
+
     }
 }

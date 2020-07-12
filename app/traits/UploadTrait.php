@@ -83,5 +83,22 @@ trait UploadTrait
         return json_ok($fileRow);
     }
 
+    /**
+     * 上传文件
+     * @Route("avatar", method="POST")
+     * @throws \Exception
+     */
+    public function uploadAvatar()
+    {
+        $file             = request()->file('file');
+        $res              = UploadService::upload(
+            $file->getPathname(),
+            $file->getOriginalName(),
+            $file->getMime());
+        $res['full_url']  = $res['full_path'];
+        $res['file_size'] = round($file->getSize() / 1024, 2) . 'KB';;
+        return json_ok($res);
+    }
+
 
 }

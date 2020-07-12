@@ -30,8 +30,8 @@ class Notice extends Model
         $_this = new self;
 
         if (!empty($request->time_range)) {
-            $_this = $_this->where('create_time', '>=', $request->time_range[0])
-                ->where('create_time', '<=', $request->time_range[1]);
+            $_this = $_this->where('start_time', '>=', $request->time_range[0])
+                ->where('end_time', '<=', $request->time_range[1]);
         }
         if (!empty($request->now_time)) {
             $_this = $_this->where('start_time', '<=', $request->now_time)

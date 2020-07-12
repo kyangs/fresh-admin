@@ -11,7 +11,14 @@
         <el-input v-model="temp.password" clearable placeholder="不修改，则留空" />
       </el-form-item>
       <el-form-item label="头像" prop="img">
-        <Uploadone v-model="temp.img" :config="config" :header="header" />
+        <el-upload
+                class="avatar-uploader"
+                action=""
+                :show-file-list="false"
+                :http-request="uploadImage">
+          <img v-if="temp.full_url" :src="temp.full_url" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
       </el-form-item>
       <el-form-item label="姓名" prop="realname">
         <el-input v-model="temp.realname" clearable />
@@ -28,16 +35,14 @@
 </template>
 
 <script>
-import Uploadone from '@/components/Upload/singleImage'
 import { modify } from '@/api/user'
 import { mapGetters } from 'vuex'
 import store from '@/store'
-import myconfig from '@/settings.js'
-import { getToken } from '@/utils/auth'
+
+import request from '@/utils/jsonrequest'
 
 export default {
   name: 'MyInfo',
-  components: { Uploadone },
   data() {
     return {
       btnLoading: false,
@@ -46,20 +51,16 @@ export default {
         realname: store.getters.realname,
         phone: store.getters.phone,
         email: store.getters.email,
-        img: store.getters.avatar
+        img: store.getters.avatar,
+        full_url: store.getters.full_avatar
       },
       config: {
         fileName: 'img',
         limit: 1,
         multiple: true,
         accept: 'image/*',
-        action: myconfig.uploadUrl.img
+        action: ''
       },
-      header: {
-        'x-access-appid': myconfig.appid,
-        'x-access-token': getToken()
-      }
-
     }
   },
   computed: {
@@ -82,6 +83,22 @@ export default {
 
   },
   methods: {
+    uploadImage: function (file) {
+      const formData = new FormData(); // 生成文件对象
+      formData.append('file', file.file)
+      const _this = this
+      request({
+        headers: {
+          'enctype': 'multipart/form-data'
+        },
+        url: '/admin/upload/avatar',
+        method: 'post',
+        data: formData
+      }).then(function (res) {
+        _this.temp.img = res.data.path
+        _this.temp.full_url = res.data.full_url
+      })
+    },
     saveData() {
       this.btnLoading = true
       this.$refs['dataForm'].validate((valid) => {
@@ -90,6 +107,7 @@ export default {
           modify(this.temp).then(response => {
             if (response.status === 1) {
               store.commit('SET_AVATAR', _this.temp.img)
+              store.commit('SET_FULL_AVATAR', _this.temp.full_avatar)
               store.commit('SET_REALNAME', _this.temp.realname)
               store.commit('SET_PHONE', _this.temp.phone)
               store.commit('SET_EMAIL', _this.temp.email)
@@ -110,3 +128,28 @@ export default {
   }
 }
 </script>
+<style>
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+</style>

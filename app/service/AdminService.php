@@ -3,6 +3,7 @@ declare (strict_types=1);
 
 namespace app\service;
 
+use app\model\Admin as AdminModel;
 use app\traits\ServiceTrait;
 use app\util\JwtUtil;
 use app\service\AuthGroupService;
@@ -71,5 +72,26 @@ class AdminService
         return array('user_token' => $user_token);
     }
 
+    /**
+     * @param $request
+     * @param $user
+     * @return AdminModel
+     * @throws \Exception
+     */
+    public static function saveAdmin($request, $user)
+    {
+        if (!isset($user['id'])) throw new \Exception('未登录，无法修改', 1);
 
+        $data = [
+            'email'    => $request['email'],
+            'realname' => $request['realname'],
+            'phone'    => $request['phone'],
+            'img'      => $request['img'],
+        ];
+        $pwd  = $request['password'];
+        if (!empty($pwd)) {
+            $data['password'] = encrypt_pass($pwd);
+        }
+        return AdminModel::update($data, ['id' => $user['id']]);
+    }
 }

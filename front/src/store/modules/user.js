@@ -8,6 +8,7 @@ const state = {
   avatar: '',
   status: '',
   realname: '',
+  full_avatar: '',
   phone: '',
   email: '',
   roles: 0,
@@ -38,6 +39,9 @@ const mutations = {
   },
   SET_STATUS: (state, status) => {
     state.status = status
+  },
+  SET_FULL_AVATAR: (state, full_avatar) => {
+    state.full_avatar = full_avatar
   },
   SET_GROUP: (state, group) => {
     state.group = group
@@ -75,6 +79,7 @@ const actions = {
         commit('SET_AVATAR', data.img)
         commit('SET_REALNAME', data.realname)
         commit('SET_PHONE', data.phone)
+        commit('SET_FULL_AVATAR', data.full_avatar)
         commit('SET_EMAIL', data.email)
         commit('SET_GROUP', data.group)
         resolve(data)

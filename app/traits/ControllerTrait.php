@@ -113,16 +113,6 @@ trait ControllerTrait
         $id = input('id', '0', 'int');
         //接收数据
         $data     = $this->beforeSave($id);
-        $validate = validate(self::$validateName);
-        if (self::$validateScene) {
-            $result = $validate->scene(self::$validateScene)->check($data);
-        } else {
-            $result = $validate->check($data);
-        }
-        if (!$result) {
-            $error = $validate->getError();
-            return json_error($error);
-        }
 
         if (isset($data['id'])) {
             unset($data['id']);
