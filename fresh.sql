@@ -49,7 +49,7 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (1,'admini','d93a5def7511da3d0f2d171d9c344e91','123@163.com','123','15237156573','https://hardphp.oss-cn-beijing.aliyuncs.com\\images/20200115\\1ed50a8ff67bedbe1d4794705868a234.jpg','127.0.0.1',1594392311,'39.149.12.184',1594392311,1,1,1540975213,0),(2,'admina','00b091d5bbbcbea4a371242e61d644a3','123@163.com','王五一','15237156573','https://hardphp.oss-cn-beijing.aliyuncs.com/vedios/20191220/044a612bd5f0874e669e0755f51ca93e.jpg','127.0.0.1',1540975213,'123.149.208.76',1579146396,1,1,1540975213,0);
+INSERT INTO `admin` VALUES (1,'admini','d93a5def7511da3d0f2d171d9c344e91','123@163.com','123','15237156573','https://hardphp.oss-cn-beijing.aliyuncs.com\\images/20200115\\1ed50a8ff67bedbe1d4794705868a234.jpg','127.0.0.1',1594479619,'39.149.12.184',1594479619,1,1,1540975213,0),(2,'admina','00b091d5bbbcbea4a371242e61d644a3','123@163.com','王五一','15237156573','https://hardphp.oss-cn-beijing.aliyuncs.com/vedios/20191220/044a612bd5f0874e669e0755f51ca93e.jpg','127.0.0.1',1540975213,'123.149.208.76',1579146396,1,1,1540975213,0);
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,7 +87,7 @@ CREATE TABLE `adv` (
 
 LOCK TABLES `adv` WRITE;
 /*!40000 ALTER TABLE `adv` DISABLE KEYS */;
-INSERT INTO `adv` VALUES (8,'admini',4,'','home','2020-07-11 06:56:41',1,'2020-07-11 06:56:32',NULL,'2020-07-01 16:00:00','2020-07-23 16:00:00',1),(9,'admini',1,'','home','2020-07-11 06:57:20',1,'2020-07-11 06:57:20',NULL,'2020-06-30 16:00:00','2020-07-30 16:00:00',100),(10,'admini',33,'','home','2020-07-11 06:57:42',1,'2020-07-11 06:57:42',NULL,'2020-07-01 16:00:00','2020-07-30 16:00:00',100),(11,'admini',6,'','home_notice','2020-07-11 07:02:51',1,'2020-07-11 07:02:51',NULL,'2020-06-30 16:00:00','2020-07-16 16:00:00',100);
+INSERT INTO `adv` VALUES (8,'admini',4,'/pages/class/class?category_id=6','home','2020-07-12 03:22:34',1,'2020-07-11 06:56:32',NULL,'2020-07-01 16:00:00','2020-07-23 16:00:00',1),(9,'admini',1,'/pages/search/search','home','2020-07-12 02:44:37',1,'2020-07-11 06:57:20',NULL,'2020-06-30 16:00:00','2020-07-30 16:00:00',100),(10,'admini',33,'','home','2020-07-11 06:57:42',1,'2020-07-11 06:57:42',NULL,'2020-07-01 16:00:00','2020-07-30 16:00:00',100),(11,'admini',6,'/pages/shopping/shopping','home_notice','2020-07-12 02:45:05',1,'2020-07-11 07:02:51',NULL,'2020-06-30 16:00:00','2020-07-16 16:00:00',100);
 /*!40000 ALTER TABLE `adv` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -242,7 +242,7 @@ CREATE TABLE `auth_group` (
 
 LOCK TABLES `auth_group` WRITE;
 /*!40000 ALTER TABLE `auth_group` DISABLE KEYS */;
-INSERT INTO `auth_group` VALUES (1,'超级管理员',1,'68328234063892481,68328450783580160,67745401595367425,67745734388224001,7246645603471361,7247512280895489,7247267136409601,7247034964905985,43,44,39,40,1,38,7,2',1594003780,1544881719),(2,'普通管理员',1,'1,2',1542787522,1542787522);
+INSERT INTO `auth_group` VALUES (1,'超级管理员',1,'70622770253402113,70622988382375937,68328234063892481,68328450783580160,67745401595367425,67745734388224001,7246645603471361,7247512280895489,7247267136409601,7247034964905985,43,44,39,40,1,38,7,2',1594550815,1544881719),(2,'普通管理员',1,'1,2',1542787522,1542787522);
 /*!40000 ALTER TABLE `auth_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -282,7 +282,7 @@ CREATE TABLE `auth_rule` (
 
 LOCK TABLES `auth_rule` WRITE;
 /*!40000 ALTER TABLE `auth_rule` DISABLE KEYS */;
-INSERT INTO `auth_rule` VALUES (1,'manage','权限管理',1,1,'',0,0,'component',1593867807,'/manage','layout',0,0,1,'',0),(2,'manage/admin','管理员列表',1,1,'',1,0,'user',1541666364,'admin','manage/admin',0,0,0,'',0),(7,'manage/rules','权限列表',1,1,'',1,0,'lock',1542353476,'rules','manage/rules',0,0,0,'',0),(38,'manage/roles','角色列表',1,1,'',1,0,'list',1542602805,'roles','manage/roles',0,0,0,'',0),(39,'log','日志管理',1,1,'',0,0,'component',1579436605,'/log','layout',0,0,1,'',0),(40,'log/log','登陆日志',1,1,'',39,0,'list',1593868512,'log','log/log',0,0,0,'',0),(43,'icon','图标管理',1,1,'',0,0,'component',1579436588,'/icon','layout',0,0,0,'',0),(44,'icon/index','图标列表',1,1,'',43,0,'list',0,'index','icons/index',0,0,0,'',0),(7246645603471361,'article','文章管理',1,1,'',0,0,'component',1579440670,'/article','layout',0,0,1,'',1579440670),(7247034964905985,'article/categery','分类列表',1,1,'',7246645603471361,0,'list',1579440763,'categery','article/categery',0,0,0,'',1579440763),(7247267136409601,'article/column','栏目列表',1,1,'',7246645603471361,0,'list',1579440819,'column','article/column',0,0,0,'',1579440819),(7247512280895489,'article/blog','文章列表',1,1,'',7246645603471361,0,'list',1579440877,'blog','article/blog',0,0,0,'',1579440877),(67745401595367425,'adv','广告管理',1,1,'',0,0,'component',1593864868,'/adv','layout',0,1,1,'',1593864698),(67745734388224001,'adv/list','广告列表',1,1,'',67745401595367425,0,'list',1593871402,'list','adv/list',0,1,0,'noredirect',1593864777),(68328234063892481,'category','分类管理',1,1,'',0,0,'component',1594003681,'category','layout',0,1,1,'',1594003656),(68328450783580160,'category/list','分类列表',1,1,'',68328234063892481,0,'list',1594003762,'list','layout',0,1,0,'noredirect',1594003708);
+INSERT INTO `auth_rule` VALUES (1,'manage','权限管理',1,1,'',0,0,'component',1593867807,'/manage','layout',0,0,1,'',0),(2,'manage/admin','管理员列表',1,1,'',1,0,'user',1541666364,'admin','manage/admin',0,0,0,'',0),(7,'manage/rules','权限列表',1,1,'',1,0,'lock',1542353476,'rules','manage/rules',0,0,0,'',0),(38,'manage/roles','角色列表',1,1,'',1,0,'list',1542602805,'roles','manage/roles',0,0,0,'',0),(39,'log','日志管理',1,1,'',0,0,'component',1579436605,'/log','layout',0,0,1,'',0),(40,'log/log','登陆日志',1,1,'',39,0,'list',1593868512,'log','log/log',0,0,0,'',0),(43,'icon','图标管理',1,1,'',0,0,'component',1579436588,'/icon','layout',0,0,0,'',0),(44,'icon/index','图标列表',1,1,'',43,0,'list',0,'index','icons/index',0,0,0,'',0),(7246645603471361,'article','文章管理',1,1,'',0,0,'component',1579440670,'/article','layout',0,0,1,'',1579440670),(7247034964905985,'article/categery','分类列表',1,1,'',7246645603471361,0,'list',1579440763,'categery','article/categery',0,0,0,'',1579440763),(7247267136409601,'article/column','栏目列表',1,1,'',7246645603471361,0,'list',1579440819,'column','article/column',0,0,0,'',1579440819),(7247512280895489,'article/blog','文章列表',1,1,'',7246645603471361,0,'list',1579440877,'blog','article/blog',0,0,0,'',1579440877),(67745401595367425,'adv','广告管理',1,1,'',0,0,'component',1593864868,'/adv','layout',0,1,1,'',1593864698),(67745734388224001,'adv/list','广告列表',1,1,'',67745401595367425,0,'list',1593871402,'list','adv/list',0,1,0,'noredirect',1593864777),(68328234063892481,'category','分类管理',1,1,'',0,0,'component',1594003681,'category','layout',0,1,1,'',1594003656),(68328450783580160,'category/list','分类列表',1,1,'',68328234063892481,0,'list',1594003762,'list','layout',0,1,0,'noredirect',1594003708),(70622770253402113,'system_notice','公告管理',1,1,'',0,0,'component',1594554195,'system_notice','layout',0,1,1,'',1594550716),(70622988382375937,'system_notice/list','公告列表',1,1,'',70622770253402113,0,'list',1594554201,'list','layout',0,1,0,'noredirect',1594550768);
 /*!40000 ALTER TABLE `auth_rule` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -306,7 +306,7 @@ CREATE TABLE `category` (
   `is_enabled` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否启用 ',
   `creator` varchar(100) NOT NULL DEFAULT '' COMMENT '创建人者 ',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -315,7 +315,7 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
-INSERT INTO `category` VALUES (2,'安心蔬菜',0,14,1,0,'2020-07-11 06:47:22','2020-07-11 06:50:32',1,1,'admini'),(3,'肉禽蛋',0,15,2,0,'2020-07-11 07:26:27','2020-07-11 07:26:27',1,1,'admini'),(4,'生鲜海鲜',0,13,3,0,'2020-07-11 07:26:51','2020-07-11 07:26:53',1,1,'admini'),(5,'时令水果',0,12,4,0,'2020-07-11 07:27:12','2020-07-11 07:27:12',1,1,'admini'),(6,'粮油调味',0,10,5,0,'2020-07-11 07:38:45','2020-07-11 07:38:45',1,1,'admini'),(7,'乳品早点',0,16,6,0,'2020-07-11 07:39:07','2020-07-11 07:39:07',1,1,'admini'),(8,'酒水饮料',0,7,7,0,'2020-07-11 07:39:22','2020-07-11 07:39:22',1,1,'admini'),(9,'速冻食品',0,9,8,0,'2020-07-11 07:40:30','2020-07-11 07:49:05',1,1,'admini'),(11,'家具个护',0,16,9,0,'2020-07-11 07:58:47','2020-07-11 07:59:08',1,1,'admini'),(12,'生鲜饮食',0,11,10,0,'2020-07-11 07:59:05','2020-07-11 07:59:05',1,1,'admini');
+INSERT INTO `category` VALUES (2,'安心蔬菜',0,14,1,0,'2020-07-11 06:47:22','2020-07-11 06:50:32',1,1,'admini'),(3,'肉禽蛋',0,15,2,0,'2020-07-11 07:26:27','2020-07-11 07:26:27',1,1,'admini'),(4,'生鲜海鲜',0,13,3,0,'2020-07-11 07:26:51','2020-07-11 07:26:53',1,1,'admini'),(5,'时令水果',0,12,4,0,'2020-07-11 07:27:12','2020-07-11 07:27:12',1,1,'admini'),(6,'粮油调味',0,10,5,0,'2020-07-11 07:38:45','2020-07-11 07:38:45',1,1,'admini'),(7,'乳品早点',0,16,6,0,'2020-07-11 07:39:07','2020-07-11 07:39:07',1,1,'admini'),(8,'酒水饮料',0,7,7,0,'2020-07-11 07:39:22','2020-07-11 07:39:22',1,1,'admini'),(9,'速冻食品',0,9,8,0,'2020-07-11 07:40:30','2020-07-11 07:49:05',1,1,'admini'),(11,'家具个护',0,16,9,0,'2020-07-11 07:58:47','2020-07-11 07:59:08',1,1,'admini'),(12,'生鲜饮食',0,11,10,0,'2020-07-11 07:59:05','2020-07-11 07:59:05',1,1,'admini'),(13,'西红柿',2,14,100,0,'2020-07-11 10:44:10','2020-07-11 10:44:51',0,1,'admini'),(14,'茄子',2,10,100,0,'2020-07-11 10:44:35','2020-07-11 10:45:03',0,1,'admini'),(15,'辣椒',2,12,100,0,'2020-07-11 10:45:22','2020-07-11 10:45:22',0,1,'admini'),(16,'红豆',2,10,100,0,'2020-07-11 10:45:37','2020-07-11 10:45:37',0,1,'admini');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -398,7 +398,7 @@ CREATE TABLE `file_group` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `group_name` (`group_name`),
   KEY `type_index` (`group_type`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -467,6 +467,44 @@ LOCK TABLES `login_log` WRITE;
 /*!40000 ALTER TABLE `login_log` DISABLE KEYS */;
 INSERT INTO `login_log` VALUES (502,1,'admin','115.60.16.49',1569570610,'超级管理员',0,0),(503,1,'admin','115.60.16.49',1569570926,'超级管理员',0,0),(504,1,'admin','115.60.16.49',1569571106,'超级管理员',0,0),(505,1,'admin','115.60.16.49',1569571198,'超级管理员',0,0),(506,1,'admin','115.60.16.49',1569572567,'超级管理员',0,0),(507,1,'admin','115.60.16.49',1569572862,'超级管理员',0,0),(508,1,'admin','115.60.16.49',1569577336,'超级管理员',0,0),(509,1,'admin','115.60.16.49',1569577374,'超级管理员',0,0),(510,1,'admin','115.60.16.49',1569579992,'超级管理员',0,0),(511,1,'admin','115.60.16.49',1569580000,'超级管理员',0,0),(512,1,'admin','115.60.16.49',1569580041,'超级管理员',0,0),(513,1,'admin','115.60.16.49',1569580343,'超级管理员',0,0),(514,1,'admin','115.60.16.49',1569580809,'超级管理员',0,0),(515,1,'admin','115.60.16.49',1569580949,'超级管理员',0,0),(516,1,'admin','115.60.16.49',1569581081,'超级管理员',0,0),(517,1,'admin','115.60.16.49',1569581087,'超级管理员',0,0),(518,1,'admin','115.60.16.49',1569581136,'超级管理员',0,0),(519,1,'admin','115.60.16.49',1569581209,'超级管理员',0,0),(520,1,'admin','115.60.16.49',1569581628,'超级管理员',0,0),(521,1,'admin','115.60.16.49',1569581657,'超级管理员',0,0),(522,1,'admin','115.60.16.49',1569581699,'超级管理员',0,0),(523,1,'admin','115.60.16.49',1569581722,'超级管理员',0,0),(524,1,'admin','115.60.16.49',1569583325,'超级管理员',0,0),(525,1,'admin','115.60.19.188',1569634122,'超级管理员',0,0),(526,1,'admin','115.60.19.188',1569639797,'超级管理员',0,0),(527,1,'admin','115.60.19.188',1569639873,'超级管理员',0,0),(528,1,'admin','115.60.19.188',1569640203,'超级管理员',0,0),(529,1,'admin','115.60.19.188',1569640213,'超级管理员',0,0),(530,1,'admin','115.60.19.188',1569642217,'超级管理员',0,0),(531,1,'admin','39.149.247.160',1574342514,'超级管理员',0,0),(532,1,'admin','39.149.247.160',1574468895,'超级管理员',0,0),(533,1,'admin','223.88.30.142',1574846370,'超级管理员',0,0),(534,1,'admin','223.88.30.142',1574848961,'超级管理员',0,0),(535,1,'admin','223.88.30.142',1574849547,'超级管理员',0,0),(536,1,'admin','223.88.30.142',1574849754,'超级管理员',0,0),(537,1,'admin','223.88.30.142',1574850555,'超级管理员',0,0),(538,1,'admin','223.88.30.142',1574850985,'超级管理员',0,0);
 /*!40000 ALTER TABLE `login_log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `notice`
+--
+
+DROP TABLE IF EXISTS `notice`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `notice` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+  `creator` varchar(20) NOT NULL DEFAULT '' COMMENT '创建者名',
+  `title` varchar(100) NOT NULL DEFAULT '' COMMENT '公告标题',
+  `tag` varchar(10) NOT NULL DEFAULT '' COMMENT '标签',
+  `content` text COMMENT '公告内容',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_enabled` tinyint(1) NOT NULL DEFAULT '1' COMMENT '用户状态  0 禁用，1正常',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `delete_time` timestamp NULL DEFAULT NULL,
+  `start_time` timestamp NULL DEFAULT NULL,
+  `end_time` timestamp NULL DEFAULT NULL,
+  `sort` int(11) NOT NULL DEFAULT '100' COMMENT '排序',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `create_time` (`create_time`) USING BTREE,
+  KEY `start_time` (`start_time`),
+  KEY `end_time` (`end_time`),
+  KEY `update_time` (`update_time`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='公告表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `notice`
+--
+
+LOCK TABLES `notice` WRITE;
+/*!40000 ALTER TABLE `notice` DISABLE KEYS */;
+INSERT INTO `notice` VALUES (12,'admini','配送到家功能上线,满29即可包邮','公告','配送到家功能上线,满29即可包邮','2020-07-12 12:23:55',1,'2020-07-12 12:05:11',NULL,'2020-06-30 16:00:00','2020-07-30 16:00:00',1),(13,'admini','新用户首单打5折！！！','优惠','新用户首单打5折！！！','2020-07-12 12:23:30',1,'2020-07-12 12:12:49',NULL,'2020-07-02 16:00:00','2020-07-24 16:00:00',2);
+/*!40000 ALTER TABLE `notice` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -578,4 +616,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-11 16:02:55
+-- Dump completed on 2020-07-12 20:29:24

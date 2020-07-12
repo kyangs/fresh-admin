@@ -95,7 +95,7 @@ export const constantRoutes = [
       {
         path: '/adv/list',
         component: () => import('@/views/adv/list'),
-        name: 'adv/list',
+        name: '/adv/list/',
         meta: { title: '广告列表', icon: 'dashboard' }
       }
     ]
@@ -108,8 +108,21 @@ export const constantRoutes = [
       {
         path: '/category/list',
         component: () => import('@/views/category/list'),
-        name: 'category/list',
+        name: '/category/list/',
         meta: { title: '分类列表', icon: 'dashboard' }
+      }
+    ]
+  },
+  {
+    path: '/system_notice/list',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/system_notice/list',
+        component: () => import('@/views/system_notice/list'),
+        name: '/system_notice/list/',
+        meta: { title: '公告列表', icon: 'dashboard' }
       }
     ]
   }

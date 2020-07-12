@@ -18,7 +18,7 @@ use think\db\exception\ModelNotFoundException;
 class BaseService
 {
 
-    public function time()
+    public static function time()
     {
         return date('Y-m-d H:i:s');
     }

@@ -21,7 +21,7 @@ class AdvService extends BaseService
 
     public function findAbleAdv()
     {
-        $adv = (new Adv)->findAbleAdv($this->time());
+        $adv = (new Adv)->findAbleAdv(self::time());
         return $adv;
     }
 
