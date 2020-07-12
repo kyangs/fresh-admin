@@ -30,7 +30,8 @@
     "ext-sockets": "*",
     "php-amqplib/php-amqplib": "^2.9.0",
     "aws/aws-sdk-php": "3.90.5",
-    "ext-json": "*"
+    "ext-json": "*",
+    "ext-curl": "*"
   },
   "require-dev": {
     "symfony/var-dumper": "^4.2",

@@ -49,6 +49,7 @@
                     {{ params.position[scope.row.position] }}
                 </template>
             </el-table-column>
+            <el-table-column label="链接" width="200" prop="link"></el-table-column>
             <el-table-column
                     prop="sort"
                     label="排序"

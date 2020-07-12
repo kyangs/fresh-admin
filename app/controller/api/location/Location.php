@@ -1,30 +1,31 @@
 <?php
-declare (strict_types=1);
 
-namespace app\controller\api;
+
+namespace app\controller\api\location;
+
 
 use app\controller\api\Base;
-use app\service\home\HomeService;
+use app\service\common\LocationService;
 use think\annotation\route\Group;
 use think\annotation\Route;
 
 /**
  * 非用户身份类接口
- * Class Home
+ * Class Location
  * @package app\controller\api
  * @author  kyangs@163.com
- * @Group("api/home")
+ * @Group("api/location")
  */
-class Home extends Base
+class Location extends Base
 {
+
     /**
-     * @Route("index", method="POST")
+     * @Route("location", method="POST")
      */
-    public function index()
+    public function location()
     {
         try {
-            $HomeService = new HomeService;
-            return json_ok($HomeService->home($this->params));
+            return json_ok(LocationService::location($this->params));
         } catch (\Exception $exception) {
             return json_error(10001, $exception->getMessage());
         }
