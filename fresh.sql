@@ -23,8 +23,8 @@ DROP TABLE IF EXISTS `admin`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `admin` (
-  `id` bigint(20) unsigned NOT NULL COMMENT '用户ID',
-  `username` char(16) NOT NULL DEFAULT '' COMMENT '用户名',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `username` varchar(20) NOT NULL DEFAULT '',
   `password` char(32) NOT NULL DEFAULT '' COMMENT '密码',
   `email` char(32) NOT NULL COMMENT '用户邮箱',
   `realname` varchar(50) NOT NULL DEFAULT '' COMMENT '姓名',
@@ -38,9 +38,8 @@ CREATE TABLE `admin` (
   `group_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '权限组',
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `delete_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '删除时间',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='管理员用户表';
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='管理员用户表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,7 +48,7 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (1,'admini','d93a5def7511da3d0f2d171d9c344e91','123@163.com','123','15237156573','https://hardphp.oss-cn-beijing.aliyuncs.com\\images/20200115\\1ed50a8ff67bedbe1d4794705868a234.jpg','127.0.0.1',1594479619,'39.149.12.184',1594479619,1,1,1540975213,0),(2,'admina','00b091d5bbbcbea4a371242e61d644a3','123@163.com','王五一','15237156573','https://hardphp.oss-cn-beijing.aliyuncs.com/vedios/20191220/044a612bd5f0874e669e0755f51ca93e.jpg','127.0.0.1',1540975213,'123.149.208.76',1579146396,1,1,1540975213,0);
+INSERT INTO `admin` VALUES (1,'admini','d93a5def7511da3d0f2d171d9c344e91','123@163.com','王五一','15237156573','fresh/2020-07/backgorund.jpg','127.0.0.1',1594652182,'123.149.208.76',1594652194,1,1,1540975213,0),(2,'kyangs','d93a5def7511da3d0f2d171d9c344e91','kyangs@163.com','咏春1','16602112169','fresh/2020-07/backgorund.jpg','127.0.0.1',1594650854,'39.149.12.184',1594652203,1,1,1540975213,1594652203),(6,'kyangs','4eaaba799838780f4a5d0dc76f0eec65','','kyang','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594652230,1,1,1594652230,0),(7,'kyangs','4eaaba799838780f4a5d0dc76f0eec65','','kyang','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594652234,1,1,1594652234,0),(8,'kyangs','4eaaba799838780f4a5d0dc76f0eec65','','kyang','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594652334,1,1,1594652334,0),(9,'kyangs','4eaaba799838780f4a5d0dc76f0eec65','','kyang','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594652334,1,1,1594652334,0),(10,'kyangs1','4eaaba799838780f4a5d0dc76f0eec65','','kyang1','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594652871,1,1,1594652871,0),(11,'kyangs1','4eaaba799838780f4a5d0dc76f0eec65','','kyang1','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594653119,1,1,1594653119,0),(12,'kyangs1','4eaaba799838780f4a5d0dc76f0eec65','','kyang1','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594653222,1,1,1594653222,0),(13,'kyangs1','4eaaba799838780f4a5d0dc76f0eec65','','kyang1','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594653370,1,1,1594653370,0);
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -242,7 +241,7 @@ CREATE TABLE `auth_group` (
 
 LOCK TABLES `auth_group` WRITE;
 /*!40000 ALTER TABLE `auth_group` DISABLE KEYS */;
-INSERT INTO `auth_group` VALUES (1,'超级管理员',1,'70622770253402113,70622988382375937,68328234063892481,68328450783580160,67745401595367425,67745734388224001,7246645603471361,7247512280895489,7247267136409601,7247034964905985,43,44,39,40,1,38,7,2',1594550815,1544881719),(2,'普通管理员',1,'1,2',1542787522,1542787522);
+INSERT INTO `auth_group` VALUES (1,'超级管理员',1,'70622770253402113,70622988382375937,68328234063892481,68328450783580160,67745401595367425,67745734388224001,7246645603471361,7247512280895489,7247267136409601,7247034964905985,43,44,39,40,1,38,7,2',1594550815,1544881719),(2,'普通管理员',1,'70622770253402113,70622988382375937,68328234063892481,68328450783580160,67745401595367425,67745734388224001,7246645603471361,7247512280895489,7247267136409601,7247034964905985',1594558953,1542787522);
 /*!40000 ALTER TABLE `auth_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -494,7 +493,7 @@ CREATE TABLE `notice` (
   KEY `start_time` (`start_time`),
   KEY `end_time` (`end_time`),
   KEY `update_time` (`update_time`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='公告表';
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='公告表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -616,4 +615,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-12 20:29:24
+-- Dump completed on 2020-07-13 23:17:43
