@@ -94,14 +94,11 @@ trait ServiceTrait
         if ($id) {
             $result = self::$repository::edit($id, $data);
         } else {
-            if (!isset($data['id']) || !$data['id']) {
-                $data['id'] = Snowflake::generate();
-            }
-            $id     = $data['id'];
+            if (isset($data['id'])) unset($data['id']);
             $result = self::$repository::add($data);
         }
 
-        return  $result ? $id : false;
+        return  $result ? $result['id'] : false;
     }
 
     /**
