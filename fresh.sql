@@ -48,7 +48,7 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (1,'admini','d93a5def7511da3d0f2d171d9c344e91','123@163.com','王五一','15237156573','fresh/2020-07/backgorund.jpg','127.0.0.1',1594652182,'123.149.208.76',1594652194,1,1,1540975213,0),(2,'kyangs','d93a5def7511da3d0f2d171d9c344e91','kyangs@163.com','咏春1','16602112169','fresh/2020-07/backgorund.jpg','127.0.0.1',1594650854,'39.149.12.184',1594652203,1,1,1540975213,1594652203),(6,'kyangs','4eaaba799838780f4a5d0dc76f0eec65','','kyang','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594652230,1,1,1594652230,0),(7,'kyangs','4eaaba799838780f4a5d0dc76f0eec65','','kyang','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594652234,1,1,1594652234,0),(8,'kyangs','4eaaba799838780f4a5d0dc76f0eec65','','kyang','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594652334,1,1,1594652334,0),(9,'kyangs','4eaaba799838780f4a5d0dc76f0eec65','','kyang','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594652334,1,1,1594652334,0),(10,'kyangs1','4eaaba799838780f4a5d0dc76f0eec65','','kyang1','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594652871,1,1,1594652871,0),(11,'kyangs1','4eaaba799838780f4a5d0dc76f0eec65','','kyang1','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594653119,1,1,1594653119,0),(12,'kyangs1','4eaaba799838780f4a5d0dc76f0eec65','','kyang1','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594653222,1,1,1594653222,0),(13,'kyangs1','4eaaba799838780f4a5d0dc76f0eec65','','kyang1','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594653370,1,1,1594653370,0);
+INSERT INTO `admin` VALUES (1,'admini','d93a5def7511da3d0f2d171d9c344e91','123@163.com','王五一','15237156573','fresh/2020-07/backgorund.jpg','127.0.0.1',1594736839,'123.149.208.76',1594736839,1,1,1540975213,0),(2,'kyangs','d93a5def7511da3d0f2d171d9c344e91','kyangs@163.com','咏春1','16602112169','fresh/2020-07/backgorund.jpg','127.0.0.1',1594650854,'39.149.12.184',1594652203,1,1,1540975213,1594652203),(6,'kyangs','4eaaba799838780f4a5d0dc76f0eec65','','kyang','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594652230,1,1,1594652230,0),(7,'kyangs','4eaaba799838780f4a5d0dc76f0eec65','','kyang','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594652234,1,1,1594652234,0),(8,'kyangs','4eaaba799838780f4a5d0dc76f0eec65','','kyang','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594652334,1,1,1594652334,0),(9,'kyangs','4eaaba799838780f4a5d0dc76f0eec65','','kyang','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594652334,1,1,1594652334,0),(10,'kyangs1','4eaaba799838780f4a5d0dc76f0eec65','','kyang1','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594652871,1,1,1594652871,0),(11,'kyangs1','4eaaba799838780f4a5d0dc76f0eec65','','kyang1','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594653119,1,1,1594653119,0),(12,'kyangs1','4eaaba799838780f4a5d0dc76f0eec65','','kyang1','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594653222,1,1,1594653222,0),(13,'kyangs1','4eaaba799838780f4a5d0dc76f0eec65','','kyang1','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594653370,1,1,1594653370,0);
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -132,7 +132,7 @@ DROP TABLE IF EXISTS `article`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `article` (
-  `id` bigint(20) unsigned NOT NULL COMMENT '用户ID',
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `title` varchar(150) NOT NULL DEFAULT '' COMMENT '标题',
   `content` text NOT NULL COMMENT 'seo描述',
   `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
@@ -143,7 +143,7 @@ CREATE TABLE `article` (
   `column_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '所属栏目',
   `img` varchar(255) NOT NULL DEFAULT '' COMMENT '图片',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文章表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='文章表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,7 +152,7 @@ CREATE TABLE `article` (
 
 LOCK TABLES `article` WRITE;
 /*!40000 ALTER TABLE `article` DISABLE KEYS */;
-INSERT INTO `article` VALUES (1,'ty9fd2848a039ab554','管理员端',1582518981,1,1514962598,100,18716532003704833,7264324116680705,'https://hardphp.oss-cn-beijing.aliyuncs.com\\images/20200221\\c2a62a8dbba7ae828c5837291e170a4c.jpg');
+INSERT INTO `article` VALUES (1,'AAA','content content content content',1594741134,1,1594741134,100,1,1,'fresh/2020-07/00-00-28.png');
 /*!40000 ALTER TABLE `article` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -164,7 +164,7 @@ DROP TABLE IF EXISTS `article_categery`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `article_categery` (
-  `id` bigint(20) unsigned NOT NULL COMMENT '用户ID',
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `name` varchar(150) NOT NULL DEFAULT '' COMMENT '栏目名称',
   `content` varchar(255) NOT NULL DEFAULT '' COMMENT '描述',
   `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
@@ -173,7 +173,7 @@ CREATE TABLE `article_categery` (
   `sorts` int(3) NOT NULL DEFAULT '100' COMMENT '排序',
   `column_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '所属栏目',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文章分类表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='文章分类表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -182,7 +182,7 @@ CREATE TABLE `article_categery` (
 
 LOCK TABLES `article_categery` WRITE;
 /*!40000 ALTER TABLE `article_categery` DISABLE KEYS */;
-INSERT INTO `article_categery` VALUES (18716532003704833,'未全额委屈','',1582175304,1,1582175304,100,7264576798330881);
+INSERT INTO `article_categery` VALUES (1,'AAA','',1594741088,1,1594741088,100,1);
 /*!40000 ALTER TABLE `article_categery` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -194,7 +194,7 @@ DROP TABLE IF EXISTS `article_column`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `article_column` (
-  `id` bigint(20) unsigned NOT NULL COMMENT '用户ID',
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `name` varchar(150) NOT NULL DEFAULT '' COMMENT '栏目名称',
   `seo_title` varchar(150) NOT NULL DEFAULT '' COMMENT 'seo关键词',
   `seo_dec` varchar(255) NOT NULL DEFAULT '' COMMENT 'seo描述',
@@ -204,7 +204,7 @@ CREATE TABLE `article_column` (
   `sorts` int(3) NOT NULL DEFAULT '100' COMMENT '排序',
   `pid` bigint(20) NOT NULL DEFAULT '0' COMMENT '父id',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文章栏目表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='文章栏目表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -213,7 +213,7 @@ CREATE TABLE `article_column` (
 
 LOCK TABLES `article_column` WRITE;
 /*!40000 ALTER TABLE `article_column` DISABLE KEYS */;
-INSERT INTO `article_column` VALUES (1,'编程语言','ec32286d0718118861afdbf6e401ee81','管理员端',1579444850,1,1514962598,100,0),(7264107703177217,'数据库','1','1',1579445065,1,1579444834,100,0),(7264249676173313,'开发框架','','',1579444868,1,1579444868,100,0),(7264324116680705,'开发工具','','',1579444885,1,1579444885,100,0),(7264576798330881,'应用实例','','',1579444946,1,1579444946,100,0),(7264664253763585,'php','','',1579445040,1,1579444966,100,1),(7264796114292737,'golang','','',1579444998,1,1579444998,100,1),(7264844751441921,'python','','',1579445009,1,1579445009,100,1);
+INSERT INTO `article_column` VALUES (1,'A','','',1594740711,1,1594740711,100,0);
 /*!40000 ALTER TABLE `article_column` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -615,4 +615,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-13 23:17:43
+-- Dump completed on 2020-07-14 23:39:09
