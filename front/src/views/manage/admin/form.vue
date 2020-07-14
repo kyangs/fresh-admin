@@ -30,7 +30,7 @@
                       action=""
                       :show-file-list="false"
                       :http-request="uploadImage">
-                <img v-if="temp.full_avatar" :src="temp.full_avatar" class="avatar">
+                <img v-if="temp.full_path" :src="temp.full_path" class="avatar">
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
             </el-form-item>
@@ -62,14 +62,12 @@
 </template>
 
 <script>
-import Uploadone from '@/components/Upload/singleImage'
 import { getListAll } from '@/api/roles'
 import { getinfo, save } from '@/api/user'
 import { validUsername, validPassword, validPhone, validEmail } from '@/utils/validate'
 import request from '@/utils/jsonrequest'
 export default {
   name: 'AdminForm',
-  components: { Uploadone },
   data() {
     var checkUsername = (rule, value, callback) => {
       if (validUsername(value)) {
@@ -112,7 +110,7 @@ export default {
         phone: '',
         email: '',
         img: '',
-        full_avatar: '',
+        full_path: '',
       },
       config: {
         fileName: 'img',
@@ -162,7 +160,7 @@ export default {
         data: formData
       }).then(function (res) {
         _this.temp.img = res.data.path
-        _this.temp.full_avatar = res.data.full_url
+        _this.temp.full_path = res.data.full_url
       })
     },
     handleClose(done) {
@@ -191,7 +189,7 @@ export default {
         phone: '',
         email: '',
         img: '',
-        full_avatar: '',
+        full_path: '',
       }
     },
     handleCreate() {
@@ -217,7 +215,7 @@ export default {
           _this.temp.email = response.data.email
           _this.temp.password = ''
           _this.temp.img = response.data.img
-          _this.temp.full_avatar = response.data.full_avatar
+          _this.temp.full_path = response.data.full_path
         }
       })
       this.$nextTick(() => {

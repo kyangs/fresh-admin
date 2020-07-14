@@ -74,7 +74,7 @@
       <el-table-column type="selection" width="55" />
       <el-table-column label="封面" width="70px" fixed>
         <template slot-scope="scope">
-          <span class="link-type" @click="handleImg(scope.row.img)"><img :src="scope.row.img" width="40" height="40"></span>
+          <span class="link-type"><img :src="scope.row.full_path" width="40" height="40"></span>
         </template>
       </el-table-column>
       <el-table-column label="标题" min-width="200px" fixed>
