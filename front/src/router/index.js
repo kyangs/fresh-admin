@@ -125,6 +125,25 @@ export const constantRoutes = [
         meta: { title: '公告列表', icon: 'dashboard' }
       }
     ]
+  },
+  {
+    path: '/goods/list',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/goods/list',
+        component: () => import('@/views/goods/list'),
+        name: '/goods/list/',
+        meta: { title: '商品列表', icon: 'dashboard' }
+      },
+      {
+        path: '/goods/create',
+        component: () => import('@/views/goods/create'),
+        name: '/goods/create/',
+        meta: { title: '添加商品', icon: 'form' }
+      }
+    ]
   }
 ]
 
