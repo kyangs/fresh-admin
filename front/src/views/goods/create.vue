@@ -1,143 +1,145 @@
 <template>
     <div class="app-container">
         <el-collapse v-model="activeNames">
-        <el-form ref="form" :model="form" label-width="180px" style="border-radius: 4px">
-            <el-collapse-item title="商品详情" name="1" >
-                <template slot="title">
-                    <span class="form-header" >基本信息</span>
-                </template>
-            <el-form-item label="商品名称">
-                <el-input v-model="form.goods_name"></el-input>
-            </el-form-item>
-            <el-form-item label="商品分类">
-                <el-select v-model="form.cate_id"
-                           clearable
-                           filterable
-                           @change="selectCate">
-                    <el-option v-for="v in init.cate_list"
-                               :key="v.id" :label="v.name"
-                               :value="v.id"></el-option>
-                </el-select>
-                <el-select v-if="init.children_list.length > 0"
-                           clearable
-                           filterable
-                           v-model="form.child_cate_id">
-                    <el-option v-for="v in init.children_list"
-                               :key="v.id" :label="v.name"
-                               :value="v.id"></el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item label="主图">
-                <el-row :gutter="20">
-                    <el-col :span="3">
-                        <img v-if="form.main_image" :src="form.main_image" @click="selectMainFile"
-                             class="avatar">
-                        <i v-else class="el-icon-plus avatar-uploader-icon" @click="selectMainFile"></i>
-                    </el-col>
-                </el-row>
-            </el-form-item>
-            <el-form-item label="轮播图">
-                <el-row :gutter="20">
-                    <el-col :span="3">
-                        <i class="el-icon-plus avatar-uploader-icon" @click="selectFile"></i>
-                    </el-col>
-                    <el-col v-for="(v) in form.image_list" :span="3">
-                        <img :src="v.full_url" class="avatar"></el-col>
-                </el-row>
-            </el-form-item>
-            <el-form-item label="标签">
-                <el-input placeholder="请输入标签,最多两个标签"
-                          style="width: 20%"
-                          v-model="form.tag" class="input-with-select">
-                    <el-button slot="append" @click="addGoodsTag">添加</el-button>
-                </el-input>
-                <el-tag
-                        v-for="(tag,k) in form.tag_list"
-                        :key="tag"
-                        closable
-                        @close="(k)=>{form.tag_list.splice(k,1)}"
-                        effect="dark"
-                        type="success">
-                    {{tag}}
-                </el-tag>
-            </el-form-item>
-            </el-collapse-item>
-            <el-collapse-item title="商品详情" name="2" >
-                <template slot="title">
-                    <span class="form-header" >价格/库存</span>
-                </template>
-            <el-form-item label="商品价格">
-                <el-input-number v-model="form.price"
-                                 :min="0.01"
-                                 :step="1.00"
-                                 :precision="2"
-                                 controls-position="right" :max="10000000">
+            <el-form ref="form" :model="form" label-width="180px" style="border-radius: 4px">
+                <el-collapse-item title="商品详情" name="1">
+                    <template slot="title">
+                        <span class="form-header">基本信息</span>
+                    </template>
+                    <el-form-item label="商品名称">
+                        <el-input v-model="form.goods_name"></el-input>
+                    </el-form-item>
+                    <el-form-item label="商品分类">
+                        <el-select v-model="form.cate_id"
+                                   clearable
+                                   filterable
+                                   @change="selectCate">
+                            <el-option v-for="v in init.cate_list"
+                                       :key="v.id" :label="v.name"
+                                       :value="v.id"></el-option>
+                        </el-select>
+                        <el-select v-if="init.children_list.length > 0"
+                                   clearable
+                                   filterable
+                                   v-model="form.child_cate_id">
+                            <el-option v-for="v in init.children_list"
+                                       :key="v.id" :label="v.name"
+                                       :value="v.id"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="主图">
+                        <el-row :gutter="20">
+                            <el-col :span="3">
+                                <img v-if="form.main_image" :src="form.main_image" @click="selectMainFile"
+                                     class="avatar">
+                                <i v-else class="el-icon-plus avatar-uploader-icon" @click="selectMainFile"></i>
+                            </el-col>
+                        </el-row>
+                    </el-form-item>
+                    <el-form-item label="轮播图">
+                        <el-row :gutter="20">
+                            <el-col :span="3">
+                                <i class="el-icon-plus avatar-uploader-icon" @click="selectFile"></i>
+                            </el-col>
+                            <el-col v-for="(v) in form.image_list" :span="3">
+                                <img :src="v.full_url" class="avatar"></el-col>
+                        </el-row>
+                    </el-form-item>
+                    <el-form-item label="标签">
+                        <el-input placeholder="最多输入两个长度为4个字标签"
+                                  style="width: 30%"
+                                  maxlength="4"
+                                  v-model="form.tag" class="input-with-select">
+                            <el-button slot="append" @click="addGoodsTag">添加</el-button>
+                        </el-input>
+                        <el-tag
+                                v-for="(tag,k) in form.tag_list"
+                                :key="tag"
+                                closable
+                                @close="(k)=>{form.tag_list.splice(k,1)}"
+                                effect="dark"
+                                type="success">
+                            {{tag}}
+                        </el-tag>
+                    </el-form-item>
+                </el-collapse-item>
+                <el-collapse-item title="商品详情" name="2">
+                    <template slot="title">
+                        <span class="form-header">价格/库存</span>
+                    </template>
+                    <el-form-item label="商品价格">
+                        <el-input-number v-model="form.price"
+                                         :min="0.01"
+                                         :step="1.00"
+                                         :precision="2"
+                                         controls-position="right" :max="10000000">
 
-                </el-input-number>
-            </el-form-item>
-            <el-form-item label="商品划线价">
-                <el-input-number v-model="form.origin_price"
-                                 :min="0.00"
-                                 :step="1.00"
-                                 :precision="2"
-                                 controls-position="right" :max="10000000">
+                        </el-input-number>
+                    </el-form-item>
+                    <el-form-item label="商品划线价">
+                        <el-input-number v-model="form.origin_price"
+                                         :min="0.00"
+                                         :step="1.00"
+                                         :precision="2"
+                                         controls-position="right" :max="10000000">
 
-                </el-input-number>
-            </el-form-item>
-            <el-form-item label="当前库存数量">
-                <el-input-number v-model="form.stock"
-                                 :min="1"
-                                 :step="1"
-                                 controls-position="right" :max="10000000">
+                        </el-input-number>
+                    </el-form-item>
+                    <el-form-item label="当前库存数量">
+                        <el-input-number v-model="form.stock"
+                                         :min="1"
+                                         :step="1"
+                                         controls-position="right" :max="10000000">
 
-                </el-input-number>
-            </el-form-item>
-            <el-form-item label="商品排序">
-                <el-input-number v-model="form.sort"
-                                 :min="1"
-                                 :step="1"
-                                 controls-position="right" :max="10000000">
+                        </el-input-number>
+                    </el-form-item>
+                    <el-form-item label="商品排序">
+                        <el-input-number v-model="form.sort"
+                                         :min="1"
+                                         :step="1"
+                                         controls-position="right" :max="10000000">
 
-                </el-input-number>
-            </el-form-item>
-            <el-form-item label="商品状态">
-                <el-switch
-                        v-model="form.is_enabled"
-                        active-text="上架"
-                        :active-value="1"
-                        :inactive-value="0"
-                        inactive-text="下架">
-                </el-switch>
-            </el-form-item>
-            </el-collapse-item>
-            <el-collapse-item title="商品详情" name="3" >
-                <template slot="title">
-                    <span class="form-header">商品详情</span>
-                </template>
-            <el-form-item label="商品详情">
-                <el-input
-                        type="textarea"
-                        placeholder="请输入商品详情"
-                        v-model="form.detail"
-                        :rows="10"
-                        :autosize="{ minRows: 10, maxRows: 20}"
-                        show-word-limit>
-                </el-input>
-            </el-form-item>
-            <el-form-item label="商品详情图片">
-                <el-row :gutter="20">
-                    <el-col :span="3">
-                        <i class="el-icon-plus avatar-uploader-icon" @click="selectDetailFile"></i>
-                    </el-col>
-                    <el-col v-for="(v) in form.detail_images" :span="3">
-                        <img :src="v.full_url" class="avatar"></el-col>
-                </el-row>
-            </el-form-item>
-            </el-collapse-item>
-        </el-form>
+                        </el-input-number>
+                    </el-form-item>
+                    <el-form-item label="商品状态">
+                        <el-switch
+                                v-model="form.is_enabled"
+                                active-text="上架"
+                                :active-value="1"
+                                :inactive-value="0"
+                                inactive-text="下架">
+                        </el-switch>
+                    </el-form-item>
+                </el-collapse-item>
+                <el-collapse-item title="商品详情" name="3">
+                    <template slot="title">
+                        <span class="form-header">商品详情</span>
+                    </template>
+
+                    <el-form-item label="商品详情图片">
+                        <el-row :gutter="20">
+                            <el-col :span="3">
+                                <i class="el-icon-plus avatar-uploader-icon" @click="selectDetailFile"></i>
+                            </el-col>
+                            <el-col v-for="(v) in form.detail_images" :span="3">
+                                <img :src="v.full_url" class="avatar"></el-col>
+                        </el-row>
+                    </el-form-item>
+                    <el-form-item label="商品详情">
+                        <el-input
+                                type="textarea"
+                                placeholder="请输入商品详情"
+                                v-model="form.detail"
+                                :rows="10"
+                                :autosize="{ minRows: 10, maxRows: 20}"
+                                show-word-limit>
+                        </el-input>
+                    </el-form-item>
+                </el-collapse-item>
+            </el-form>
         </el-collapse>
         <p style="float: right">
-            <el-button type="primary">立即添加</el-button>
+            <el-button type="primary" @click="createGoods">立即添加</el-button>
         </p>
         <File ref="file_upload_1" @getMainFileList="getMainFileList"></File>
         <File ref="file_upload_2" @getFileList="getFileList"></File>
@@ -155,7 +157,7 @@
         components: {File},
         data() {
             return {
-                activeNames:['1','2','3'],
+                activeNames: ['1', '2', '3'],
                 form: {
                     price: 1.00,
                     origin_price: 0,
@@ -183,11 +185,13 @@
                 init: {
                     cate_list: [],
                     children_list: [],
-                }
+                },
+                reset_form: {}
             }
         },
         created() {
             const _this = this
+            Object.assign(_this.reset_form, _this.form)
             request({
                 url: "/admin/category/list",
                 method: 'post',
@@ -197,9 +201,32 @@
             })
         },
         methods: {
+            createGoods() {
+                const _this = this
+                request({
+                    url: "/admin/goods/save",
+                    method: 'post',
+                    data: _this.form
+                }).then(res => {
+                    if (res.code === 10000) {
+                        this.$confirm('保存成功', '提示', {
+                            confirmButtonText: '返回商品列表页',
+                            cancelButtonText: '继续添加',
+                            type: 'success'
+                        }).then(() => {
+                            this.$message({
+                                type: 'success',
+                                message: '删除成功!'
+                            });
+                        }).catch(() => {
+                            Object.assign(_this.form, _this.reset_form)
+                        });
+                    }
+                })
+            },
             selectCate(v) {
                 const _this = this
-                _this.init.children_list=[]
+                _this.init.children_list = []
                 _this.init.cate_list.forEach(row => {
                     if (row.id === v) {
                         _this.init.children_list = row.children
@@ -269,7 +296,8 @@
         height: 108px;
         display: block;
     }
-    .form-header{
+
+    .form-header {
         font-weight: bold;
         font-size: 16px;
     }

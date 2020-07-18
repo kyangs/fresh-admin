@@ -30,6 +30,18 @@ class Category extends Model
         return self::where(['parent_id' => $parentID])->order('sort', 'asc')->select()->toArray();
     }
 
+    /**
+     * @param int $parentID
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function categoryByParentID($parentID)
+    {
+        return self::where(['parent_id' => $parentID])->select()->toArray();
+    }
+
 
     /**
      * @param $filter

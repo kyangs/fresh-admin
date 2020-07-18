@@ -411,6 +411,126 @@ INSERT INTO `file_group` VALUES (3,'','商品',100,0,'2020-07-06 07:59:55','2020
 UNLOCK TABLES;
 
 --
+-- Table structure for table `goods`
+--
+
+DROP TABLE IF EXISTS `goods`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `goods` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `store_id` bigint(20) DEFAULT '0' COMMENT '店铺ID',
+  `goods_name` char(200) DEFAULT '' COMMENT '名称',
+  `short_desc` char(200) DEFAULT '' COMMENT '简短描述',
+  `is_enabled` tinyint(1) DEFAULT '1' COMMENT '为1正常，为0下回架',
+  `detail` text COMMENT '商品详情',
+  `sort` int(11) DEFAULT '100' COMMENT '商品排序',
+  `stock` int(11) DEFAULT '0' COMMENT '商品库存',
+  `sale` bigint(20) DEFAULT '0' COMMENT '商品销量',
+  `warning_num` int(11) DEFAULT '1' COMMENT '商品预警量',
+  `weight` int(11) DEFAULT '0' COMMENT '商品预重量单位g',
+  `origin_price` decimal(10,2) DEFAULT '0.00' COMMENT '商品原价',
+  `price` decimal(10,2) DEFAULT '0.00' COMMENT '商品当前价',
+  `main_image` bigint(20) DEFAULT '0' COMMENT '商品主图ID',
+  `cate_id` bigint(20) DEFAULT '0' COMMENT '商品分类',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `update_time` (`update_time`),
+  KEY `create_time` (`create_time`),
+  KEY `store_id` (`store_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='商品表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `goods`
+--
+
+LOCK TABLES `goods` WRITE;
+/*!40000 ALTER TABLE `goods` DISABLE KEYS */;
+INSERT INTO `goods` VALUES (1,0,'桔子100元/5斤','',1,'桔子100元/5斤',100,100,0,1,0,0.00,100.00,20,5,'2020-07-18 11:56:47','2020-07-18 11:56:47'),(2,0,'大葱50/6斤','',1,'',100,1,0,1,0,0.00,50.00,17,2,'2020-07-18 11:59:24','2020-07-18 11:59:24');
+/*!40000 ALTER TABLE `goods` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `goods_detail_intro_image`
+--
+
+DROP TABLE IF EXISTS `goods_detail_intro_image`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `goods_detail_intro_image` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `goods_id` bigint(20) DEFAULT '0' COMMENT '商品ID',
+  `image_id` bigint(20) DEFAULT NULL COMMENT 'FILe表主键',
+  PRIMARY KEY (`id`),
+  KEY `goods_id` (`goods_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品详情介绍图片表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `goods_detail_intro_image`
+--
+
+LOCK TABLES `goods_detail_intro_image` WRITE;
+/*!40000 ALTER TABLE `goods_detail_intro_image` DISABLE KEYS */;
+/*!40000 ALTER TABLE `goods_detail_intro_image` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `goods_image`
+--
+
+DROP TABLE IF EXISTS `goods_image`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `goods_image` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `goods_id` bigint(20) DEFAULT '0' COMMENT '商品ID',
+  `image_id` bigint(20) DEFAULT NULL COMMENT 'FILe表主键',
+  `type` varchar(10) DEFAULT NULL COMMENT '类型：carousel ：轮播，detail:详情图片',
+  PRIMARY KEY (`id`),
+  KEY `goods_id` (`goods_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='商品表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `goods_image`
+--
+
+LOCK TABLES `goods_image` WRITE;
+/*!40000 ALTER TABLE `goods_image` DISABLE KEYS */;
+INSERT INTO `goods_image` VALUES (1,1,25,'carousel'),(2,1,20,'carousel'),(3,1,25,'detail'),(4,1,20,'detail'),(5,2,17,'carousel'),(6,2,17,'detail');
+/*!40000 ALTER TABLE `goods_image` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `goods_tag`
+--
+
+DROP TABLE IF EXISTS `goods_tag`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `goods_tag` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `goods_id` bigint(20) DEFAULT '0' COMMENT '商品ID',
+  `name` varchar(20) DEFAULT NULL COMMENT 'name',
+  PRIMARY KEY (`id`),
+  KEY `goods_id` (`goods_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='商品标签表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `goods_tag`
+--
+
+LOCK TABLES `goods_tag` WRITE;
+/*!40000 ALTER TABLE `goods_tag` DISABLE KEYS */;
+INSERT INTO `goods_tag` VALUES (1,1,'当天发货'),(2,2,'大葱');
+/*!40000 ALTER TABLE `goods_tag` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `image_hash`
 --
 
@@ -615,4 +735,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-18 17:41:45
+-- Dump completed on 2020-07-18 21:49:37
