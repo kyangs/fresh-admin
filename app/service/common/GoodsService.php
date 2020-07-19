@@ -11,6 +11,7 @@ use app\model\common\Goods;
 use app\model\common\GoodsAttr;
 use app\model\common\GoodsDetailIntroImage;
 use app\model\common\GoodsImage;
+use app\model\common\GoodsSales;
 use app\model\common\GoodsTag;
 use app\service\BaseService;
 use app\service\UploadService;
@@ -95,8 +96,8 @@ class GoodsService extends BaseService
             foreach ($request->attr_list as $attr) {
                 $attrList[] = [
                     'goods_id'   => $request->id,
-                    'attr_name'  => $attr->name,
-                    'attr_value' => $attr->value,
+                    'attr_name'  => $attr->attr_name,
+                    'attr_value' => $attr->attr_value,
                 ];
             }
         }
@@ -175,6 +176,7 @@ class GoodsService extends BaseService
         $goods['detail_images_id'] = $detailImageIds;
         $goods['detail_images']    = $detailImage;
         $goods['image_list']       = $carouselImage;
+        $goods['mouth_sale']       = GoodsSales::getMothSalesByGoodsID($goods['id']);
         $goods['tag_list']         = array_column($tagList, 'name');
         return $goods;
     }

@@ -448,7 +448,7 @@ CREATE TABLE `goods` (
 
 LOCK TABLES `goods` WRITE;
 /*!40000 ALTER TABLE `goods` DISABLE KEYS */;
-INSERT INTO `goods` VALUES (1,0,'桔子100元/5斤','',0,'桔子100元/5斤',100,100,0,1,0,0.00,100.00,20,5,'2020-07-19 04:31:55','2020-07-18 11:56:47'),(3,0,'云南大香蕉100/6斤','',1,'好吃不多，你要吃的，好吧',100,100,0,1,0,199.00,100.00,36,5,'2020-07-19 04:10:29','2020-07-19 04:10:29'),(4,0,'云南大香蕉100/6斤','',1,'好吃不多，你要吃的，好吧11',100,100,0,1,0,199.00,100.00,36,13,'2020-07-19 05:20:12','2020-07-19 04:11:09');
+INSERT INTO `goods` VALUES (1,0,'桔子100元/5斤','',0,'桔子100元/5斤',100,100,0,1,0,0.00,100.00,20,5,'2020-07-19 04:31:55','2020-07-18 11:56:47'),(3,0,'云南大香蕉100/6斤','',1,'好吃不多，你要吃的，好吧1',100,100,0,1,0,199.00,100.00,36,5,'2020-07-19 06:25:39','2020-07-19 04:10:29'),(4,0,'云南大香蕉100/6斤','',1,'好吃不多，你要吃的，好吧11',100,100,0,1,0,199.00,100.00,36,13,'2020-07-19 05:20:12','2020-07-19 04:11:09');
 /*!40000 ALTER TABLE `goods` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -466,7 +466,7 @@ CREATE TABLE `goods_attr` (
   `attr_value` varchar(100) DEFAULT NULL COMMENT '属性值',
   PRIMARY KEY (`id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='商品属性表';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='商品属性表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -475,7 +475,7 @@ CREATE TABLE `goods_attr` (
 
 LOCK TABLES `goods_attr` WRITE;
 /*!40000 ALTER TABLE `goods_attr` DISABLE KEYS */;
-INSERT INTO `goods_attr` VALUES (1,3,'产地','云南'),(2,3,'重量','100g'),(3,3,'保存期','100天');
+INSERT INTO `goods_attr` VALUES (4,3,'产地','云南'),(5,3,'重量','100g'),(6,3,'保存期','100天');
 /*!40000 ALTER TABLE `goods_attr` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -492,7 +492,7 @@ CREATE TABLE `goods_detail_intro_image` (
   `image_id` bigint(20) DEFAULT NULL COMMENT 'FILe表主键',
   PRIMARY KEY (`id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8 COMMENT='商品详情介绍图片表';
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8 COMMENT='商品详情介绍图片表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -501,7 +501,7 @@ CREATE TABLE `goods_detail_intro_image` (
 
 LOCK TABLES `goods_detail_intro_image` WRITE;
 /*!40000 ALTER TABLE `goods_detail_intro_image` DISABLE KEYS */;
-INSERT INTO `goods_detail_intro_image` VALUES (1,1,25),(2,1,20),(3,3,36),(4,3,35),(5,3,34),(6,3,36),(7,3,35),(8,3,34),(27,4,36),(28,4,35),(29,4,34),(30,4,36),(31,4,35),(32,4,34),(33,4,36),(34,4,35),(35,4,34),(36,4,36),(37,4,35),(38,4,34),(39,4,36),(40,4,35),(41,4,34),(42,4,36),(43,4,35),(44,4,34),(45,4,36),(46,4,35),(47,4,34),(48,4,36),(49,4,35),(50,4,34);
+INSERT INTO `goods_detail_intro_image` VALUES (1,1,25),(2,1,20),(27,4,36),(28,4,35),(29,4,34),(30,4,36),(31,4,35),(32,4,34),(33,4,36),(34,4,35),(35,4,34),(36,4,36),(37,4,35),(38,4,34),(39,4,36),(40,4,35),(41,4,34),(42,4,36),(43,4,35),(44,4,34),(45,4,36),(46,4,35),(47,4,34),(48,4,36),(49,4,35),(50,4,34),(51,3,36),(52,3,35),(53,3,34),(54,3,36),(55,3,35),(56,3,34),(57,3,36),(58,3,35),(59,3,34),(60,3,36),(61,3,35),(62,3,34);
 /*!40000 ALTER TABLE `goods_detail_intro_image` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -519,7 +519,7 @@ CREATE TABLE `goods_image` (
   `type` varchar(10) DEFAULT NULL COMMENT '类型：carousel ：轮播，detail:详情图片',
   PRIMARY KEY (`id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='商品表';
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COMMENT='商品表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -528,8 +528,38 @@ CREATE TABLE `goods_image` (
 
 LOCK TABLES `goods_image` WRITE;
 /*!40000 ALTER TABLE `goods_image` DISABLE KEYS */;
-INSERT INTO `goods_image` VALUES (1,1,25,'carousel'),(2,1,20,'carousel'),(3,1,25,'detail'),(4,1,20,'detail'),(5,2,17,'carousel'),(6,2,17,'detail'),(7,3,36,NULL),(8,3,35,NULL),(9,3,34,NULL),(16,4,36,NULL),(17,4,35,NULL),(18,4,34,NULL);
+INSERT INTO `goods_image` VALUES (1,1,25,'carousel'),(2,1,20,'carousel'),(3,1,25,'detail'),(4,1,20,'detail'),(5,2,17,'carousel'),(6,2,17,'detail'),(16,4,36,NULL),(17,4,35,NULL),(18,4,34,NULL),(19,3,36,NULL),(20,3,35,NULL),(21,3,34,NULL);
 /*!40000 ALTER TABLE `goods_image` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `goods_sales`
+--
+
+DROP TABLE IF EXISTS `goods_sales`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `goods_sales` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `store_id` bigint(20) DEFAULT '0' COMMENT '店铺ID',
+  `goods_id` bigint(200) DEFAULT '0' COMMENT '商品ID',
+  `num` int(11) DEFAULT '0' COMMENT '卖出数量',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `create_time` (`create_time`),
+  KEY `store_id` (`store_id`),
+  KEY `goods_id` (`goods_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='商品销量表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `goods_sales`
+--
+
+LOCK TABLES `goods_sales` WRITE;
+/*!40000 ALTER TABLE `goods_sales` DISABLE KEYS */;
+INSERT INTO `goods_sales` VALUES (1,0,3,1,'2020-07-19 06:37:24'),(2,0,3,4,'2020-07-19 06:37:24'),(3,0,4,2,'2020-07-19 06:37:30');
+/*!40000 ALTER TABLE `goods_sales` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -545,7 +575,7 @@ CREATE TABLE `goods_tag` (
   `name` varchar(20) DEFAULT NULL COMMENT 'name',
   PRIMARY KEY (`id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='商品标签表';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='商品标签表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -554,7 +584,7 @@ CREATE TABLE `goods_tag` (
 
 LOCK TABLES `goods_tag` WRITE;
 /*!40000 ALTER TABLE `goods_tag` DISABLE KEYS */;
-INSERT INTO `goods_tag` VALUES (1,1,'当天发货'),(2,2,'大葱'),(3,3,'云南特产'),(6,4,'云南特产');
+INSERT INTO `goods_tag` VALUES (1,1,'当天发货'),(2,2,'大葱'),(6,4,'云南特产'),(7,3,'云南特产');
 /*!40000 ALTER TABLE `goods_tag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -763,4 +793,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-19 13:20:46
+-- Dump completed on 2020-07-19 14:48:51

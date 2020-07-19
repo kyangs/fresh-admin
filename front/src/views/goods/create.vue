@@ -133,17 +133,17 @@
                         </el-row>
                         <el-row :gutter="20" v-for="(attr,index) in form.attr_list">
                             <el-col :span="6">
-                                <el-input v-model="attr.name">
+                                <el-input v-model="attr.attr_name">
                                     <template slot="prepend">属性名</template>
                                 </el-input>
                             </el-col>
                             <el-col :span="6">
-                                <el-input v-model="attr.value">
+                                <el-input v-model="attr.attr_value">
                                     <template slot="prepend">属性值</template>
                                 </el-input>
                             </el-col>
                             <el-col :span="6">
-                                <el-button type="primary" @click="delAttr(index)">删除</el-button>
+                                <el-link type="danger" @click="delAttr(index)">删除</el-link>
                             </el-col>
                         </el-row>
 
@@ -247,8 +247,8 @@
             addAttr() {
                 const _this = this
                 _this.form.attr_list.push({
-                    name: '',
-                    value: ''
+                    attr_name: '',
+                    attr_value: ''
                 })
             },
             delAttr(index) {
