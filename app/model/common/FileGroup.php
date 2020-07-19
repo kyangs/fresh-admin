@@ -33,7 +33,7 @@ class FileGroup extends Model
      */
     public function saveGroup($post)
     {
-        if (empty($post->group_nam)) throw new \Exception('请输入组名', 1);
+        if (empty($post->group_name)) throw new \Exception('请输入组名', 1);
         $data = [
             'group_name' => $post->group_name,
             'sort'       => $post->sort,

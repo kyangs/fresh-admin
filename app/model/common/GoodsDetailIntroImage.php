@@ -31,6 +31,13 @@ class GoodsDetailIntroImage extends Model
             ->select()
             ->toArray();
     }
+    public static function findByGoodsId($goodsId)
+    {
+        if (empty($goodsId)) return [];
+        return self::where('goods_id', $goodsId)
+            ->select()
+            ->toArray();
+    }
 }
 
 

@@ -72,6 +72,11 @@ class Category extends Model
     {
         return self::whereIn('id', $ids)->delete();
     }
+
+    public static function categoryByID($id)
+    {
+        return self::where(['id' => $id])->find()->toArray();
+    }
 }
 
 

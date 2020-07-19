@@ -22,10 +22,19 @@ class GoodsTag extends Model
         self::where(['goods_id' => $goodsID])->delete();
         self::insertAll($data);
     }
+
     public static function findByGoodsIds($goodsIds)
     {
         if (empty($goodsIds)) return [];
         return self::whereIn('goods_id', $goodsIds)
+            ->select()
+            ->toArray();
+    }
+
+    public static function findByGoodsId($goodsId)
+    {
+        if (empty($goodsId)) return [];
+        return self::where('goods_id', $goodsId)
             ->select()
             ->toArray();
     }

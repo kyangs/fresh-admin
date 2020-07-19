@@ -8,17 +8,13 @@ use app\traits\ModelTrait;
 
 /**
  * 管理员
- * Class GoodsImage
+ * Class GoodsAttr
  * @package app\model
  */
-class GoodsImage extends Model
+class GoodsAttr extends Model
 {
     use ModelTrait;
-
-    // 类型：carousel ：轮播，detail:详情图片
-    const TYPE_CAROUSEL = 'carousel';
-    const TYPE_DETAIL = 'detail';
-    protected $table = 'goods_image';
+    protected $table = 'goods_attr';
 
     public static function deleteForSave($goodsID, $data)
     {

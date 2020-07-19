@@ -65,5 +65,18 @@ class File extends Model
             $imgList[$item['id']] = $onlyUrl ? $item['full_url'] : $item;
         }
         return $imgList;
+
+
+    }
+
+    public static function findById($imageIds, $onlyUrl = true)
+    {
+
+        if (empty($imageIds)) return '';
+
+        $httpPrefix      = rtrim(config('filesystem.disks.minio.endpoint'), '/') . '/';
+        $row             = self::where(['id' => $imageIds])->find()->toArray();
+        $row['full_url'] = $httpPrefix . $row['file_url'];
+        return $onlyUrl ? $row['full_url'] : $row;
     }
 }

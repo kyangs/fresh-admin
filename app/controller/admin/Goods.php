@@ -38,6 +38,32 @@ class Goods extends Base
         return json_ok(GoodsService::saveGoods($this->params));
     }
     /**
+     * 保存商品
+     * @Route("enable", method="POST")
+     * @throws \Exception
+     */
+    public function enabled()
+    {
+        try {
+            return json_ok(GoodsService::enabled($this->params));
+        }catch (\Exception $exception){
+            return json_error(10001,$exception->getMessage());
+        }
+    }
+    /**
+     * 保存商品
+     * @Route("info", method="POST")
+     * @throws \Exception
+     */
+    public function goodsInfo()
+    {
+        try {
+            return json_ok(GoodsService::goodsInfo($this->params->id));
+        }catch (\Exception $exception){
+            return json_error(10001,$exception->getMessage());
+        }
+    }
+    /**
      * 获取登录用户信息
      * @Route("list", method="POST")
      * @throws \Exception
@@ -57,28 +83,13 @@ class Goods extends Base
             'position' => AdvModel::$position,
         ]);
     }
-
-    /**
-     * 获取登录用户信息
-     * @Route("adv", method="POST")
-     */
-    public function saveAdv()
-    {
-        try {
-            (new AdvService)->saveAdv($this->params,$this->user);
-            return  json_ok();
-        }catch (\Exception $exception){
-            return json_error(10001,$exception->getMessage());
-        }
-    }
-
     /**
      * 删除信息
      * @Route("delete", method="POST")
      */
-    public function deleteAdv(){
+    public function deleteGoods(){
         try {
-            (new AdvService)->deleteAdv($this->params);
+            GoodsService::delete($this->params);
             return  json_ok();
         }catch (\Exception $exception){
             return json_error(10001,$exception->getMessage());

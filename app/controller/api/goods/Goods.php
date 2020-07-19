@@ -30,4 +30,15 @@ class Goods extends Base
             return json_error(10001, $exception->getMessage());
         }
     }
+    /**
+     * @Route("info", method="GET")
+     */
+    public function goodsInfo()
+    {
+        try {
+            return json_ok(GoodsService::goodsInfo($this->request->get('goods_id')));
+        } catch (\Exception $exception) {
+            return json_error(10001, $exception->getMessage());
+        }
+    }
 }

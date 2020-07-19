@@ -8,11 +8,13 @@ use app\model\common\Category;
 use app\model\common\File;
 use app\model\common\FileGroup;
 use app\model\common\Goods;
+use app\model\common\GoodsAttr;
 use app\model\common\GoodsDetailIntroImage;
 use app\model\common\GoodsImage;
 use app\model\common\GoodsTag;
 use app\service\BaseService;
 use app\service\UploadService;
+use think\facade\Db;
 
 class GoodsService extends BaseService
 {
@@ -56,7 +58,7 @@ class GoodsService extends BaseService
             $request->id = $goods->id;
         }
 
-        $imageList = $tagList = $introImageList = [];
+        $imageList = $tagList = $introImageList = $attrList = [];
         if ($request->tag_list) {
             foreach ($request->tag_list as $tag) {
                 $tagList[] = [
@@ -81,15 +83,40 @@ class GoodsService extends BaseService
                 ];
             }
         }
+        if ($request->detail_images_id) {
+            foreach ($request->detail_images_id as $did) {
+                $introImageList[] = [
+                    'goods_id' => $request->id,
+                    'image_id' => $did,
+                ];
+            }
+        }
+        if (isset($request->attr_list) && !empty($request->attr_list)) {
+            foreach ($request->attr_list as $attr) {
+                $attrList[] = [
+                    'goods_id'   => $request->id,
+                    'attr_name'  => $attr->name,
+                    'attr_value' => $attr->value,
+                ];
+            }
+        }
         GoodsImage::deleteForSave($request->id, $imageList);
         GoodsDetailIntroImage::deleteForSave($request->id, $introImageList);
         GoodsTag::deleteForSave($request->id, $tagList);
+        GoodsAttr::deleteForSave($request->id, $attrList);
     }
 
 
+    /** api 获取商品列表
+     * @param $request
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
     public static function goodsList($request)
     {
-        $otherImage = $introImage = $introResult = $detailResult = $tagList = $cateIdList = [];
+        $tagList = $cateIdList = [];
         if (!isset($request->pageSize)) $request->pageSize = 50;
         if (isset($request->child_id) && empty($request->child_id)) {
             $parentCate = Category::categoryByParentID($request->cate_id);
@@ -98,40 +125,67 @@ class GoodsService extends BaseService
         }
         $request->cate_id = !empty($request->child_id) ? [$request->child_id] : $cateIdList;
         $page             = Goods::goodsList($request);
-        $goodsId          = array_column($page['data'], 'id');
-        $imageIds         = array_column($page['data'], 'main_image');
+        $goodsImage       = File::findByIds(array_column($page['data'], 'main_image'), true);
 
-        foreach (GoodsImage::findByGoodsIds($goodsId) as $item) {
-            $introImage[$item['goods_id']][] = $item['image_id'];
-            $imageIds[]                      = $item['image_id'];
+        foreach (GoodsTag::findByGoodsIds(array_column($page['data'], 'id')) as $item) {
+            $tagList[$item['goods_id']][] = $item['name'];
         }
-
-        foreach (GoodsDetailIntroImage::findByGoodsIds($goodsId) as $intro) {
-            $otherImage[$intro['goods_id']][] = $intro['image_id'];
-            $imageIds[]                       = $intro['image_id'];
-        }
-        $goodsImage = File::findByIds($imageIds, true);
-
-        foreach ($introImage as $gid => $intros) {
-            foreach ($intros as $imgID) {
-                if (isset($goodsImage[$imgID])) $introResult[$gid][] = $goodsImage[$imgID];
-            }
-        }
-
-        foreach ($otherImage as $gid => $other) {
-            foreach ($other as $imgID) {
-                if (isset($goodsImage[$imgID])) $detailResult[$gid][] = $goodsImage[$imgID];
-            }
-        }
-        foreach (GoodsTag::findByGoodsIds($goodsId) as $item) $tagList[$item['goods_id']][] = $item['name'];
 
         foreach ($page['data'] as &$item) {
             $item['main_image_url'] = isset($goodsImage[$item['main_image']]) ? $goodsImage[$item['main_image']] : '';
             $item['carousel']       = isset($introResult[$item['id']]) ? $introResult[$item['id']] : [];
             $item['detail']         = isset($detailResult[$item['id']]) ? $detailResult[$item['id']] : [];
-            $item['tag_list'] = isset($tagList[$item['id']]) ? $tagList[$item['id']] : [];
-            $item['self_sale'] = empty($item['store_id']) ? '平台自营' : '';
+            $item['tag_list']       = isset($tagList[$item['id']]) ? $tagList[$item['id']] : [];
+            $item['self_sale']      = empty($item['store_id']) ? '平台自营' : '';
         }
         return $page;
+    }
+
+    /** 获取商品详情
+     * @param $goodsId
+     */
+    public static function goodsInfo($goodsId)
+    {
+        $goods = Goods::goodsInfoByID($goodsId);
+        if (empty($goods)) throw new \Exception('商品不存在或已经下架', 1);
+
+        $carouselImageIds = [];
+        foreach (GoodsImage::findByGoodsId($goods['id']) as $item) $carouselImageIds[] = $item['image_id'];
+        $carouselImage = File::findByIds($carouselImageIds);
+
+        $detailImageIds = [];
+        foreach (GoodsDetailIntroImage::findByGoodsId($goods['id']) as $intro) $detailImageIds[] = $intro['image_id'];
+        $detailImage = File::findByIds($detailImageIds);
+        $tagList     = GoodsTag::findByGoodsId($goods['id']);
+
+        $cateRow = Category::categoryByID($goods['cate_id']);
+
+        if (!empty($cateRow)) {
+            if ($cateRow['parent_id'] != 0) {
+                $goods['child_cate_id'] = $cateRow['id'];
+                $goods['cate_id']       = $cateRow['parent_id'];
+            }
+        }
+        $goods['carousel_image']   = array_column($carouselImage, 'full_url');
+        $goods['detail_image']     = array_column($detailImage, 'full_url');
+        $goods['attr_list']        = GoodsAttr::findByGoodsId($goods['id']);
+        $goods['main_image_id']    = $goods['main_image'];
+        $goods['main_image']       = File::findById($goods['main_image'], true);
+        $goods['image_id_list']    = $carouselImageIds;
+        $goods['detail_images_id'] = $detailImageIds;
+        $goods['detail_images']    = $detailImage;
+        $goods['image_list']       = $carouselImage;
+        $goods['tag_list']         = array_column($tagList, 'name');
+        return $goods;
+    }
+
+    public static function enabled($request)
+    {
+        return Goods::enabled($request->id, $request->is_enabled);
+    }
+
+    public static function delete($request)
+    {
+        return Goods::deleteById($request->id);
     }
 }

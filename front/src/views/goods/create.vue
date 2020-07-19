@@ -125,6 +125,29 @@
                                 <img :src="v.full_url" class="avatar"></el-col>
                         </el-row>
                     </el-form-item>
+                    <el-form-item label="商品属性">
+                        <el-row :gutter="20">
+                            <el-col :span="6">
+                                <el-button type="primary" @click="addAttr">新增</el-button>
+                            </el-col>
+                        </el-row>
+                        <el-row :gutter="20" v-for="(attr,index) in form.attr_list">
+                            <el-col :span="6">
+                                <el-input v-model="attr.name">
+                                    <template slot="prepend">属性名</template>
+                                </el-input>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-input v-model="attr.value">
+                                    <template slot="prepend">属性值</template>
+                                </el-input>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button type="primary" @click="delAttr(index)">删除</el-button>
+                            </el-col>
+                        </el-row>
+
+                    </el-form-item>
                     <el-form-item label="商品详情">
                         <el-input
                                 type="textarea"
@@ -159,6 +182,7 @@
             return {
                 activeNames: ['1', '2', '3'],
                 form: {
+                    id: 0,
                     price: 1.00,
                     origin_price: 0,
                     stock: 1,
@@ -175,11 +199,15 @@
                     end_time: '',
                     tag: '',
                     detail: '',
+                    main_image_url: '',
                     tag_list: [],
                     image_list: [],
                     detail_images: [],
+                    attr_list: [],
                     detail_images_id: [],
                     image_id_list: [],
+                    carousel_image: [],
+                    detail_image: [],
                     store_id: '',
                 },
                 init: {
@@ -190,7 +218,10 @@
             }
         },
         created() {
+            let query = this.$route.query
+
             const _this = this
+
             Object.assign(_this.reset_form, _this.form)
             request({
                 url: "/admin/category/list",
@@ -199,8 +230,31 @@
             }).then(res => {
                 _this.init.cate_list = res.data
             })
+            if (query.id) {
+                request({
+                    url: "/admin/goods/info",
+                    method: 'POST',
+                    data: {id: query.id}
+                }).then(res => {
+                    Object.assign(_this.form, res.data)
+                    if (parseInt(_this.form.child_cate_id) > 0) {
+                        _this.selectCate(_this.form.cate_id)
+                    }
+                })
+            }
         },
         methods: {
+            addAttr() {
+                const _this = this
+                _this.form.attr_list.push({
+                    name: '',
+                    value: ''
+                })
+            },
+            delAttr(index) {
+                const _this = this
+                _this.form.attr_list.splice(index, 1)
+            },
             createGoods() {
                 const _this = this
                 request({
@@ -214,10 +268,7 @@
                             cancelButtonText: '继续添加',
                             type: 'success'
                         }).then(() => {
-                            this.$message({
-                                type: 'success',
-                                message: '删除成功!'
-                            });
+                            _this.$router.push('/goods/list')
                         }).catch(() => {
                             Object.assign(_this.form, _this.reset_form)
                         });
