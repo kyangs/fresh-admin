@@ -58,16 +58,7 @@ class GoodsService extends BaseService
             $goods       = Goods::create($data);
             $request->id = $goods->id;
         }
-
-        $imageList = $tagList = $introImageList = $attrList = [];
-        if ($request->tag_list) {
-            foreach ($request->tag_list as $tag) {
-                $tagList[] = [
-                    'goods_id' => $request->id,
-                    'name'     => $tag,
-                ];
-            }
-        }
+        $imageList = $introImageList = $attrList = [];
         if ($request->image_id_list) {
             foreach ($request->image_id_list as $cid) {
                 $imageList[] = [
@@ -103,7 +94,6 @@ class GoodsService extends BaseService
         }
         GoodsImage::deleteForSave($request->id, $imageList);
         GoodsDetailIntroImage::deleteForSave($request->id, $introImageList);
-        GoodsTag::deleteForSave($request->id, $tagList);
         GoodsAttr::deleteForSave($request->id, $attrList);
     }
 
@@ -117,7 +107,7 @@ class GoodsService extends BaseService
      */
     public static function goodsList($request)
     {
-        $tagList = $cateIdList = [];
+        $cateIdList = [];
         if (!isset($request->pageSize)) $request->pageSize = 50;
         if (isset($request->child_id) && empty($request->child_id)) {
             $parentCate = Category::categoryByParentID($request->cate_id);
@@ -128,15 +118,11 @@ class GoodsService extends BaseService
         $page             = Goods::goodsList($request);
         $goodsImage       = File::findByIds(array_column($page['data'], 'main_image'), true);
 
-        foreach (GoodsTag::findByGoodsIds(array_column($page['data'], 'id')) as $item) {
-            $tagList[$item['goods_id']][] = $item['name'];
-        }
-
         foreach ($page['data'] as &$item) {
             $item['main_image_url'] = isset($goodsImage[$item['main_image']]) ? $goodsImage[$item['main_image']] : '';
             $item['carousel']       = isset($introResult[$item['id']]) ? $introResult[$item['id']] : [];
             $item['detail']         = isset($detailResult[$item['id']]) ? $detailResult[$item['id']] : [];
-            $item['tag_list']       = isset($tagList[$item['id']]) ? $tagList[$item['id']] : [];
+            $item['tag_list']       = [];
             $item['self_sale']      = empty($item['store_id']) ? '平台自营' : '';
         }
         return $page;

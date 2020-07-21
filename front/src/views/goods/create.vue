@@ -45,23 +45,6 @@
                                 <img :src="v.full_url" class="avatar"></el-col>
                         </el-row>
                     </el-form-item>
-                    <el-form-item label="标签">
-                        <el-input placeholder="最多输入两个长度为4个字标签"
-                                  style="width: 30%"
-                                  maxlength="4"
-                                  v-model="form.tag" class="input-with-select">
-                            <el-button slot="append" @click="addGoodsTag">添加</el-button>
-                        </el-input>
-                        <el-tag
-                                v-for="(tag,k) in form.tag_list"
-                                :key="tag"
-                                closable
-                                @close="(k)=>{form.tag_list.splice(k,1)}"
-                                effect="dark"
-                                type="success">
-                            {{tag}}
-                        </el-tag>
-                    </el-form-item>
                 </el-collapse-item>
                 <el-collapse-item title="商品详情" name="2">
                     <template slot="title">
@@ -126,12 +109,12 @@
                         </el-row>
                     </el-form-item>
                     <el-form-item label="商品属性">
-                        <el-row :gutter="20">
+                        <el-row  :gutter="20">
                             <el-col :span="6">
-                                <el-button type="primary" @click="addAttr">新增</el-button>
+                                <el-link type="primary" @click="addAttr">新增</el-link>
                             </el-col>
                         </el-row>
-                        <el-row :gutter="20" v-for="(attr,index) in form.attr_list">
+                        <el-row :gutter="20" style="padding: 5px" v-for="(attr,index) in form.attr_list">
                             <el-col :span="6">
                                 <el-input v-model="attr.attr_name">
                                     <template slot="prepend">属性名</template>
@@ -145,6 +128,7 @@
                             <el-col :span="6">
                                 <el-link type="danger" @click="delAttr(index)">删除</el-link>
                             </el-col>
+                            <p></p>
                         </el-row>
 
                     </el-form-item>
@@ -162,7 +146,7 @@
             </el-form>
         </el-collapse>
         <p style="float: right">
-            <el-button type="primary" @click="createGoods">立即添加</el-button>
+            <el-button type="success" @click="createGoods">提 交</el-button>
         </p>
         <File ref="file_upload_1" @getMainFileList="getMainFileList"></File>
         <File ref="file_upload_2" @getFileList="getFileList"></File>
