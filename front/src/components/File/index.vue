@@ -24,10 +24,14 @@
 
                 </el-form-item>
             </el-form>
-            <el-container style="height: 500px; border: 1px solid #eee">
-                <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+            <el-container style="height: 500px;">
+                <el-aside width="200px" style="background-color: #545c64">
                     <el-main>
-                        <el-menu @select="handleSelect" :default-active="default_active">
+                        <el-menu @select="handleSelect"
+                                 background-color="#545c64"
+                                 text-color="#fff"
+                                 active-text-color="#ffd04b"
+                                 :default-active="default_active">
                             <el-menu-item v-for="(v,k) in group_list"
                                           @click="addFileGroup(v,false)"
                                           :index="k.toString()" :key="v.id">
@@ -39,7 +43,7 @@
                 </el-aside>
 
                 <el-container>
-                    <el-header style="text-align: right; font-size: 12px;height: 42px">
+                    <el-header style="text-align: right; font-size: 12px;height: 42px;">
                         <el-form :inline="true" class="demo-form-inline">
                             <el-form-item>
                                 <el-upload
@@ -99,7 +103,7 @@
                     </el-footer>
                 </el-container>
             </el-container>
-            <span slot="footer" class="dialog-footer">
+            <span slot="footer" class="dialog-footer" >
             <el-link @click="deleteSelectImage" v-if="check_list.length > 0" type="danger">删除</el-link>
             <el-button @click="fileDialogVisible = false">取消</el-button>
             <el-button type="primary" @click="handleSelectImage">确定</el-button>
