@@ -144,6 +144,19 @@ export const constantRoutes = [
         meta: { title: '添加商品', icon: 'form' }
       }
     ]
+  },
+  {
+    path: '/system_setting',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/system_setting/upload',
+        component: () => import('@/views/system_setting/upload_setting'),
+        name: '/system_setting/upload/',
+        meta: { title: '商品列表', icon: 'dashboard' }
+      },
+    ]
   }
 ]
 

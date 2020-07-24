@@ -3,7 +3,7 @@
     ref="drawer"
     :with-header="false"
     size="50%"
-    :before-close="handleClose"
+    :wrapperClosable="false"
     :visible.sync="dialogFormVisible"
     direction="rtl"
     custom-class="demo-drawer"
@@ -17,19 +17,28 @@
               <el-cascader v-model="pid" :options="getRulesList" :props="props_pid" placeholder="请选择" change-on-select @change="handleChange" />
             </el-form-item>
             <el-form-item label="名称" prop="title">
-              <el-input v-model="temp.title" clearable />
+              <el-input v-model="temp.title" clearable placeholder="例如：用户中心" />
             </el-form-item>
             <el-form-item label="标识" prop="name">
-              <el-input v-model="temp.name" clearable />
+              <el-input v-model="temp.name" clearable  placeholder="例如：xx/xx （用来权限控制标识）" />
             </el-form-item>
             <el-form-item label="图标" prop="icon">
-              <el-input v-model="temp.icon" clearable />
+              <el-select value v-model="temp.icon" clearable filterable style="width: 100%">
+                <el-option
+                        v-for="icon in iconList"
+                        :key="icon"
+                        :label="icon"
+                        :value="icon">
+                  <span style="float: left">{{ icon }}</span>
+                  <span style="float: right; color: #8492a6; font-size: 13px"><svg-icon :icon-class="icon" /></span>
+                </el-option>
+              </el-select>
             </el-form-item>
             <el-form-item label="路径" prop="path">
-              <el-input v-model="temp.path" clearable />
+              <el-input v-model="temp.path" clearable  placeholder="例如：list （用来确定路径，如果为子菜单，则url: 父路径/子路径）"  />
             </el-form-item>
             <el-form-item label="组件" prop="component">
-              <el-input v-model="temp.component" clearable />
+              <el-input v-model="temp.component" clearable  placeholder="一般为layout"  />
             </el-form-item>
             <el-form-item label="跳转" prop="redirect">
               <el-input v-model="temp.redirect" clearable />
@@ -73,9 +82,12 @@
 <script>
 import { getinfo, save } from '@/api/rules'
 import tree from '@/utils/tree'
+import iconList from '@/components/IconList'
 export default {
   name: 'RulesForm',
-  components: {},
+  components: {
+
+  },
   props: {
     ruleList: {
       type: Array,
@@ -84,6 +96,7 @@ export default {
   },
   data() {
     return {
+      iconList,
       btnLoading: false,
       ruleTop: [{ 'id': 0, 'title': '顶级' }],
       pid: [],

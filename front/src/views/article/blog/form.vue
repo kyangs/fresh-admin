@@ -4,7 +4,7 @@
                 ref="drawer"
                 :with-header="false"
                 size="50%"
-                :before-close="handleClose"
+                :wrapperClosable="false"
                 :visible.sync="dialogFormVisible"
                 direction="rtl"
                 custom-class="demo-drawer"
