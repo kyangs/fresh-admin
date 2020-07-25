@@ -146,15 +146,15 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/system_setting',
+    path: '/system',
     component: Layout,
     hidden: true,
     children: [
       {
-        path: '/system_setting/upload',
-        component: () => import('@/views/system_setting/upload_setting'),
-        name: '/system_setting/upload/',
-        meta: { title: '商品列表', icon: 'dashboard' }
+        path: '/system/upload',
+        component: () => import('@/views/system/upload_setting'),
+        name: '/system/upload/',
+        meta: { title: '上传设置', icon: 'dashboard' }
       },
     ]
   }

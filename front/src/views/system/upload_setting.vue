@@ -1,8 +1,12 @@
 <template>
     <div class="app-container">
         <!--数据-->
-        <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane name="aliyun" label="阿里云">
+        <el-tabs v-model="activeName">
+            <el-tab-pane name="aliyun">
+                <span slot="label"><i class="el-icon-document"/>
+                    阿里云
+                    <span v-if="uploadForm.default==='aliyun'">(默认)</span>
+                </span>
                 <el-form ref="form" :model="uploadForm.aliyun" label-width="300px">
                     <el-form-item label="阿里云（accessKeyId ）">
                         <el-input v-model="uploadForm.aliyun.accessKeyId"></el-input>
@@ -21,8 +25,12 @@
                     </el-form-item>
                 </el-form>
             </el-tab-pane>
-            <el-tab-pane label="七牛云" name="qiniuyun">
-                <el-form ref="form" :model="uploadForm.qiniuyun" label-width="200px">
+            <el-tab-pane name="qiniuyun">
+                <span slot="label"><i class="el-icon-document"></i>
+                    七牛云
+                    <span v-if="uploadForm.default==='qiniuyun'">(默认)</span>
+                    </span>
+                <el-form ref="form" :model="uploadForm.qiniuyun" label-width="300px">
                     <el-form-item label="七牛云（Access_Key ）">
                         <el-input v-model="uploadForm.qiniuyun.accessKeyId"></el-input>
                     </el-form-item>
@@ -40,8 +48,12 @@
                     </el-form-item>
                 </el-form>
             </el-tab-pane>
-            <el-tab-pane label="腾讯云" name="txyun">
-                <el-form ref="form" :model="uploadForm.txyun" label-width="200px">
+            <el-tab-pane name="txyun">
+                <span slot="label"><i class="el-icon-document"></i>
+                    腾讯云
+                <span v-if="uploadForm.default==='txyun'">(默认)</span>
+                </span>
+                <el-form ref="form" :model="uploadForm.txyun" label-width="300px">
                     <el-form-item label="腾讯云（SecretId ）">
                         <el-input v-model="uploadForm.txyun.accessKeyId"></el-input>
                     </el-form-item>
@@ -62,8 +74,11 @@
                     </el-form-item>
                 </el-form>
             </el-tab-pane>
-            <el-tab-pane label="Minio" name="minio">
-                <el-form ref="form" :model="uploadForm.minio" label-width="200px">
+            <el-tab-pane name="minio">
+                <span slot="label"><i class="el-icon-document"></i>
+                Minio<span v-if="uploadForm.default==='minio'">(默认)</span>
+                </span>
+                <el-form ref="form" :model="uploadForm.minio" label-width="300px">
                     <el-form-item label="Minio（用户名 ）">
                         <el-input v-model="uploadForm.minio.userName"></el-input>
                     </el-form-item>
@@ -74,7 +89,7 @@
                         <el-input v-model="uploadForm.minio.endpoint"></el-input>
                     </el-form-item>
                     <el-form-item label="Minio（BucketName ）">
-                        <el-input v-model="uploadForm.qiniuyun.bucket"></el-input>
+                        <el-input v-model="uploadForm.minio.bucket"></el-input>
                     </el-form-item>
                     <el-form-item label="是否默认使用">
                         <el-radio v-model="uploadForm.default" label="minio">默认</el-radio>
@@ -82,7 +97,9 @@
                 </el-form>
             </el-tab-pane>
         </el-tabs>
-        <el-button type="primary" @click="onSubmit">保存</el-button>
+        <el-row>
+            <el-button type="primary" @click="onSubmit">保存</el-button>
+        </el-row>
     </div>
 
 </template>
@@ -121,16 +138,43 @@
                         endpoint: '',
                         bucket: '',
                     },
-                    default:'aliyun'
+                    default: 'aliyun'
                 },
             }
         },
         created() {
-
+            this.getSetting()
         },
         methods: {
-            onSubmit(){
-
+            getSetting() {
+                const _this = this
+                request({
+                    url: '/admin/system/setting',
+                    method: 'post',
+                    data: {key: "upload"}
+                }).then(function (res) {
+                    if (res.code === 10000) {
+                        console.log(res.data.minio)
+                        if (res.data && res.data.length > 0) {
+                            Object.assign(_this.uploadForm, res.data)
+                            _this.activeName = this.uploadForm.default
+                        }
+                    }
+                })
+            },
+            onSubmit() {
+                const _this = this
+                request({
+                    url: '/admin/system/upload/setting',
+                    method: 'post',
+                    data: _this.uploadForm
+                }).then(function (res) {
+                    if (res.code === 10000) {
+                        _this.$message.success('保存成功')
+                        return
+                    }
+                    _this.$message.error('保存失败')
+                })
             },
         }
     }
