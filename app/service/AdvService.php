@@ -5,6 +5,7 @@ namespace app\service;
 
 
 use app\model\Adv;
+use app\repository\file\FileSystemRepository;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -17,14 +18,6 @@ use think\db\exception\ModelNotFoundException;
  */
 class AdvService extends BaseService
 {
-
-
-    public function findAbleAdv()
-    {
-        $adv = (new Adv)->findAbleAdv(self::time());
-        return $adv;
-    }
-
     /**
      * @param $request
      * @return array
@@ -34,7 +27,16 @@ class AdvService extends BaseService
      */
     public function listByFilter($request)
     {
-        return (new Adv)->listByFilter($request);
+        $data      = (new Adv)->listByFilter($request);
+        $imageList = FileSystemRepository::findByIds(array_column($data, 'image_id'));
+        foreach ($data as &$item) {
+            $item['full_path'] = '';
+            if (isset($imageList[$item['image_id']])) {
+                $item['full_path'] = $imageList[$item['image_id']]['full_url'];
+            }
+            $item['is_enabled'] = strval($item['is_enabled']);
+        }
+        return $data;
     }
 
     /** 新增或保存广告

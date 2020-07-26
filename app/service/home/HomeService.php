@@ -5,6 +5,7 @@ namespace app\service\home;
 
 
 use app\model\Adv;
+use app\repository\file\FileSystemRepository;
 use app\service\BaseService;
 use app\service\common\CategoryService;
 use app\service\common\NoticeService;
@@ -23,10 +24,19 @@ class HomeService extends BaseService
      */
     public function home($request)
     {
+        $advList   = (new Adv)->findAbleAdv(self::time());
+        $imageList = FileSystemRepository::findByIds(array_column($advList, 'image_id'));
+        foreach ($advList as $item) {
+            $item['full_path'] = '';
+            if (isset($imageList[$item['image_id']])) {
+                $item['full_path'] = $imageList[$item['image_id']];
+            }
+            $data[$item['position']][] = $item;
+        }
         return [
-            'adv_list'         => (new Adv)->findAbleAdv(self::time()),
-            'category_list'    => CategoryService::showHomeAndEnable(),
-            'notice_list'=>NoticeService::enableList(),
+            'adv_list'      => $advList,
+            'category_list' => CategoryService::showHomeAndEnable(),
+            'notice_list'   => NoticeService::enableList(),
         ];
     }
 }

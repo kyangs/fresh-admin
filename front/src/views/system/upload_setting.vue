@@ -112,6 +112,7 @@
         data() {
             return {
                 activeName: 'aliyun',
+                newForm: {},
                 uploadForm: {
                     aliyun: {
                         accessKeyId: '',
@@ -154,11 +155,10 @@
                     data: {key: "upload"}
                 }).then(function (res) {
                     if (res.code === 10000) {
-                        console.log(res.data.minio)
-                        if (res.data && res.data.length > 0) {
-                            Object.assign(_this.uploadForm, res.data)
-                            _this.activeName = this.uploadForm.default
-                        }
+                        console.log(res.data)
+                        if (Object.keys(res.data).length===0) return
+                        _this.uploadForm = res.data
+                        _this.activeName = _this.uploadForm.default
                     }
                 })
             },

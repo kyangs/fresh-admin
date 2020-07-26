@@ -27,23 +27,13 @@ class Adv extends Model
 
     public function findAbleAdv($time, $position = ['home', 'home_notice'])
     {
-        $data = [];
-        $advList   = $this->where('start_time', '<=', $time)
+        return $this->where('start_time', '<=', $time)
             ->where('end_time', '>=', $time)
             ->where(['position' => $position])
             ->where(['is_enabled' => 1])
             ->order('sort', 'asc')
             ->select()
             ->toArray();
-        $imageList = File::findByIds(array_column($advList, 'image_id'), true);
-        foreach ($advList as $item) {
-            $item['full_path'] = '';
-            if (isset($imageList[$item['image_id']])) {
-                $item['full_path'] = $imageList[$item['image_id']];
-            }
-            $data[$item['position']][] = $item;
-        }
-        return $data;
     }
 
 
@@ -68,16 +58,7 @@ class Adv extends Model
         if (!empty($request->username)) {
             $_this = $_this->where('username', 'like', '%' . $request->username . '%');
         }
-        $list      = $_this->select()->toArray();
-        $imageList = File::findByIds(array_column($list, 'image_id'));
-        foreach ($list as &$item) {
-            $item['full_path'] = '';
-            if (isset($imageList[$item['image_id']])) {
-                $item['full_path'] = $imageList[$item['image_id']]['full_url'];
-            }
-            $item['is_enabled'] = strval($item['is_enabled']);
-        }
-        return $list;
+        return $_this->select()->toArray();
     }
 
 

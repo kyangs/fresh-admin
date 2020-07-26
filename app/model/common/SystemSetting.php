@@ -27,6 +27,16 @@ class SystemSetting extends Model
         return empty($row) ? [] : $row->toArray();
     }
 
+    public static function defaultUploadSetting()
+    {
+        $row = self::getSettingByKey('upload');
+        if (empty($row)) {
+            return [];
+        }
+        $row = json_decode($row['value'],true);
+        return isset($row[$row['default']]) ? $row[$row['default']] : [];
+    }
+
     public static function saveSetting($key, $value, $describe = '')
     {
         $row  = self::getSettingByKey($key);

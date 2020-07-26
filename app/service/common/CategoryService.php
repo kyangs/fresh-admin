@@ -7,6 +7,7 @@ namespace app\service\common;
 use app\model\common\Category;
 use app\model\common\File;
 use app\model\common\FileGroup;
+use app\repository\file\FileSystemRepository;
 use app\service\BaseService;
 use app\service\UploadService;
 
@@ -42,7 +43,7 @@ class CategoryService extends BaseService
         $res = Category::category();
         if (empty($res)) return $res;
 
-        $images = File::findByIds(array_column($res, 'image_id'));
+        $images = FileSystemRepository::findByIds(array_column($res, 'image_id'));
 
         foreach ($res as &$item) {
             $item['children'] = [];
@@ -67,7 +68,7 @@ class CategoryService extends BaseService
             'show_home'  => '1',
             'is_enabled' => '1',
         ]);
-        $images = File::findByIds(array_column($res, 'image_id'));
+        $images = FileSystemRepository::findByIds(array_column($res, 'image_id'));
         foreach ($res as &$item) {
             $item['children'] = [];
             if (isset($images[$item['image_id']])) {
@@ -88,7 +89,7 @@ class CategoryService extends BaseService
         $res = Category::category(1);
         if (empty($res)) return $res;
 
-        $images    = File::findByIds(array_column($res, 'image_id'));
+        $images    = FileSystemRepository::findByIds(array_column($res, 'image_id'));
         $childList = [];
         foreach ($res as $item) {
 
@@ -151,10 +152,10 @@ class CategoryService extends BaseService
     public static function categoryList($request)
     {
         $categoryList = Category::categoryByFilter(['is_enabled' => '1']);
-        $image        = File::findByIds(array_column($categoryList, 'image_id'), true);
+        $image        = FileSystemRepository::findByIds(array_column($categoryList, 'image_id'), true);
 
-        $childMap     = [];
-        $parent       = [];
+        $childMap = [];
+        $parent   = [];
         foreach ($categoryList as $item) {
 
             if (isset($image[$item['image_id']])) {

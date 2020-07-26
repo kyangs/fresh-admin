@@ -22,25 +22,5 @@ return [
             'visibility' => 'public',
         ],
         // 更多的磁盘配置信息
-        'aliyun' => [
-            'type'         => 'aliyun',
-            'accessId'     => '',
-            'accessSecret' => '',
-            'bucket'       => '',
-            'endpoint'     => 'oss-cn-beijing.aliyuncs.com',
-            'url'          => 'https://oss-cn-beijing.aliyuncs.com',//不要斜杠结尾，此处为URL地址域名。
-            'process'      => [],//图片处理器
-        ],
-        // 更多的磁盘配置信息
-        'minio' => [
-            'type'         => 'minio',
-            'bucket'       => 'fresh',
-            'accessId'     => 'kyangs',
-            'accessSecret' => 'a3lhbmdzX21pbmlv',
-            'endpoint'     => 'http://yl8134.cn:9999',
-            'url'          => 'http://yl8134.cn:9999',//不要斜杠结尾，此处为URL地址域名。
-            'process'      => [],//图片处理器
-        ]
-
     ],
 ];

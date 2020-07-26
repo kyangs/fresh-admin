@@ -13,6 +13,7 @@ use app\model\common\GoodsDetailIntroImage;
 use app\model\common\GoodsImage;
 use app\model\common\GoodsSales;
 use app\model\common\GoodsTag;
+use app\repository\file\FileSystemRepository;
 use app\service\BaseService;
 use app\service\UploadService;
 use think\facade\Db;
@@ -116,8 +117,7 @@ class GoodsService extends BaseService
         }
         $request->cate_id = !empty($request->child_id) ? [$request->child_id] : $cateIdList;
         $page             = Goods::goodsList($request);
-        $goodsImage       = File::findByIds(array_column($page['data'], 'main_image'), true);
-
+        $goodsImage       = FileSystemRepository::findByIds(array_column($page['data'], 'main_image'), true);
         foreach ($page['data'] as &$item) {
             $item['main_image_url'] = isset($goodsImage[$item['main_image']]) ? $goodsImage[$item['main_image']] : '';
             $item['carousel']       = isset($introResult[$item['id']]) ? $introResult[$item['id']] : [];
@@ -138,11 +138,11 @@ class GoodsService extends BaseService
 
         $carouselImageIds = [];
         foreach (GoodsImage::findByGoodsId($goods['id']) as $item) $carouselImageIds[] = $item['image_id'];
-        $carouselImage = File::findByIds($carouselImageIds);
+        $carouselImage = FileSystemRepository::findByIds($carouselImageIds);
 
         $detailImageIds = [];
         foreach (GoodsDetailIntroImage::findByGoodsId($goods['id']) as $intro) $detailImageIds[] = $intro['image_id'];
-        $detailImage = File::findByIds($detailImageIds);
+        $detailImage = FileSystemRepository::findByIds($detailImageIds);
         $tagList     = GoodsTag::findByGoodsId($goods['id']);
 
         $cateRow = Category::categoryByID($goods['cate_id']);
@@ -157,7 +157,7 @@ class GoodsService extends BaseService
         $goods['detail_image']     = array_column($detailImage, 'full_url');
         $goods['attr_list']        = GoodsAttr::findByGoodsId($goods['id']);
         $goods['main_image_id']    = $goods['main_image'];
-        $goods['main_image']       = File::findById($goods['main_image'], true);
+        $goods['main_image']       = FileSystemRepository::findById($goods['main_image'], true);
         $goods['image_id_list']    = $carouselImageIds;
         $goods['detail_images_id'] = $detailImageIds;
         $goods['detail_images']    = $detailImage;
