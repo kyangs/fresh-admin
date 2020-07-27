@@ -52,7 +52,8 @@ export default {
         phone: store.getters.phone,
         email: store.getters.email,
         img: store.getters.avatar,
-        full_url: store.getters.full_avatar
+        full_url: store.getters.full_avatar,
+        image_key: '',
       },
       config: {
         fileName: 'img',
@@ -97,6 +98,7 @@ export default {
       }).then(function (res) {
         _this.temp.img = res.data.path
         _this.temp.full_url = res.data.full_url
+        _this.temp.image_key = res.data.config_key
       })
     },
     saveData() {

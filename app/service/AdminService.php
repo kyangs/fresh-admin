@@ -88,10 +88,15 @@ class AdminService
             'phone'    => $request['phone'],
             'img'      => $request['img'],
         ];
-        $pwd  = $request['password'];
+        if (isset($request['image_key']) && !empty($request['image_key'])) {
+            $data['image_key'] = $request['image_key'];
+        }
+
+        $pwd = $request['password'];
         if (!empty($pwd)) {
             $data['password'] = encrypt_pass($pwd);
         }
         return AdminModel::update($data, ['id' => $user['id']]);
     }
+
 }

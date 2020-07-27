@@ -52,8 +52,13 @@ class UploadService
         }
     }
 
-    public static function fullPath($path)
+    public static function fullPath($path, $configKey)
     {
-        return FileSystemRepository::fullUrl(SystemSetting::defaultUploadSetting()) . $path;
+        $settingMapping = SystemSetting::uploadSettingMapping();
+        $setting        = [];
+        if (isset($settingMapping[$configKey])) {
+            $setting = $settingMapping[$configKey];
+        }
+        return FileSystemRepository::fullUrl($setting) . $path;
     }
 }

@@ -30,8 +30,8 @@
                                 <el-input v-model="temp.title" clearable/>
                             </el-form-item>
                             <el-form-item label="封面" prop="img">
-                                <img :src="temp.full_path" @click="selectFile"
-                                     style="width: 178px;height: 178px"/>
+                                <img :src="temp.full_path"  @click="selectFile"
+                                     style="width: 178px;height: 178px;cursor: pointer"/>
                             </el-form-item>
                             <el-form-item label="排序" prop="sorts">
                                 <el-input v-model="temp.sorts" clearable/>
@@ -89,6 +89,7 @@
                     sorts: 100,
                     img: '',
                     full_path: '',
+                    image_key:''
                 },
                 config: {
                     fileName: 'img',
@@ -148,6 +149,7 @@
                 console.log(row)
                 _this.temp.full_path = row.full_url
                 _this.temp.img = row.file_url
+                _this.temp.image_key = row.config_key
             },
             handleClose(done) {
                 if (this.btnLoading) {
@@ -181,6 +183,7 @@
                     sorts: 100,
                     img: '',
                     full_path: '',
+                    image_key: '',
                 }
             },
             handleCreate() {
@@ -205,6 +208,7 @@
                         _this.temp.status = response.data.status
                         _this.temp.sorts = response.data.sorts
                         _this.temp.img = response.data.img
+                        _this.temp.image_key = response.data.image_key
                         _this.temp.full_path = response.data.full_path
                         _this.column_id = tree.getParentsId(this.columns, response.data.column_id)
                         _this.column_id.push(response.data.column_id)

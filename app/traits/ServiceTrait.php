@@ -26,8 +26,8 @@ trait ServiceTrait
      */
     public static function getInfoById($id, $field = [], $where = true)
     {
-        $row = self::$repository::getInfoById($id, $field, $where);
-        $row['full_path'] = UploadService::fullPath($row['img']);
+        $row              = self::$repository::getInfoById($id, $field, $where);
+        $row['full_path'] = UploadService::fullPath($row['img'], $row['image_key']);
         return $row;
     }
 
@@ -55,8 +55,8 @@ trait ServiceTrait
     public static function getLists($where = true, $myorder = ['id' => 'desc'], $page = 1, $psize = 20, $field = [])
     {
         $data = self::$repository::getLists($where, $myorder, $page, $psize, $field);
-        foreach ($data as &$item){
-            $item['full_path'] = UploadService::fullPath($item['img']);
+        foreach ($data as &$item) {
+            $item['full_path'] = UploadService::fullPath($item['img'], $item['image_key']);
         }
         return $data;
     }
@@ -97,7 +97,7 @@ trait ServiceTrait
             if (isset($data['id'])) unset($data['id']);
             $result = self::$repository::add($data);
         }
-        return  isset($result['id']) && !empty($result['id']) ? $result['id'] : $id;
+        return isset($result['id']) && !empty($result['id']) ? $result['id'] : $id;
     }
 
     /**

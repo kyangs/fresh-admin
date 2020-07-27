@@ -5,6 +5,7 @@ namespace app\controller;
 
 use app\BaseController;
 use app\model\Admin;
+use app\service\AdminService;
 use app\util\JwtUtil;
 use think\facade\Log;
 
@@ -27,7 +28,7 @@ class AdminController extends BaseController
 
             Log::debug($this->app->request->post());
             $obj        = JwtUtil::decode(think_decrypt($this->app->request->header('x-access-token')));
-            $this->user = (new Admin)->find($obj->aid);
+            $this->user = AdminService::getInfoById($obj->aid);
         } catch (\Exception $exception) {
 
         }

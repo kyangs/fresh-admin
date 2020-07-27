@@ -49,7 +49,7 @@ class Admin extends Base
         $user['realname']    = $this->user->realname;
         $user['phone']       = $this->user->phone;
         $user['img']         = $this->user->img;
-        $user['full_avatar'] = UploadService::fullPath($this->user->img);
+        $user['full_avatar'] = UploadService::fullPath($this->user->img, $this->user->image_key);
         $user['group_id']    = $this->user->group_id;
         $user['create_time'] = $this->user->create_time;
         $user['login_time']  = $this->user->login_time ? date('Y-m-d H:i:s', $this->user->login_time) : '';

@@ -24,7 +24,12 @@ class Article extends Model
     protected $hidden = [];
 
     //据输出显示的属性
-    public static $showField = ['id', 'title', 'content', 'status', 'sorts', 'cate_id', 'column_id', 'img', 'update_time', 'create_time'];
+    public static $showField = [
+        'id', 'title', 'content',
+        'status', 'sorts', 'cate_id',
+        'column_id', 'img', 'update_time',
+        'create_time','image_key',
+    ];
 
     //查询类型转换, 与Model 中的type类型转化功能相同，只是新增字符串类型
     protected $selectType = [

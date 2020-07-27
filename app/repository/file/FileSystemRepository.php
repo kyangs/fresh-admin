@@ -23,6 +23,8 @@ class FileSystemRepository
 
     public static function fullUrl($setting)
     {
+        if (!isset($setting['http'])) return '';
+
         return rtrim($setting['http'], '/') . '/';
     }
 

@@ -111,6 +111,7 @@ export default {
         email: '',
         img: '',
         full_path: '',
+        config_key: '',
       },
       config: {
         fileName: 'img',
@@ -159,8 +160,10 @@ export default {
         method: 'post',
         data: formData
       }).then(function (res) {
+        console.log(res.data)
         _this.temp.img = res.data.path
         _this.temp.full_path = res.data.full_url
+        _this.temp.config_key = res.data.config_key
       })
     },
     handleClose(done) {

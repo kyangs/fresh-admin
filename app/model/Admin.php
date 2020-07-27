@@ -31,7 +31,13 @@ class Admin extends Model
     protected $hidden = ['delete_time', 'password'];
 
     //据输出显示的属性
-    public static $showField = ['id', 'username', 'password', 'email', 'realname', 'phone', 'img', 'reg_ip', 'login_time', 'login_ip', 'is_enabled', 'group_id', 'create_time'];
+    public static $showField = [
+        'id', 'username', 'password',
+        'email', 'realname', 'phone',
+        'img', 'reg_ip', 'login_time',
+        'login_ip', 'is_enabled', 'group_id',
+        'create_time','image_key',
+    ];
 
     //查询类型转换, 与Model 中的type类型转化功能相同，只是新增字符串类型
     protected $selectType = [

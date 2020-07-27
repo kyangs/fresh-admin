@@ -79,6 +79,10 @@ class Article extends Base
             'sorts'     => input('sorts', 0, 'int'),
             'status'    => input('status', 0, 'int'),
         ];
+        $imageKey = input('image_key', '', 'trim');
+        if (!empty($imageKey)){
+            $data['image_key'] = $imageKey;
+        }
 
         return $data;
     }
