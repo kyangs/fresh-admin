@@ -30,6 +30,7 @@ CREATE TABLE `admin` (
   `realname` varchar(50) NOT NULL DEFAULT '' COMMENT '姓名',
   `phone` char(15) NOT NULL DEFAULT '' COMMENT '用户手机',
   `img` varchar(255) NOT NULL DEFAULT '' COMMENT '头像',
+  `image_key` varchar(50) NOT NULL DEFAULT '' COMMENT '上传时的配置key',
   `reg_ip` varchar(20) NOT NULL DEFAULT '' COMMENT '注册IP',
   `login_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最后登录时间',
   `login_ip` varchar(20) NOT NULL DEFAULT '' COMMENT '最后登录IP',
@@ -48,7 +49,7 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (1,'admini','d93a5def7511da3d0f2d171d9c344e91','123@163.com','王五一','15237156573','fresh/2020-07/微信图片_20200210092256.jpg','127.0.0.1',1595829478,'123.149.208.76',1595829478,1,1,1540975213,0),(2,'kyangs','d93a5def7511da3d0f2d171d9c344e91','kyangs@163.com','咏春1','16602112169','fresh/2020-07/backgorund.jpg','127.0.0.1',1594650854,'39.149.12.184',1594652203,1,1,1540975213,1594652203),(6,'kyangs','4eaaba799838780f4a5d0dc76f0eec65','','kyang','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594652230,1,1,1594652230,0),(7,'kyangs','4eaaba799838780f4a5d0dc76f0eec65','','kyang','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594652234,1,1,1594652234,0),(8,'kyangs','4eaaba799838780f4a5d0dc76f0eec65','','kyang','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594652334,1,1,1594652334,0),(9,'kyangs','4eaaba799838780f4a5d0dc76f0eec65','','kyang','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594652334,1,1,1594652334,0),(10,'kyangs1','4eaaba799838780f4a5d0dc76f0eec65','','kyang1','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594652871,1,1,1594652871,0),(11,'kyangs1','4eaaba799838780f4a5d0dc76f0eec65','','kyang1','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594653119,1,1,1594653119,0),(12,'kyangs1','4eaaba799838780f4a5d0dc76f0eec65','','kyang1','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594653222,1,1,1594653222,0),(13,'kyangs1','4eaaba799838780f4a5d0dc76f0eec65','','kyang1','','fresh/2020-07/wx.jpg','127.0.0.1',0,'',1594653370,1,1,1594653370,0);
+INSERT INTO `admin` VALUES (1,'admini','d93a5def7511da3d0f2d171d9c344e91','123@163.com','王五一','15237156573','微信图片_20200210092237.png','aliyun','127.0.0.1',1595859750,'123.149.208.76',1595859750,1,1,1540975213,0),(2,'kyangs','d93a5def7511da3d0f2d171d9c344e91','kyangs@163.com','咏春1','16602112169','fresh/2020-07/backgorund.jpg','','127.0.0.1',1594650854,'39.149.12.184',1594652203,1,1,1540975213,1594652203);
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,6 +143,7 @@ CREATE TABLE `article` (
   `cate_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '分类id',
   `column_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '所属栏目',
   `img` varchar(255) NOT NULL DEFAULT '' COMMENT '图片',
+  `image_key` varchar(50) NOT NULL DEFAULT '' COMMENT '上传时的配置key',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='文章表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -152,7 +154,7 @@ CREATE TABLE `article` (
 
 LOCK TABLES `article` WRITE;
 /*!40000 ALTER TABLE `article` DISABLE KEYS */;
-INSERT INTO `article` VALUES (1,'AAA','content content content content',1594741134,1,1594741134,100,1,1,'fresh/2020-07/00-00-28.png');
+INSERT INTO `article` VALUES (1,'AAA','content content content content',1595860393,1,1594741134,100,1,1,'fresh/2020-07/00-07-44.png','minio');
 /*!40000 ALTER TABLE `article` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -766,7 +768,7 @@ CREATE TABLE `system_setting` (
 
 LOCK TABLES `system_setting` WRITE;
 /*!40000 ALTER TABLE `system_setting` DISABLE KEYS */;
-INSERT INTO `system_setting` VALUES ('upload','上传设置','{\"aliyun\":{\"accessKeyId\":\"LTAI4GFioN3HVHhvugbhLzxm\",\"accessKeySecret\":\"gBTo0ElWFad9suSwbfjoJr5Ln5IL8c\",\"endpoint\":\"oss-cn-beijing.aliyuncs.com\",\"bucket\":\"fresh-kyang\",\"http\":\"http:\\/\\/fresh-kyang.oss-cn-beijing.aliyuncs.com\"},\"qiniuyun\":{\"accessKeyId\":\"5JsGXDMCZx9rJCXkB6VZr2_RVVdzWC4q2-ETgsuz\",\"accessKeySecret\":\"UeD1CFDNMBf7z7N28LOl5STa6IS8_6sUoGiofnVf\",\"endpoint\":\"s3-cn-east-1.qiniucs.com\",\"bucket\":\"fresh-kyangs\",\"http\":\"http:\\/\\/qe4knhsk2.bkt.clouddn.com\"},\"txyun\":{\"accessKeyId\":\"\",\"accessKeySecret\":\"\",\"endpoint\":\"\",\"region\":\"\",\"token\":\"\"},\"minio\":{\"userName\":\"kyangs\",\"password\":\"a3lhbmdzX21pbmlv\",\"endpoint\":\"http:\\/\\/yl8134.cn:9999\",\"bucket\":\"fresh\",\"http\":\"http:\\/\\/yl8134.cn:9999\"},\"default\":\"aliyun\",\"signature\":\"f7ef40543a4ced92e10330765f1c1599\"}','2020-07-27 11:54:33','2020-07-25 13:09:45');
+INSERT INTO `system_setting` VALUES ('upload','上传设置','{\"aliyun\":{\"accessKeyId\":\"LTAI4GFioN3HVHhvugbhLzxm\",\"accessKeySecret\":\"gBTo0ElWFad9suSwbfjoJr5Ln5IL8c\",\"endpoint\":\"oss-cn-beijing.aliyuncs.com\",\"bucket\":\"fresh-kyang\",\"http\":\"http:\\/\\/fresh-kyang.oss-cn-beijing.aliyuncs.com\"},\"qiniuyun\":{\"accessKeyId\":\"5JsGXDMCZx9rJCXkB6VZr2_RVVdzWC4q2-ETgsuz\",\"accessKeySecret\":\"UeD1CFDNMBf7z7N28LOl5STa6IS8_6sUoGiofnVf\",\"endpoint\":\"s3-cn-east-1.qiniucs.com\",\"bucket\":\"fresh-kyangs\",\"http\":\"http:\\/\\/qe4knhsk2.bkt.clouddn.com\"},\"txyun\":{\"accessKeyId\":\"\",\"accessKeySecret\":\"\",\"endpoint\":\"\",\"region\":\"\",\"token\":\"\"},\"minio\":{\"userName\":\"kyangs\",\"password\":\"a3lhbmdzX21pbmlv\",\"endpoint\":\"http:\\/\\/yl8134.cn:9999\",\"bucket\":\"fresh\",\"http\":\"http:\\/\\/yl8134.cn:9999\"},\"default\":\"aliyun\",\"signature\":\"f7ef40543a4ced92e10330765f1c1599\"}','2020-07-27 13:55:07','2020-07-25 13:09:45');
 /*!40000 ALTER TABLE `system_setting` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -821,4 +823,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-27 19:55:58
+-- Dump completed on 2020-07-27 22:35:06
