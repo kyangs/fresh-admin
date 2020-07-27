@@ -44,7 +44,9 @@ class UploadService
                     $data = (new MinioFileRepository($setting['minio']))->upload($sourceFile, $sourceName, $type);
                     break;
             }
-            return $data;
+            return array_merge($data, [
+                'config_key' => $setting['default'],
+            ]);
         } catch (\Exception $e) {
             throw $e;
         }

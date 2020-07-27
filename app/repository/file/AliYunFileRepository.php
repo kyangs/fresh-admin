@@ -6,6 +6,7 @@ namespace app\repository\file;
 use app\model\common\SystemSetting;
 use app\traits\RepositoryTrait;
 use Aws\S3\S3Client;
+use OSS\OssClient;
 
 /**
  * 管理员
@@ -28,10 +29,15 @@ class AliYunFileRepository extends FileRepository
     {
         try {
 
+            $ossClient = new OssClient($this->setting['accessKeyId'], $this->setting['accessKeySecret'], $this->setting['endpoint']);
+
+            $res = $ossClient->uploadFile($this->setting['bucket'], $sourceName, $sourceFile);
+
+            $data = $res['info'];
 
             return [
-                'path'      => '',
-                'full_path' => '',
+                'path'      => $sourceName,
+                'full_path' => $data['url'],
             ];
         } catch (\Exception $e) {
             throw $e;

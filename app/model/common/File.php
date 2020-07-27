@@ -30,4 +30,14 @@ class File extends Model
             ->paginate($filter->pageSize)
             ->toArray();
     }
+
+    /**
+     * @param $idList
+     * @return bool
+     */
+    public function deleteFile($idList)
+    {
+        if (empty($idList)) return false;
+        return $this->whereIn('id',$idList)->save(['is_delete'=>1]);
+    }
 }

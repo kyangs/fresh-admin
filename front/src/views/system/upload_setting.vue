@@ -20,6 +20,9 @@
                     <el-form-item label="阿里云（BucketName ）">
                         <el-input v-model="uploadForm.aliyun.bucket"></el-input>
                     </el-form-item>
+                    <el-form-item label="阿里云（Http路径 ）">
+                        <el-input v-model="uploadForm.aliyun.http"></el-input>
+                    </el-form-item>
                     <el-form-item label="是否默认使用">
                         <el-radio v-model="uploadForm.default" label="aliyun">默认</el-radio>
                     </el-form-item>
@@ -43,37 +46,43 @@
                     <el-form-item label="七牛云（BucketName ）">
                         <el-input v-model="uploadForm.qiniuyun.bucket"></el-input>
                     </el-form-item>
+                    <el-form-item label="七牛云（Http路径 ）">
+                        <el-input v-model="uploadForm.qiniuyun.http"></el-input>
+                    </el-form-item>
                     <el-form-item label="是否默认使用">
                         <el-radio v-model="uploadForm.default" label="qiniuyun">默认</el-radio>
                     </el-form-item>
                 </el-form>
             </el-tab-pane>
-            <el-tab-pane name="txyun">
-                <span slot="label"><i class="el-icon-document"></i>
-                    腾讯云
-                <span v-if="uploadForm.default==='txyun'">(默认)</span>
-                </span>
-                <el-form ref="form" :model="uploadForm.txyun" label-width="300px">
-                    <el-form-item label="腾讯云（SecretId ）">
-                        <el-input v-model="uploadForm.txyun.accessKeyId"></el-input>
-                    </el-form-item>
-                    <el-form-item label="腾讯云（SecretKey ）">
-                        <el-input v-model="uploadForm.txyun.accessKeySecret"></el-input>
-                    </el-form-item>
-                    <el-form-item label="腾讯云（Endpoint ）">
-                        <el-input v-model="uploadForm.txyun.endpoint"></el-input>
-                    </el-form-item>
-                    <el-form-item label="腾讯云（Region ）">
-                        <el-input v-model="uploadForm.txyun.region"></el-input>
-                    </el-form-item>
-                    <el-form-item label="腾讯云（Token ）">
-                        <el-input v-model="uploadForm.txyun.token"></el-input>
-                    </el-form-item>
-                    <el-form-item label="是否默认使用">
-                        <el-radio v-model="uploadForm.default" label="txyun">默认</el-radio>
-                    </el-form-item>
-                </el-form>
-            </el-tab-pane>
+<!--            <el-tab-pane name="txyun">-->
+<!--                <span slot="label"><i class="el-icon-document"></i>-->
+<!--                    腾讯云-->
+<!--                <span v-if="uploadForm.default==='txyun'">(默认)</span>-->
+<!--                </span>-->
+<!--                <el-form ref="form" :model="uploadForm.txyun" label-width="300px">-->
+<!--                    <el-form-item label="腾讯云（SecretId ）">-->
+<!--                        <el-input v-model="uploadForm.txyun.accessKeyId"></el-input>-->
+<!--                    </el-form-item>-->
+<!--                    <el-form-item label="腾讯云（SecretKey ）">-->
+<!--                        <el-input v-model="uploadForm.txyun.accessKeySecret"></el-input>-->
+<!--                    </el-form-item>-->
+<!--                    <el-form-item label="腾讯云（Endpoint ）">-->
+<!--                        <el-input v-model="uploadForm.txyun.endpoint"></el-input>-->
+<!--                    </el-form-item>-->
+<!--                    <el-form-item label="腾讯云（Region ）">-->
+<!--                        <el-input v-model="uploadForm.txyun.region"></el-input>-->
+<!--                    </el-form-item>-->
+<!--                    <el-form-item label="腾讯云（Token ）">-->
+<!--                        <el-input v-model="uploadForm.txyun.token"></el-input>-->
+<!--                    </el-form-item>-->
+<!--                    <el-form-item label="腾讯云（Http路径 ）">-->
+<!--                        <el-input v-model="uploadForm.txyun.http"></el-input>-->
+<!--                    </el-form-item>-->
+<!--                    <el-form-item label="是否默认使用">-->
+<!--                        <el-radio v-model="uploadForm.default" label="txyun">默认</el-radio>-->
+<!--                    </el-form-item>-->
+<!--                </el-form>-->
+<!--            </el-tab-pane>-->
             <el-tab-pane name="minio">
                 <span slot="label"><i class="el-icon-document"></i>
                 Minio<span v-if="uploadForm.default==='minio'">(默认)</span>
@@ -90,6 +99,9 @@
                     </el-form-item>
                     <el-form-item label="Minio（BucketName ）">
                         <el-input v-model="uploadForm.minio.bucket"></el-input>
+                    </el-form-item>
+                    <el-form-item label="Minio（Http路径 ）">
+                        <el-input v-model="uploadForm.minio.http"></el-input>
                     </el-form-item>
                     <el-form-item label="是否默认使用">
                         <el-radio v-model="uploadForm.default" label="minio">默认</el-radio>

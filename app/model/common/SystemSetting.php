@@ -27,6 +27,21 @@ class SystemSetting extends Model
         return empty($row) ? [] : $row->toArray();
     }
 
+    public static function uploadSettingMapping(){
+        $row = self::where('unique_key', 'upload')->find();
+        if (empty($row)) return [];
+
+        $array = json_decode($row['value'],true);
+
+        foreach ($array as &$item) {
+
+           if (isset($item['http'])){
+               $item['http'] = rtrim($item['http'],'/').'/';
+           }
+        }
+        return $array;
+    }
+
     public static function defaultUploadSetting()
     {
         $row = self::getSettingByKey('upload');

@@ -23,7 +23,7 @@ class FileSystemRepository
 
     public static function fullUrl($setting)
     {
-        return rtrim($setting['endpoint'], '/') . '/';
+        return rtrim($setting['http'], '/') . '/';
     }
 
     /**
@@ -37,14 +37,14 @@ class FileSystemRepository
         if (isset($filter->id)) {
             $_this = $_this->where(['group_id' => $filter->id]);
         }
-        $page       = $_this->where(['is_delete' => '0'])
+        $page        = $_this->where(['is_delete' => '0'])
             ->order('id', 'desc')
             ->paginate($filter->pageSize)
             ->toArray();
-        $httpPrefix = self::fullUrl(SystemSetting::defaultUploadSetting());
+        $httpMapping = SystemSetting::uploadSettingMapping();
         foreach ($page['data'] as &$item) {
             $item['file_size'] = round($item['file_size'] / 1024, 2) . 'KB';
-            $item['full_url']  = $httpPrefix . $item['file_url'];
+            $item['full_url']  = $httpMapping[$item['config_key']]['http'] . $item['file_url'];
         }
         return $page;
     }
@@ -61,9 +61,9 @@ class FileSystemRepository
     {
         $imgList = [];
         if (empty($imageIds)) return $imgList;
-        $httpPrefix = self::fullUrl(SystemSetting::defaultUploadSetting());
+        $httpMapping = SystemSetting::uploadSettingMapping();
         foreach (File::where(['id' => $imageIds])->select()->toArray() as &$item) {
-            $item['full_url']     = $httpPrefix . $item['file_url'];
+            $item['full_url']     = $httpMapping[$item['config_key']]['http'] . $item['file_url'];
             $imgList[$item['id']] = $onlyUrl ? $item['full_url'] : $item;
         }
         return $imgList;
@@ -74,9 +74,9 @@ class FileSystemRepository
     {
         if (empty($imageIds)) return '';
 
-        $httpPrefix      = self::fullUrl(SystemSetting::defaultUploadSetting());
+        $httpMapping     = SystemSetting::uploadSettingMapping();
         $row             = File::where(['id' => $imageIds])->find()->toArray();
-        $row['full_url'] = $httpPrefix . $row['file_url'];
+        $row['full_url'] = $httpMapping[$item['config_key']]['http'] . $row['file_url'];
         return $onlyUrl ? $row['full_url'] : $row;
     }
 }
