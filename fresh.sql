@@ -768,7 +768,7 @@ CREATE TABLE `system_setting` (
 
 LOCK TABLES `system_setting` WRITE;
 /*!40000 ALTER TABLE `system_setting` DISABLE KEYS */;
-INSERT INTO `system_setting` VALUES ('upload','上传设置','{\"aliyun\":{\"accessKeyId\":\"LTAI4GFioN3HVHhvugbhLzxm\",\"accessKeySecret\":\"gBTo0ElWFad9suSwbfjoJr5Ln5IL8c\",\"endpoint\":\"oss-cn-beijing.aliyuncs.com\",\"bucket\":\"fresh-kyang\",\"http\":\"http:\\/\\/fresh-kyang.oss-cn-beijing.aliyuncs.com\"},\"qiniuyun\":{\"accessKeyId\":\"5JsGXDMCZx9rJCXkB6VZr2_RVVdzWC4q2-ETgsuz\",\"accessKeySecret\":\"UeD1CFDNMBf7z7N28LOl5STa6IS8_6sUoGiofnVf\",\"endpoint\":\"s3-cn-east-1.qiniucs.com\",\"bucket\":\"fresh-kyangs\",\"http\":\"http:\\/\\/qe4knhsk2.bkt.clouddn.com\"},\"txyun\":{\"accessKeyId\":\"\",\"accessKeySecret\":\"\",\"endpoint\":\"\",\"region\":\"\",\"token\":\"\"},\"minio\":{\"userName\":\"kyangs\",\"password\":\"a3lhbmdzX21pbmlv\",\"endpoint\":\"http:\\/\\/yl8134.cn:9999\",\"bucket\":\"fresh\",\"http\":\"http:\\/\\/yl8134.cn:9999\"},\"default\":\"aliyun\",\"signature\":\"f7ef40543a4ced92e10330765f1c1599\"}','2020-07-27 13:55:07','2020-07-25 13:09:45');
+INSERT INTO `system_setting` VALUES ('upload','上传设置','{\"aliyun\":{\"accessKeyId\":\"LTAI4GFioN3HVHhvugbhLzxm\",\"accessKeySecret\":\"gBTo0ElWFad9suSwbfjoJr5Ln5IL8c\",\"endpoint\":\"oss-cn-beijing.aliyuncs.com\",\"bucket\":\"fresh-kyang\",\"http\":\"http:\\/\\/fresh-kyang.oss-cn-beijing.aliyuncs.com\"},\"qiniuyun\":{\"accessKeyId\":\"5JsGXDMCZx9rJCXkB6VZr2_RVVdzWC4q2-ETgsuz\",\"accessKeySecret\":\"UeD1CFDNMBf7z7N28LOl5STa6IS8_6sUoGiofnVf\",\"endpoint\":\"s3-cn-east-1.qiniucs.com\",\"bucket\":\"fresh-kyangs\",\"http\":\"http:\\/\\/qe4knhsk2.bkt.clouddn.com\"},\"txyun\":{\"accessKeyId\":\"\",\"accessKeySecret\":\"\",\"endpoint\":\"\",\"region\":\"\",\"token\":\"\"},\"minio\":{\"userName\":\"kyangs\",\"password\":\"a3lhbmdzX21pbmlv\",\"endpoint\":\"http:\\/\\/yl8134.cn:9999\",\"bucket\":\"fresh\",\"http\":\"http:\\/\\/yl8134.cn:9999\"},\"default\":\"minio\",\"signature\":\"ed6d741584f1a2022f5af64e50032a4c\"}','2020-07-28 01:37:56','2020-07-25 13:09:45');
 /*!40000 ALTER TABLE `system_setting` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -780,28 +780,31 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
-  `id` bigint(20) NOT NULL COMMENT 'ID',
-  `openid` varchar(150) NOT NULL DEFAULT '' COMMENT '微信身份标识',
-  `password` char(32) NOT NULL DEFAULT '' COMMENT '32位小写MD5密码',
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户id',
+  `open_id` varchar(255) NOT NULL DEFAULT '' COMMENT '微信openid(唯一标示)',
+  `nickname` varchar(255) NOT NULL DEFAULT '' COMMENT '昵称',
+  `real_name` varchar(20) NOT NULL DEFAULT '' COMMENT '用户真实姓名',
+  `password` varchar(100) NOT NULL DEFAULT '' COMMENT '密码',
   `phone` varchar(30) NOT NULL DEFAULT '' COMMENT '手机号',
-  `username` varchar(30) NOT NULL DEFAULT '' COMMENT '用户名',
-  `is_enabled` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否启用',
-  `nickname` varchar(20) NOT NULL COMMENT '用户昵称',
-  `img` varchar(255) NOT NULL DEFAULT '' COMMENT '头像URL',
-  `sex` tinyint(1) NOT NULL DEFAULT '0' COMMENT '性别标志：0，其他；1，男；2，女',
-  `balance` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '账户余额',
+  `avatar` varchar(255) NOT NULL DEFAULT '' COMMENT '头像',
+  `image_key` varchar(20) NOT NULL DEFAULT '' COMMENT '头像保存在哪个设置key里',
+  `gender` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '性别',
+  `country` varchar(50) NOT NULL DEFAULT '' COMMENT '国家',
+  `province` varchar(50) NOT NULL DEFAULT '' COMMENT '省份',
+  `city` varchar(50) NOT NULL DEFAULT '' COMMENT '城市',
+  `address_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '默认收货地址',
+  `wxapp_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '小程序id',
   `birth` varchar(50) NOT NULL DEFAULT '' COMMENT '生日',
-  `descript` varchar(200) NOT NULL DEFAULT '',
-  `money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '账户总金额',
-  `create_time` int(10) NOT NULL DEFAULT '0' COMMENT '注册时间',
   `reg_ip` varchar(20) NOT NULL DEFAULT '' COMMENT '注册IP',
   `login_ip` varchar(20) NOT NULL DEFAULT '' COMMENT 'IP',
   `login_time` int(10) NOT NULL DEFAULT '0' COMMENT '登录时间',
-  `update_time` int(10) NOT NULL DEFAULT '0' COMMENT '时间',
-  `delete_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '删除时间',
+  `sign` varchar(200) NOT NULL DEFAULT '' COMMENT '个性签名',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  KEY `phone` (`phone`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='主系统用户表。';
+  KEY `openid` (`open_id`),
+  KEY `create_time` (`create_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -810,8 +813,41 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'','','15237156573','12312333',1,'xiegaolei','/uploads/images/20180512/6c7cf3ee6e3e83c031e260c5fa0844fb.jpg',0,20210.00,'1989-10-10','我要给你一个拥抱 给你一双温热手掌',525225.00,1515057952,'123.149.214.69','',0,0,0),(10,'','','','',1,'','',0,0.00,'','',0.00,0,'','',0,0,0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_address`
+--
+
+DROP TABLE IF EXISTS `user_address`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_address` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `name` varchar(30) NOT NULL DEFAULT '' COMMENT '收货人姓名',
+  `phone` varchar(20) NOT NULL DEFAULT '' COMMENT '联系电话',
+  `province_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '所在省份id',
+  `city_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '所在城市id',
+  `region_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '所在区id',
+  `detail` varchar(255) NOT NULL DEFAULT '' COMMENT '详细地址',
+  `user_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
+  `wxapp_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '小程序id',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `create_time` (`create_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_address`
+--
+
+LOCK TABLES `user_address` WRITE;
+/*!40000 ALTER TABLE `user_address` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_address` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -823,4 +859,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-27 22:35:06
+-- Dump completed on 2020-07-28 10:00:43
