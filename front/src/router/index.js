@@ -157,7 +157,20 @@ export const constantRoutes = [
         meta: { title: '上传设置', icon: 'dashboard' }
       },
     ]
-  }
+  },
+  {
+    path: '/user',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/user/list',
+        component: () => import('@/views/user/list'),
+        name: '/user/list/',
+        meta: { title: '用户列表', icon: 'dashboard' }
+      },
+    ]
+  },
 ]
 
 const createRouter = () => new Router({

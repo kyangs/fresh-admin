@@ -243,7 +243,7 @@ CREATE TABLE `auth_group` (
 
 LOCK TABLES `auth_group` WRITE;
 /*!40000 ALTER TABLE `auth_group` DISABLE KEYS */;
-INSERT INTO `auth_group` VALUES (1,'超级管理员',1,'58,59,55,57,56,53,54,51,52,49,50,45,48,47,46,43,44,39,40,1,38,7,2',1595672181,1544881719),(2,'普通管理员',1,'70622770253402113,70622988382375937,68328234063892481,68328450783580160,67745401595367425,67745734388224001,7246645603471361,7247512280895489,7247267136409601,7247034964905985',1594558953,1542787522);
+INSERT INTO `auth_group` VALUES (1,'超级管理员',1,'60,61,58,59,55,57,56,53,54,51,52,49,50,45,48,47,46,43,44,39,40,1,38,7,2',1595903987,1544881719),(2,'普通管理员',1,'70622770253402113,70622988382375937,68328234063892481,68328450783580160,67745401595367425,67745734388224001,7246645603471361,7247512280895489,7247267136409601,7247034964905985',1594558953,1542787522);
 /*!40000 ALTER TABLE `auth_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -274,7 +274,7 @@ CREATE TABLE `auth_rule` (
   `create_time` int(10) unsigned DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `name` (`name`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8 COMMENT='规则表';
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8 COMMENT='规则表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -283,7 +283,7 @@ CREATE TABLE `auth_rule` (
 
 LOCK TABLES `auth_rule` WRITE;
 /*!40000 ALTER TABLE `auth_rule` DISABLE KEYS */;
-INSERT INTO `auth_rule` VALUES (1,'manage','权限管理',1,1,'',0,0,'component',1593867807,'/manage','layout',0,0,1,'',0),(2,'manage/admin','管理员列表',1,1,'',1,0,'user',1541666364,'admin','manage/admin',0,0,0,'',0),(7,'manage/rules','权限列表',1,1,'',1,0,'lock',1542353476,'rules','manage/rules',0,0,0,'',0),(38,'manage/roles','角色列表',1,1,'',1,0,'list',1542602805,'roles','manage/roles',0,0,0,'',0),(39,'log','日志管理',1,1,'',0,0,'component',1579436605,'/log','layout',0,0,1,'',0),(40,'log/log','登陆日志',1,1,'',39,0,'list',1593868512,'log','log/log',0,0,0,'',0),(43,'icon','图标管理',1,1,'',0,0,'component',1579436588,'/icon','layout',0,0,0,'',0),(44,'icon/index','图标列表',1,1,'',43,0,'list',0,'index','icons/index',0,0,0,'',0),(45,'article','文章管理',1,1,'',0,0,'component',1579440670,'/article','layout',0,0,1,'',1579440670),(46,'article/categery','分类列表',1,1,'',45,0,'list',1579440763,'categery','article/categery',0,0,0,'',1579440763),(47,'article/column','栏目列表',1,1,'',45,0,'list',1579440819,'column','article/column',0,0,0,'',1579440819),(48,'article/blog','文章列表',1,1,'',45,0,'list',1579440877,'blog','article/blog',0,0,0,'',1579440877),(49,'adv','广告管理',1,1,'',0,0,'component',1593864868,'/adv','layout',0,1,1,'',1593864698),(50,'adv/list','广告列表',1,1,'',49,0,'list',1593871402,'list','adv/list',0,1,0,'noredirect',1593864777),(51,'category','分类管理',1,1,'',0,0,'component',1594003681,'category','layout',0,1,1,'',1594003656),(52,'category/list','分类列表',1,1,'',51,0,'list',1594003762,'list','layout',0,1,0,'noredirect',1594003708),(53,'system_notice','公告管理',1,1,'',0,0,'component',1594554195,'system_notice','layout',0,1,1,'',1594550716),(54,'system_notice/list','公告列表',1,1,'',53,0,'list',1594554201,'list','layout',0,1,0,'noredirect',1594550768),(55,'goods','商品管理',1,1,'',0,0,'component',1595055683,'goods','layout',0,1,1,'noredirect',1595055368),(56,'goods/list','商品列表',1,1,'',55,0,'list',1595055714,'list','layout',0,1,0,'noredirect',1595055714),(57,'goods/create','添加商品',1,1,'',55,0,'form',1595056037,'create','layout',0,1,0,'noredirect',1595056005),(58,'system','系统设置',1,1,'',0,0,'component',1595672334,'system','layout',0,1,1,'',1595672132),(59,'system/upload','上传设置',1,1,'',58,0,'documentation',1595672342,'upload','layout',0,1,0,'noredirect',1595672171);
+INSERT INTO `auth_rule` VALUES (1,'manage','权限管理',1,1,'',0,0,'component',1593867807,'/manage','layout',0,0,1,'',0),(2,'manage/admin','管理员列表',1,1,'',1,0,'user',1541666364,'admin','manage/admin',0,0,0,'',0),(7,'manage/rules','权限列表',1,1,'',1,0,'lock',1542353476,'rules','manage/rules',0,0,0,'',0),(38,'manage/roles','角色列表',1,1,'',1,0,'list',1542602805,'roles','manage/roles',0,0,0,'',0),(39,'log','日志管理',1,1,'',0,0,'component',1579436605,'/log','layout',0,0,1,'',0),(40,'log/log','登陆日志',1,1,'',39,0,'list',1593868512,'log','log/log',0,0,0,'',0),(43,'icon','图标管理',1,1,'',0,0,'component',1579436588,'/icon','layout',0,0,0,'',0),(44,'icon/index','图标列表',1,1,'',43,0,'list',0,'index','icons/index',0,0,0,'',0),(45,'article','文章管理',1,1,'',0,0,'component',1579440670,'/article','layout',0,0,1,'',1579440670),(46,'article/categery','分类列表',1,1,'',45,0,'list',1579440763,'categery','article/categery',0,0,0,'',1579440763),(47,'article/column','栏目列表',1,1,'',45,0,'list',1579440819,'column','article/column',0,0,0,'',1579440819),(48,'article/blog','文章列表',1,1,'',45,0,'list',1579440877,'blog','article/blog',0,0,0,'',1579440877),(49,'adv','广告管理',1,1,'',0,0,'component',1593864868,'/adv','layout',0,1,1,'',1593864698),(50,'adv/list','广告列表',1,1,'',49,0,'list',1593871402,'list','adv/list',0,1,0,'noredirect',1593864777),(51,'category','分类管理',1,1,'',0,0,'component',1594003681,'category','layout',0,1,1,'',1594003656),(52,'category/list','分类列表',1,1,'',51,0,'list',1594003762,'list','layout',0,1,0,'noredirect',1594003708),(53,'system_notice','公告管理',1,1,'',0,0,'component',1594554195,'system_notice','layout',0,1,1,'',1594550716),(54,'system_notice/list','公告列表',1,1,'',53,0,'list',1594554201,'list','layout',0,1,0,'noredirect',1594550768),(55,'goods','商品管理',1,1,'',0,0,'component',1595055683,'goods','layout',0,1,1,'noredirect',1595055368),(56,'goods/list','商品列表',1,1,'',55,0,'list',1595055714,'list','layout',0,1,0,'noredirect',1595055714),(57,'goods/create','添加商品',1,1,'',55,0,'form',1595056037,'create','layout',0,1,0,'noredirect',1595056005),(58,'system','系统设置',1,1,'',0,0,'component',1595672334,'system','layout',0,1,1,'',1595672132),(59,'system/upload','上传设置',1,1,'',58,0,'documentation',1595672342,'upload','layout',0,1,0,'noredirect',1595672171),(60,'user','用户管理',1,1,'',0,0,'component',1595903973,'user','layout',0,1,1,'',1595903874),(61,'user/list','用户列表',1,1,'',60,0,'list',1595904044,'list','layout',0,1,0,'noredirect',1595903956);
 /*!40000 ALTER TABLE `auth_rule` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -859,4 +859,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-28 10:00:43
+-- Dump completed on 2020-07-28 11:22:57
