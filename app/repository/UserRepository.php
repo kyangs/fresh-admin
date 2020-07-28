@@ -18,7 +18,7 @@ class UserRepository
     //模型主键
     public static $pk = 'id';
     //name字段名称
-    public static $name = 'openid';
+    public static $name = 'open_id';
 
     use RepositoryTrait;
 

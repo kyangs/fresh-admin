@@ -100,4 +100,14 @@ trait RepositoryTrait
         return self::$model::destroy($id);
     }
 
+
+    public static function paginate($where, $order, $page = 1, $pageSize = 20, $field = [], $toArray = true)
+    {
+        $page = self::getLists($where, $order, $page, $pageSize, $field);
+        return [
+            'data'  => $toArray ? $page->toArray() : $page,
+            'total' => self::getTotal($where),
+        ];
+    }
+
 }

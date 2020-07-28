@@ -3,9 +3,15 @@ declare (strict_types=1);
 
 namespace app\service\user;
 
+use app\model\common\SystemSetting;
+use app\model\User;
+use app\repository\system\SystemSettingRepository;
+use app\repository\user\UserRepository;
+use app\service\BaseService;
 use app\service\UserService;
 use think\facade\Config;
 use EasyWeChat\Factory;
+use think\facade\Db;
 
 /**
  * 微信小程序用户
@@ -13,8 +19,29 @@ use EasyWeChat\Factory;
  * @package app\service\user
  * @author  kyangs@163.com
  */
-class UserMiniService
+class UserMiniService extends BaseService
 {
+
+    public static function getUserList($request)
+    {
+        $where = [];
+        if ($request->username) {
+            $where[] = ['nickname', 'like', '%' . $request->username . '%'];
+        }
+        if ($request->phone) {
+            $where[] = ['phone', 'like', '%' . $request->phone . '%'];
+        }
+        if ($request->time_range && !empty($request->time_range)) {
+            $where[] = ['create_time', 'between', [$request->time_range[0], $request->time_range[1]]];
+        }
+        $data = UserRepository::paginate($where, ['create_time' => 'desc'], $request->current_page, $request->per_page);
+
+        foreach ($data['data'] as &$item) {
+            $item['full_avatar'] = SystemSettingRepository::fullPath($item['avatar'], $item['image_key']);
+        }
+        return $data;
+    }
+
     /**
      * 微信用户自动登录
      * @param $openid
@@ -166,6 +193,29 @@ class UserMiniService
         } catch (\Exception $e) {
             throw new \app\MyException(12006);
         }
+    }
+
+    /** 管理员保存在用户
+     * @param $request
+     * @return mixed
+     */
+    public static function adminSaveUser($request)
+    {
+        $data = [
+            'nickname'   => $request->username,
+            'real_name'  => $request->real_name,
+            'avatar'     => $request->avatar,
+            'image_key'  => $request->image_key,
+            'phone'      => $request->phone,
+            'gender'     => $request->gender,
+            'is_enabled' => $request->is_enabled,
+            'password'   => think_encrypt($request->password),
+        ];
+        if ($request->id && !empty($request->id)) {
+
+            return UserRepository::edit($request->id, $data);
+        }
+        return UserRepository::add($data);
     }
 
 }

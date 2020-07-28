@@ -59,6 +59,6 @@ class UploadService
         if (isset($settingMapping[$configKey])) {
             $setting = $settingMapping[$configKey];
         }
-        return FileSystemRepository::fullUrl($setting) . $path;
+        return SystemSetting::fullUploadUrl($setting) . $path;
     }
 }

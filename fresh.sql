@@ -49,7 +49,7 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (1,'admini','d93a5def7511da3d0f2d171d9c344e91','123@163.com','王五一','15237156573','微信图片_20200210092237.png','aliyun','127.0.0.1',1595859750,'123.149.208.76',1595859750,1,1,1540975213,0),(2,'kyangs','d93a5def7511da3d0f2d171d9c344e91','kyangs@163.com','咏春1','16602112169','fresh/2020-07/backgorund.jpg','','127.0.0.1',1594650854,'39.149.12.184',1594652203,1,1,1540975213,1594652203);
+INSERT INTO `admin` VALUES (1,'admini','d93a5def7511da3d0f2d171d9c344e91','123@163.com','王五一','15237156573','微信图片_20200210092237.png','aliyun','127.0.0.1',1595920575,'123.149.208.76',1595920575,1,1,1540975213,0),(2,'kyangs','d93a5def7511da3d0f2d171d9c344e91','kyangs@163.com','咏春1','16602112169','fresh/2020-07/backgorund.jpg','','127.0.0.1',1594650854,'39.149.12.184',1594652203,1,1,1540975213,1594652203);
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -715,6 +715,34 @@ LOCK TABLES `notice_send_log` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `size_provider_work_time`
+--
+
+DROP TABLE IF EXISTS `size_provider_work_time`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `size_provider_work_time` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `size_id` varchar(200) NOT NULL DEFAULT '' COMMENT '尺寸id，可能是external_goods_id，也可能是size_name',
+  `work_time` timestamp NULL DEFAULT NULL COMMENT '生效时间',
+  `provider_id` text COMMENT '供应商id列表',
+  `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `size_id` (`size_id`),
+  KEY `created_time` (`created_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `size_provider_work_time`
+--
+
+LOCK TABLES `size_provider_work_time` WRITE;
+/*!40000 ALTER TABLE `size_provider_work_time` DISABLE KEYS */;
+/*!40000 ALTER TABLE `size_provider_work_time` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `sms`
 --
 
@@ -788,23 +816,25 @@ CREATE TABLE `user` (
   `phone` varchar(30) NOT NULL DEFAULT '' COMMENT '手机号',
   `avatar` varchar(255) NOT NULL DEFAULT '' COMMENT '头像',
   `image_key` varchar(20) NOT NULL DEFAULT '' COMMENT '头像保存在哪个设置key里',
-  `gender` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '性别',
+  `gender` enum('男','女','保密') NOT NULL DEFAULT '保密' COMMENT '性别 ',
   `country` varchar(50) NOT NULL DEFAULT '' COMMENT '国家',
   `province` varchar(50) NOT NULL DEFAULT '' COMMENT '省份',
   `city` varchar(50) NOT NULL DEFAULT '' COMMENT '城市',
   `address_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '默认收货地址',
   `wxapp_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '小程序id',
+  `is_enabled` tinyint(1) NOT NULL DEFAULT '1' COMMENT '启用1，禁用0',
   `birth` varchar(50) NOT NULL DEFAULT '' COMMENT '生日',
   `reg_ip` varchar(20) NOT NULL DEFAULT '' COMMENT '注册IP',
   `login_ip` varchar(20) NOT NULL DEFAULT '' COMMENT 'IP',
-  `login_time` int(10) NOT NULL DEFAULT '0' COMMENT '登录时间',
+  `login_time` timestamp NULL DEFAULT NULL COMMENT '登录时间',
   `sign` varchar(200) NOT NULL DEFAULT '' COMMENT '个性签名',
+  `delete_time` int(11) NOT NULL DEFAULT '0' COMMENT '删除时间',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `openid` (`open_id`),
   KEY `create_time` (`create_time`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -813,6 +843,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'','kyang','杨坤','8D2CD4A0DC80D728C65C1D7E6B9559C3MDAwMDAwMDAwMIOIfN6FfIaW','16602112169','fresh/2020-07/emoji.jpg','minio','男','','','',0,0,1,'','','',NULL,'',0,'0000-00-00 00:00:00','0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -859,4 +890,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-28 11:22:57
+-- Dump completed on 2020-07-28 20:14:09

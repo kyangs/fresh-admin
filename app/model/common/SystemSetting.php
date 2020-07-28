@@ -42,6 +42,13 @@ class SystemSetting extends Model
         return $array;
     }
 
+    public static function fullUploadUrl($setting)
+    {
+        if (!isset($setting['http'])) return '';
+
+        return rtrim($setting['http'], '/') . '/';
+    }
+
     public static function defaultUploadSetting()
     {
         $row = self::getSettingByKey('upload');

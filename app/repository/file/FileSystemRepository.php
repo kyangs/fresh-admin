@@ -17,18 +17,6 @@ class FileSystemRepository
     protected $setting;
 
     /**
-     * @param $setting
-     * @return string
-     */
-
-    public static function fullUrl($setting)
-    {
-        if (!isset($setting['http'])) return '';
-
-        return rtrim($setting['http'], '/') . '/';
-    }
-
-    /**
      * @param $filter
      * @return array
      * @throws \think\db\exception\DbException
@@ -78,7 +66,7 @@ class FileSystemRepository
 
         $httpMapping     = SystemSetting::uploadSettingMapping();
         $row             = File::where(['id' => $imageIds])->find()->toArray();
-        $row['full_url'] = $httpMapping[$item['config_key']]['http'] . $row['file_url'];
+        $row['full_url'] = $httpMapping[$row['config_key']]['http'] . $row['file_url'];
         return $onlyUrl ? $row['full_url'] : $row;
     }
 }
