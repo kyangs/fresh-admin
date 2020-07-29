@@ -17,6 +17,7 @@ class UserValidate extends Validate
     //验证规则 unique:table,field,except,pk
     protected $rule = [
         'nickname' => ['require'],
+        'account'  => ['require', 'regex' => '/[a-zA-Z\d]{4,16}/', 'unique' => 'user,account'],
         'phone'    => ['regex' => '/1\d{10}$/', 'unique' => 'user,phone'],
     ];
 
@@ -24,6 +25,8 @@ class UserValidate extends Validate
     protected $message = [
         'nickname.require' => '请填写昵称',
         'phone.regex'      => '手机格式错误',
+        'account.regex'    => '登录账号为长度在4到16个4-16纯字母，纯数字或字母与数字组合',
+        'account.unique'   => '登录账号已存在',
         'phone.unique'     => '手机号已注册',
     ];
 

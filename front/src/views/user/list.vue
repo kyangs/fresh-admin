@@ -30,7 +30,9 @@
                 :data="table.list"
                 height="550"
                 border
+                size="mini"
                 style="width: 100%">
+            <el-table-column label=登录账号 width="100" prop="account"></el-table-column>
             <el-table-column label="用户名" width="100" prop="nickname"></el-table-column>
             <el-table-column label="真实姓名" width="100" prop="real_name"></el-table-column>
             <el-table-column label="性别" width="100" prop="gender"></el-table-column>
@@ -82,12 +84,18 @@
         </el-pagination>
 
         <el-dialog
-                title="新增/编辑 用户"
+                :title="data_from.id ===''? '添加用户':'编辑用户'"
                 :visible.sync="dialogVisible"
                 width="40%" :close-on-click-modal="false">
             <el-form :model="data_from"
+                     :rules="rules"
+                     size="mini"
                      label-position="right"
                      label-width="120px">
+                <el-form-item label="登录账号" prop="account">
+                    <el-input :disabled="data_from.id !==''"  maxlength="16" show-word-limit v-model="data_from.account"
+                               style="width: 360px;" clearable placeholder="4-16纯字母，纯数字或字母与数字组合（确定后不能更改）"></el-input>
+                </el-form-item>
                 <el-form-item label="用户昵称">
                     <el-input  maxlength="10" show-word-limit v-model="data_from.nickname"  style="width: 360px;" clearable placeholder="用户名"></el-input>
                 </el-form-item>
@@ -166,6 +174,7 @@
                 data_from: {
                     id: '',
                     is_enabled: 1,
+                    account: '',
                     nickname: '',
                     real_name: '',
                     password: '',
@@ -179,6 +188,7 @@
                     id: '',
                     is_enabled: 1,
                     nickname: '',
+                    account: '',
                     real_name: '',
                     password: '',
                     phone: '',
@@ -187,6 +197,12 @@
                     full_avatar: '',
                     avatar: '',
                 },
+                rules: {
+                    account: [
+                        { required: true, message: '请输入登录账号', trigger: 'change' },
+                        { min: 4, max: 16, message: '长度在4到16个4-16纯字母，纯数字或字母与数字组合', trigger: 'change' }
+                    ],
+                }
             }
         },
         created() {

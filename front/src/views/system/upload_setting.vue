@@ -8,7 +8,7 @@
                     阿里云
                     <span v-if="uploadForm.default==='aliyun'">(默认)</span>
                 </span>
-                <el-form ref="form" :model="uploadForm.aliyun" label-width="220px">
+                <el-form ref="form" :model="uploadForm.aliyun" label-width="220px" size="mini">
                     <el-form-item label="阿里云（accessKeyId ）">
                         <el-input v-model="uploadForm.aliyun.accessKeyId"></el-input>
                     </el-form-item>
@@ -34,7 +34,7 @@
                     七牛云
                     <span v-if="uploadForm.default==='qiniuyun'">(默认)</span>
                     </span>
-                <el-form ref="form" :model="uploadForm.qiniuyun" label-width="220px">
+                <el-form ref="form" :model="uploadForm.qiniuyun" label-width="220px" size="mini">
                     <el-form-item label="七牛云（Access_Key ）">
                         <el-input v-model="uploadForm.qiniuyun.accessKeyId"></el-input>
                     </el-form-item>
@@ -59,7 +59,7 @@
                 <span slot="label"><i class="el-icon-document"></i>
                 Minio<span v-if="uploadForm.default==='minio'">(默认)</span>
                 </span>
-                <el-form ref="form" :model="uploadForm.minio" label-width="220px">
+                <el-form ref="form" :model="uploadForm.minio" label-width="220px" size="mini">
                     <el-form-item label="Minio（用户名 ）">
                         <el-input v-model="uploadForm.minio.userName"></el-input>
                     </el-form-item>

@@ -4,7 +4,7 @@
         <el-container>
             <el-tabs v-model="activeName">
                 <el-tab-pane name="base" label="小程序设置">
-                    <el-form ref="form" :model="form.base" label-width="200px">
+                    <el-form ref="form" :model="form.base" label-width="200px" size="mini">
                         <el-form-item label="AppID 小程序ID">
                             <el-input v-model="form.base.appID"></el-input>
                         </el-form-item>
@@ -14,7 +14,7 @@
                     </el-form>
                 </el-tab-pane>
                 <el-tab-pane name="pay" label="微信支付设置">
-                    <el-form ref="form" :model="form.pay" label-width="200px">
+                    <el-form ref="form" :model="form.pay" label-width="200px" size="mini">
                         <el-form-item label="微信支付商户号 MCHID">
                             <el-input v-model="form.pay.mchID"></el-input>
                         </el-form-item>

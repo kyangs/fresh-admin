@@ -49,7 +49,7 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (1,'admini','d93a5def7511da3d0f2d171d9c344e91','123@163.com','王五一','15237156573','微信图片_20200210092237.png','aliyun','127.0.0.1',1595920575,'123.149.208.76',1595920575,1,1,1540975213,0),(2,'kyangs','d93a5def7511da3d0f2d171d9c344e91','kyangs@163.com','咏春1','16602112169','fresh/2020-07/backgorund.jpg','','127.0.0.1',1594650854,'39.149.12.184',1594652203,1,1,1540975213,1594652203);
+INSERT INTO `admin` VALUES (1,'admini','d93a5def7511da3d0f2d171d9c344e91','123@163.com','王五一','15237156573','微信图片_20200210092237.png','aliyun','127.0.0.1',1596007075,'123.149.208.76',1596007075,1,1,1540975213,0),(2,'kyangs','d93a5def7511da3d0f2d171d9c344e91','kyangs@163.com','咏春1','16602112169','fresh/2020-07/backgorund.jpg','','127.0.0.1',1594650854,'39.149.12.184',1594652203,1,1,1540975213,1594652203);
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -809,6 +809,7 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户id',
+  `account` varchar(16) NOT NULL DEFAULT '' COMMENT '用户唯一账号标识，设置好不可更改',
   `open_id` varchar(255) NOT NULL DEFAULT '' COMMENT '微信openid(唯一标示)',
   `nickname` varchar(255) NOT NULL DEFAULT '' COMMENT '昵称',
   `real_name` varchar(20) NOT NULL DEFAULT '' COMMENT '用户真实姓名',
@@ -843,7 +844,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'','杨s','杨坤','8D2CD4A0DC80D728C65C1D7E6B9559C3MDAwMDAwMDAwMIOIfN6FfIaW','16602112169','fresh/2020-07/emoji.jpg','minio','男','','','',0,0,1,'','','',NULL,'',NULL,'2020-07-29 02:24:21','2020-07-29 03:17:03'),(2,'','212','','','16602112161','fresh/2020-07/0dba32ec834c8327ae56433051d44b5f6c74cafe.png','minio','保密','','','',0,0,1,'','','',NULL,'','2020-07-29 03:18:29','2020-07-29 02:46:22','2020-07-29 03:18:29');
+INSERT INTO `user` VALUES (1,'kyang','','杨s','杨坤','8D2CD4A0DC80D728C65C1D7E6B9559C3MDAwMDAwMDAwMIOIfN6FfIaW','16602112169','fresh/2020-07/emoji.jpg','minio','男','','','',0,0,1,'','','',NULL,'',NULL,'2020-07-29 02:24:21','2020-07-29 07:48:32'),(2,'','','212','','','16602112161','fresh/2020-07/0dba32ec834c8327ae56433051d44b5f6c74cafe.png','minio','保密','','','',0,0,1,'','','',NULL,'','2020-07-29 03:18:29','2020-07-29 02:46:22','2020-07-29 03:18:29');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -890,4 +891,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-29 15:13:06
+-- Dump completed on 2020-07-29 15:53:18

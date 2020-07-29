@@ -202,8 +202,9 @@ class UserMiniService extends BaseService
      */
     public static function adminSaveUser($request)
     {
-        $data = [
+        $data     = [
             'nickname'   => $request->nickname,
+            'account'    => $request->account,
             'real_name'  => $request->real_name,
             'avatar'     => $request->avatar,
             'image_key'  => $request->image_key,
@@ -211,15 +212,17 @@ class UserMiniService extends BaseService
             'gender'     => $request->gender,
             'is_enabled' => $request->is_enabled,
         ];
-        $phoneRule='unique:user,phone';
-        if (isset($request->id) && !empty($request->id)){
-            $phoneRule.=','.$request->id;
+        $validate = validate(UserValidate::class);
+        if (isset($request->id) && !empty($request->id)) {
+            $validate->rule('phone', 'unique:user,phone,' . $request->id);
+            $validate->rule('account', 'unique:user,account,' . $request->id);
         }
         if (isset($request->password) && !empty($request->password)) {
             $data['password'] = think_encrypt($request->password);
         }
-        validate(UserValidate::class)->rule('phone',$phoneRule)->check($data);
+        $validate->check($data);
         if ($request->id && !empty($request->id)) {
+            unset($data['account']);
             return UserRepository::edit($request->id, $data);
         }
         return UserRepository::add($data);
