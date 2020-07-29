@@ -7,19 +7,19 @@
                 width="55%" :close-on-click-modal="false">
             <el-form :inline="true" :model="group_data" class="demo-form-inline">
                 <el-form-item label="组名">
-                    <el-input v-model="group_data.group_name" placeholder="组名"></el-input>
+                    <el-input size="mini" v-model="group_data.group_name" placeholder="组名"></el-input>
                 </el-form-item>
                 <el-form-item label="排序">
-                    <el-input v-model="group_data.sort" placeholder="排序"></el-input>
+                    <el-input size="mini" v-model="group_data.sort" placeholder="排序"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="addFileGroup(group_data,true)">保存组</el-button>
+                    <el-button  size="mini"  type="primary" @click="addFileGroup(group_data,true)">保存组</el-button>
 
                     <el-popconfirm
                             v-if="group_data.id"
                             @onConfirm="deleteFileGroup(group_data)"
                             title="当前组被删除后，此组里的图片会被同时删除，您确定吗？">
-                        <el-button slot="reference" type="danger">删除组</el-button>
+                        <el-button  size="mini" slot="reference" type="danger">删除组</el-button>
                     </el-popconfirm>
 
                 </el-form-item>
@@ -52,7 +52,7 @@
                                         action=""
                                         :show-file-list="false"
                                         :http-request="uploadImage">
-                                    <el-button type="success">点击开始上传</el-button>
+                                    <el-button  size="mini" type="success">点击开始上传</el-button>
                                 </el-upload>
                             </el-form-item>
                             <el-form-item>
@@ -105,8 +105,8 @@
             </el-container>
             <span slot="footer" class="dialog-footer" >
             <el-link @click="deleteSelectImage" v-if="check_list.length > 0" type="danger">删除</el-link>
-            <el-button @click="fileDialogVisible = false">取消</el-button>
-            <el-button type="primary" @click="handleSelectImage">确定</el-button>
+            <el-button  size="mini" @click="fileDialogVisible = false">取消</el-button>
+            <el-button  size="mini" type="primary" @click="handleSelectImage">确定</el-button>
             </span>
         </el-dialog>
 

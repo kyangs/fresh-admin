@@ -17,13 +17,13 @@
               <el-cascader v-model="column_id" :options="getColumnList" :props="props_pid" placeholder="请选择" change-on-select @change="handleChange" />
             </el-form-item>
             <el-form-item label="名称" prop="name">
-              <el-input v-model="temp.name" clearable />
+              <el-input size="mini" v-model="temp.name" clearable />
             </el-form-item>
             <el-form-item label="详情" prop="content">
-              <el-input v-model="temp.content" type="textarea" clearable />
+              <el-input size="mini" v-model="temp.content" type="textarea" clearable />
             </el-form-item>
             <el-form-item label="排序" prop="sorts">
-              <el-input v-model="temp.sorts" clearable />
+              <el-input size="mini" v-model="temp.sorts" clearable />
             </el-form-item>
             <el-form-item label="状态">
               <el-radio-group v-model="temp.status">
@@ -37,8 +37,8 @@
 
       </el-form>
       <div class="demo-drawer__footer" style="position:fixed;top:15px;right:30px;">
-        <el-button size="mini" @click="$refs.drawer.closeDrawer()">取 消</el-button>
-        <el-button size="mini" :loading="btnLoading" type="primary" @click="saveData()">保存</el-button>
+        <el-button  size="mini"  @click="$refs.drawer.closeDrawer()">取 消</el-button>
+        <el-button  size="mini"  :loading="btnLoading" type="primary" @click="saveData()">保存</el-button>
       </div>
     </div>
   </el-drawer>

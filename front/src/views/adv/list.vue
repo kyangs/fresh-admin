@@ -3,17 +3,16 @@
         <!-- 搜索 -->
         <el-form :inline="true" :model="query_from" class="demo-form-inline">
             <el-form-item label="创建人">
-                <el-input v-model="query_from.username" placeholder="创建人" clearable></el-input>
+                <el-input size="mini" v-model="query_from.username" placeholder="创建人" clearable></el-input>
             </el-form-item>
             <el-form-item label="位置">
-                <el-select v-model="query_from.position" placeholder="位置" clearable>
+                <el-select size="mini" v-model="query_from.position" placeholder="位置" clearable>
                     <el-option v-for="(v,k) in params.position"
                                :label="v" :key="v" :value="k"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="时间">
-                <el-date-picker
-                        clearable
+                <el-date-picker size="mini"                         clearable
                         v-model="query_from.time_range"
                         type="datetimerange"
                         format="yyyy-MM-dd HH:mm:ss"
@@ -24,8 +23,8 @@
                 </el-date-picker>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="listQuery">查询</el-button>
-                <el-button type="primary" @click="saveAdv({},false)">新增</el-button>
+                <el-button  size="mini" type="primary" @click="listQuery">查询</el-button>
+                <el-button  size="mini" type="primary" @click="saveAdv({},false)">新增</el-button>
             </el-form-item>
         </el-form>
         <!--数据-->
@@ -33,6 +32,7 @@
                 :data="table.list"
                 height="550"
                 border
+                size="mini"
                 style="width: 100%">
 
             <el-table-column label="图片" width="120">
@@ -98,27 +98,26 @@
                      label-position="right"
                      label-width="120px">
                 <el-form-item label="位置">
-                    <el-select v-model="data_from.position" style="width: 360px;" clearable placeholder="位置">
+                    <el-select size="mini" v-model="data_from.position" style="width: 360px;" clearable placeholder="位置">
                         <el-option v-for="(v,k) in params.position"
                                    :label="v" :key="v" :value="k"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="链接">
-                    <el-input v-model="data_from.link" style="width: 360px;" clearable placeholder="链接"></el-input>
+                    <el-input size="mini" v-model="data_from.link" style="width: 360px;" clearable placeholder="链接"></el-input>
                 </el-form-item>
 
                 <el-form-item label="图片">
                     <el-image v-if="data_from.full_path" :src="data_from.full_path"
                               style="width: 80px;height: 80px">
                     </el-image>
-                    <el-button type="primary" @click="selectFile">
+                    <el-button  size="mini" type="primary" @click="selectFile">
                         选择图片<i class="el-icon-upload el-icon--right"></i>
                     </el-button>
                 </el-form-item>
 
                 <el-form-item label="时间">
-                    <el-date-picker
-                            clearable
+                    <el-date-picker size="mini"                             clearable
                             style="width: 360px;"
                             v-model="data_from.time_range"
                             type="datetimerange"
@@ -130,7 +129,7 @@
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item label="排序">
-                    <el-input v-model="data_from.sort" style="width: 360px;" clearable placeholder="排序"></el-input>
+                    <el-input size="mini" v-model="data_from.sort" style="width: 360px;" clearable placeholder="排序"></el-input>
                 </el-form-item>
                 <el-form-item label="状态">
                     <el-radio v-model="data_from.is_enabled" label="1" key="1" :value="1">启用</el-radio>
@@ -138,8 +137,8 @@
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="saveAdv(data_from,true)">确 定</el-button>
+            <el-button  size="mini" @click="dialogVisible = false">取 消</el-button>
+            <el-button  size="mini" type="primary" @click="saveAdv(data_from,true)">确 定</el-button>
             </span>
         </el-dialog>
         <File ref="file_upload" @getFileList="getFileList"></File>

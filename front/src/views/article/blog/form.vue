@@ -21,20 +21,20 @@
                                              placeholder="请选择" change-on-select @change="handleChange"/>
                             </el-form-item>
                             <el-form-item label="分类" prop="cate_id">
-                                <el-select v-model="temp.cate_id" class="filter-item" placeholder="请选择">
+                                <el-select size="mini" v-model="temp.cate_id" class="filter-item" placeholder="请选择">
                                     <el-option v-for="item in cates" :key="item.id" :label="item.name"
                                                :value="item.id"/>
                                 </el-select>
                             </el-form-item>
                             <el-form-item label="标题" prop="title">
-                                <el-input v-model="temp.title" clearable/>
+                                <el-input size="mini" v-model="temp.title" clearable/>
                             </el-form-item>
                             <el-form-item label="封面" prop="img">
                                 <img :src="temp.full_path"  @click="selectFile"
                                      style="width: 178px;height: 178px;cursor: pointer"/>
                             </el-form-item>
                             <el-form-item label="排序" prop="sorts">
-                                <el-input v-model="temp.sorts" clearable/>
+                                <el-input size="mini" v-model="temp.sorts" clearable/>
                             </el-form-item>
                             <el-form-item label="状态">
                                 <el-radio-group v-model="temp.status">
@@ -46,15 +46,15 @@
                         </el-tab-pane>
                         <el-tab-pane label="文章详情">
                             <el-form-item label="详情" prop="content">
-                                <el-input v-model="temp.content" rows="20" type="textarea" clearable/>
+                                <el-input size="mini" v-model="temp.content" rows="20" type="textarea" clearable/>
                             </el-form-item>
                         </el-tab-pane>
                     </el-tabs>
 
                 </el-form>
                 <div class="demo-drawer__footer" style="position:fixed;top:15px;right:30px;">
-                    <el-button size="mini" @click="$refs.drawer.closeDrawer()">取 消</el-button>
-                    <el-button size="mini" :loading="btnLoading" type="primary" @click="saveData()">保存</el-button>
+                    <el-button  size="mini"  @click="$refs.drawer.closeDrawer()">取 消</el-button>
+                    <el-button  size="mini"  :loading="btnLoading" type="primary" @click="saveData()">保存</el-button>
                 </div>
             </div>
         </el-drawer>

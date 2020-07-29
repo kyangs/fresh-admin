@@ -14,15 +14,15 @@
         <el-tabs tab-position="top" style="height: 200px;">
           <el-tab-pane label="基本信息">
             <el-form-item label="角色" prop="group_id">
-              <el-select v-model="temp.group_id" class="filter-item" placeholder="请选择">
+              <el-select size="mini" v-model="temp.group_id" class="filter-item" placeholder="请选择">
                 <el-option v-for="item in roles" :key="item.id" :label="item.title" :value="item.id" />
               </el-select>
             </el-form-item>
             <el-form-item label="账号" prop="username">
-              <el-input v-model="temp.username" clearable />
+              <el-input size="mini" v-model="temp.username" clearable />
             </el-form-item>
             <el-form-item label="密码" prop="password">
-              <el-input v-model="temp.password" clearable />
+              <el-input size="mini" v-model="temp.password" clearable />
             </el-form-item>
             <el-form-item label="头像" prop="img">
               <el-upload
@@ -35,13 +35,13 @@
               </el-upload>
             </el-form-item>
             <el-form-item label="姓名" prop="realname">
-              <el-input v-model="temp.realname" clearable />
+              <el-input size="mini" v-model="temp.realname" clearable />
             </el-form-item>
             <el-form-item label="手机" prop="phone">
-              <el-input v-model="temp.phone" clearable />
+              <el-input size="mini" v-model="temp.phone" clearable />
             </el-form-item>
             <el-form-item label="邮箱" prop="email">
-              <el-input v-model="temp.email" clearable />
+              <el-input size="mini" v-model="temp.email" clearable />
             </el-form-item>
             <el-form-item label="状态">
               <el-radio-group v-model="temp.is_enabled">
@@ -54,8 +54,8 @@
 
       </el-form>
       <div class="demo-drawer__footer" style="position:fixed;top:15px;right:30px;">
-        <el-button size="mini" @click="$refs.drawer.closeDrawer()">取 消</el-button>
-        <el-button size="mini" :loading="btnLoading" type="primary" @click="saveData()">保存</el-button>
+        <el-button  size="mini"  @click="$refs.drawer.closeDrawer()">取 消</el-button>
+        <el-button  size="mini"  :loading="btnLoading" type="primary" @click="saveData()">保存</el-button>
       </div>
     </div>
   </el-drawer>

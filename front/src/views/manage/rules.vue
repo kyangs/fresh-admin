@@ -4,17 +4,17 @@
     <el-row style="margin-bottom: 10px;">
       <el-col :xs="24" :sm="24" :lg="24">
         <el-tooltip content="刷新" placement="top">
-          <el-button v-waves type="warning" icon="el-icon-refresh" circle @click="handleFilterClear" />
+          <el-button  size="mini" v-waves type="warning" icon="el-icon-refresh" circle @click="handleFilterClear" />
         </el-tooltip>
         <el-tooltip content="添加" placement="top">
-          <el-button v-waves type="success" icon="el-icon-plus" circle @click="handleCreate" />
+          <el-button  size="mini" v-waves type="success" icon="el-icon-plus" circle @click="handleCreate" />
         </el-tooltip>
         <el-tooltip content="删除" placement="top">
-          <el-button v-waves :loading="deleting" :disabled="buttonDisabled" type="danger" icon="el-icon-delete" circle @click="handleDeleteAll()" />
+          <el-button  size="mini" v-waves :loading="deleting" :disabled="buttonDisabled" type="danger" icon="el-icon-delete" circle @click="handleDeleteAll()" />
         </el-tooltip>
         <el-tooltip content="更多" placement="top">
           <el-dropdown trigger="click" placement="bottom" style="margin-left: 10px;" @command="handleCommand">
-            <el-button :disabled="buttonDisabled" type="Info" circle>
+            <el-button  size="mini" :disabled="buttonDisabled" type="Info" circle>
               <i class="el-icon-more" />
             </el-button>
             <el-dropdown-menu slot="dropdown">
@@ -68,10 +68,10 @@
       <el-table-column label="操作" align="center" width="120px" class-name="small-padding">
         <template slot-scope="scope">
           <el-tooltip content="编辑" placement="top">
-            <el-button v-waves type="primary" icon="el-icon-edit-outline" circle @click="handleUpdate(scope.$index,scope.row.id)" />
+            <el-button  size="mini" v-waves type="primary" icon="el-icon-edit-outline" circle @click="handleUpdate(scope.$index,scope.row.id)" />
           </el-tooltip>
           <el-tooltip content="删除" placement="top">
-            <el-button v-waves :loading="scope.row.delete" type="danger" icon="el-icon-delete" circle @click="handleDelete(scope.$index,scope.row.id)" />
+            <el-button  size="mini" v-waves :loading="scope.row.delete" type="danger" icon="el-icon-delete" circle @click="handleDelete(scope.$index,scope.row.id)" />
           </el-tooltip>
         </template>
       </el-table-column>

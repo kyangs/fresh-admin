@@ -15,7 +15,7 @@
         <el-tabs tab-position="top" style="height: 200px;">
           <el-tab-pane label="基本信息">
             <el-form-item label="名称" prop="title">
-              <el-input v-model="temp.title" clearable />
+              <el-input size="mini" v-model="temp.title" clearable />
             </el-form-item>
             <el-form-item label="状态">
               <el-radio-group v-model="temp.status">
@@ -40,8 +40,8 @@
 
       </el-form>
       <div class="demo-drawer__footer" style="position:fixed;top:15px;right:30px;">
-        <el-button size="mini" @click="$refs.drawer.closeDrawer()">取 消</el-button>
-        <el-button size="mini" :loading="btnLoading" type="primary" @click="saveData()">保存</el-button>
+        <el-button  size="mini"  @click="$refs.drawer.closeDrawer()">取 消</el-button>
+        <el-button  size="mini"  :loading="btnLoading" type="primary" @click="saveData()">保存</el-button>
       </div>
     </div>
   </el-drawer>

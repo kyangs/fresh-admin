@@ -3,14 +3,13 @@
         <!-- 搜索 -->
         <el-form :inline="true" :model="query_from" class="demo-form-inline">
             <el-form-item label="用户名">
-                <el-input v-model="query_from.username" placeholder="用户名" clearable></el-input>
+                <el-input size="mini" v-model="query_from.username" placeholder="用户名" clearable></el-input>
             </el-form-item>
             <el-form-item label="手机号">
-                <el-input v-model="query_from.phone" placeholder="手机号" clearable></el-input>
+                <el-input size="mini" v-model="query_from.phone" placeholder="手机号" clearable></el-input>
             </el-form-item>
             <el-form-item label="时间">
-                <el-date-picker
-                        clearable
+                <el-date-picker size="mini"                         clearable
                         v-model="query_from.time_range"
                         type="datetimerange"
                         format="yyyy-MM-dd HH:mm:ss"
@@ -21,8 +20,8 @@
                 </el-date-picker>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="listQuery">查询</el-button>
-                <el-button type="primary" @click="saveRequest({},false)">新增</el-button>
+                <el-button  size="mini" type="primary" @click="listQuery">查询</el-button>
+                <el-button  size="mini" type="primary" @click="saveRequest({},false)">新增</el-button>
             </el-form-item>
         </el-form>
         <!--数据-->
@@ -56,13 +55,13 @@
             </el-table-column>
             <el-table-column>
                 <template slot-scope="scope">
-                <el-switch v-model="scope.row.is_enabled"
-                           active-text="启用"
-                           :active-value="1"
-                           :inactive-value="0"
-                           @change="switchEnabled(scope.row)"
-                           inactive-text="禁用">
-                </el-switch>
+                    <el-switch v-model="scope.row.is_enabled"
+                               active-text="启用"
+                               :active-value="1"
+                               :inactive-value="0"
+                               @change="switchEnabled(scope.row)"
+                               inactive-text="禁用">
+                    </el-switch>
                 </template>
             </el-table-column>
             <el-table-column label="操作" width="120">
@@ -90,26 +89,30 @@
             <el-form :model="data_from"
                      :rules="rules"
                      size="mini"
+                     ref="myForm"
                      label-position="right"
                      label-width="120px">
                 <el-form-item label="登录账号" prop="account">
-                    <el-input :disabled="data_from.id !==''"  maxlength="16" show-word-limit v-model="data_from.account"
-                               style="width: 360px;" clearable placeholder="4-16纯字母，纯数字或字母与数字组合（确定后不能更改）"></el-input>
+                    <el-input size="mini" :disabled="data_from.id !==''" maxlength="16" show-word-limit v-model="data_from.account"
+                              style="width: 360px;" clearable placeholder="4-16纯字母，纯数字或字母与数字组合（确定后不能更改）"></el-input>
                 </el-form-item>
-                <el-form-item label="用户昵称">
-                    <el-input  maxlength="10" show-word-limit v-model="data_from.nickname"  style="width: 360px;" clearable placeholder="用户名"></el-input>
+                <el-form-item label="用户昵称" prop="nickname">
+                    <el-input size="mini" maxlength="10" show-word-limit v-model="data_from.nickname" style="width: 360px;"
+                              clearable placeholder="用户名"></el-input>
                 </el-form-item>
                 <el-form-item label="真实姓名">
-                    <el-input maxlength="5" show-word-limit v-model="data_from.real_name" style="width: 360px;" clearable placeholder="真实姓名"></el-input>
+                    <el-input size="mini" maxlength="5" show-word-limit v-model="data_from.real_name" style="width: 360px;"
+                              clearable placeholder="真实姓名"></el-input>
                 </el-form-item>
                 <el-form-item label="登录密码">
-                    <el-input v-model="data_from.password" style="width: 360px;" clearable placeholder="登录密码"></el-input>
+                    <el-input size="mini" v-model="data_from.password" style="width: 360px;" clearable
+                              placeholder="登录密码"></el-input>
                 </el-form-item>
-                <el-form-item label="手机号">
-                    <el-input v-model="data_from.phone" style="width: 360px;" clearable placeholder="手机号"></el-input>
+                <el-form-item label="手机号" prop="phone">
+                    <el-input size="mini" v-model="data_from.phone" style="width: 360px;" clearable placeholder="手机号"></el-input>
                 </el-form-item>
                 <el-form-item label="性别">
-                    <el-select v-model="data_from.gender">
+                    <el-select size="mini" v-model="data_from.gender">
                         <el-option value="男"></el-option>
                         <el-option value="女"></el-option>
                         <el-option value="保密"></el-option>
@@ -129,16 +132,16 @@
 
                 <el-form-item label="状态">
                     <el-switch v-model="data_from.is_enabled"
-                    active-text="启用"
-                    :active-value="1"
-                    :inactive-value="0"
-                    inactive-text="禁用">
+                               active-text="启用"
+                               :active-value="1"
+                               :inactive-value="0"
+                               inactive-text="禁用">
                     </el-switch>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="saveRequest(data_from,true)">确 定</el-button>
+            <el-button  size="mini" @click="dialogVisible = false">取 消</el-button>
+            <el-button  size="mini" type="primary" @click="saveRequest(data_from,true)">确 定</el-button>
             </span>
         </el-dialog>
     </div>
@@ -150,8 +153,7 @@
 
     export default {
         name: 'List',
-        components: {
-        },
+        components: {},
         data() {
             return {
                 form_data: new FormData(),
@@ -159,7 +161,7 @@
                 show_file_dialog: false,
                 table: {
                     list: [],
-                    total:0,
+                    total: 0,
                 },
                 query_from: {
                     phone: '',
@@ -199,8 +201,16 @@
                 },
                 rules: {
                     account: [
-                        { required: true, message: '请输入登录账号', trigger: 'change' },
-                        { min: 4, max: 16, message: '长度在4到16个4-16纯字母，纯数字或字母与数字组合', trigger: 'change' }
+                        {required: true, message: '请输入登录账号', trigger: 'change'},
+                        {min: 4, max: 16, message: '长度在4到16个4-16纯字母，纯数字或字母与数字组合', trigger: 'change'}
+                    ],
+                    nickname: [
+                        {required: true, message: '请输入登录账号', trigger: 'change'},
+                        {min: 2, max: 10, message: '长度在2到10昵称', trigger: 'change'}
+                    ],
+                    phone: [
+                        {required: true, message: '请输入手机号', trigger: 'change'},
+                        {min: 11, max: 11, message: '长度在11纯数字', trigger: 'change'}
                     ],
                 }
             }
@@ -289,19 +299,25 @@
                     }
                     return
                 }
-                request({
-                    url: '/admin/user/save',
-                    method: 'post',
-                    data: _this.data_from
-                }).then(function (res) {
-                    if (res.code === 10000) {
-                        _this.$message.success('保存成功')
-                        _this.dialogVisible = false
-                        _this.listQuery()
+                this.$refs["myForm"].validate((valid) => {
+                    if (valid) {
+                        request({
+                            url: '/admin/user/save',
+                            method: 'post',
+                            data: _this.data_from
+                        }).then(function (res) {
+                            if (res.code === 10000) {
+                                _this.$message.success('保存成功')
+                                _this.dialogVisible = false
+                                _this.listQuery()
+                                return
+                            }
+                            _this.$message.error('保存失败')
+                        })
                         return
                     }
-                    _this.$message.error('保存失败')
-                })
+                    return false;
+                });
             },
 
             initParam() {
@@ -330,9 +346,11 @@
         position: relative;
         overflow: hidden;
     }
+
     .avatar-uploader .el-upload:hover {
         border-color: #409EFF;
     }
+
     .avatar-uploader-icon {
         font-size: 28px;
         color: #8c939d;
@@ -341,6 +359,7 @@
         line-height: 178px;
         text-align: center;
     }
+
     .avatar {
         width: 178px;
         height: 178px;

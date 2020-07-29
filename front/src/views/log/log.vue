@@ -4,22 +4,22 @@
     <div v-if="showSearch" class="filter-container">
       <el-form :inline="true" :model="listQuery" class="form-inline">
         <el-form-item label="">
-          <el-input v-model="listQuery.uid" placeholder="用ID" clearable size="small" />
+          <el-input size="mini" v-model="listQuery.uid" placeholder="用ID" clearable  />
         </el-form-item>
         <el-form-item label="">
-          <el-input v-model="listQuery.username" placeholder="用户名" clearable size="small" />
+          <el-input size="mini" v-model="listQuery.username" placeholder="用户名" clearable  />
         </el-form-item>
         <el-form-item label="">
-          <el-input v-model="listQuery.login_ip" placeholder="登录IP" clearable size="small" />
+          <el-input size="mini" v-model="listQuery.login_ip" placeholder="登录IP" clearable  />
         </el-form-item>
         <el-form-item label="">
-          <el-date-picker v-model="dateTime" :picker-options="pickerOptions" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" align="right" clearable size="small" />
+          <el-date-picker size="mini" v-model="dateTime" :picker-options="pickerOptions" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" align="right" clearable />
         </el-form-item>
         <el-form-item>
-          <el-button v-waves type="primary" icon="el-icon-search" size="small" @click="handleFilter">搜索</el-button>
+          <el-button  size="mini" v-waves type="primary" icon="el-icon-search"  @click="handleFilter">搜索</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button v-waves type="warning" icon="el-icon-refresh" size="small" @click="handleFilterClear">重置</el-button>
+          <el-button  size="mini" v-waves type="warning" icon="el-icon-refresh"  @click="handleFilterClear">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -28,10 +28,10 @@
     <el-row style="margin-bottom: 10px;">
       <el-col :xs="24" :sm="24" :lg="24">
         <el-tooltip content="刷新" placement="top">
-          <el-button v-waves type="warning" icon="el-icon-refresh" circle @click="handleFilterClear" />
+          <el-button  size="mini" v-waves type="warning" icon="el-icon-refresh" circle @click="handleFilterClear" />
         </el-tooltip>
         <el-tooltip content="搜索" placement="top">
-          <el-button v-waves type="primary" icon="el-icon-search" circle @click="showSearch = !showSearch" />
+          <el-button  size="mini" v-waves type="primary" icon="el-icon-search" circle @click="showSearch = !showSearch" />
         </el-tooltip>
       </el-col>
     </el-row>
@@ -42,6 +42,7 @@
       v-loading="listLoading"
       :data="list"
       border
+      size="mini"
       fit
       highlight-current-row
       style="width: 100%;"

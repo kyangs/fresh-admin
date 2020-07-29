@@ -3,8 +3,7 @@
         <!-- 搜索 -->
         <el-form :inline="true" :model="query_from" class="demo-form-inline">
             <el-form-item label="创建时间">
-                <el-date-picker
-                        clearable
+                <el-date-picker size="mini"                         clearable
                         v-model="query_from.time_range"
                         type="datetimerange"
                         format="yyyy-MM-dd HH:mm:ss"
@@ -15,7 +14,7 @@
                 </el-date-picker>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="listQuery">查询</el-button>
+                <el-button  size="mini" type="primary" @click="listQuery">查询</el-button>
             </el-form-item>
         </el-form>
         <!--数据-->
@@ -23,6 +22,7 @@
                 :data="table.list"
                 height="550"
                 border
+                size="mini"
                 style="width: 100%">
 
             <el-table-column label="商品名" prop="goods_name"></el-table-column>

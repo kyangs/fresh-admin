@@ -6,27 +6,27 @@
                 <el-tab-pane name="base" label="小程序设置">
                     <el-form ref="form" :model="form.base" label-width="200px" size="mini">
                         <el-form-item label="AppID 小程序ID">
-                            <el-input v-model="form.base.appID"></el-input>
+                            <el-input size="mini" v-model="form.base.appID"></el-input>
                         </el-form-item>
                         <el-form-item label="AppSecret 小程序密钥">
-                            <el-input v-model="form.base.appSecret"></el-input>
+                            <el-input size="mini" v-model="form.base.appSecret"></el-input>
                         </el-form-item>
                     </el-form>
                 </el-tab-pane>
                 <el-tab-pane name="pay" label="微信支付设置">
                     <el-form ref="form" :model="form.pay" label-width="200px" size="mini">
                         <el-form-item label="微信支付商户号 MCHID">
-                            <el-input v-model="form.pay.mchID"></el-input>
+                            <el-input size="mini" v-model="form.pay.mchID"></el-input>
                         </el-form-item>
                         <el-form-item label="微信支付密钥 APIKEY">
-                            <el-input v-model="form.pay.apiKey"></el-input>
+                            <el-input size="mini" v-model="form.pay.apiKey"></el-input>
                         </el-form-item>
                     </el-form>
                 </el-tab-pane>
             </el-tabs>
             <el-footer>
                 <el-row>
-                    <el-button type="primary" round @click="onSubmit">保存</el-button>
+                    <el-button  size="mini" type="primary" round @click="onSubmit">保存</el-button>
                 </el-row>
             </el-footer>
         </el-container>

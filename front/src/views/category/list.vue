@@ -3,7 +3,7 @@
         <!-- 搜索 -->
         <el-form :inline="true" :model="query_from" class="demo-form-inline">
             <el-form-item>
-                <el-button type="primary" @click="saveCategory({},false)">新增</el-button>
+                <el-button  size="mini" type="primary" @click="saveCategory({},false)">新增</el-button>
             </el-form-item>
         </el-form>
         <!--数据-->
@@ -11,6 +11,7 @@
                 :data="table.list"
                 height="550"
                 border
+                size="mini"
                 row-key="id"
                 :tree-props="{children: 'children'}">
             style="width: 100%">
@@ -79,10 +80,10 @@
                      label-position="right"
                      label-width="120px">
                 <el-form-item label="名称">
-                    <el-input v-model="data_from.name" style="width: 360px;" clearable placeholder="名称"></el-input>
+                    <el-input size="mini" v-model="data_from.name" style="width: 360px;" clearable placeholder="名称"></el-input>
                 </el-form-item>
                 <el-form-item label="类型">
-                    <el-select v-model="data_from.parent_id" style="width: 360px;" clearable placeholder="类型">
+                    <el-select size="mini" v-model="data_from.parent_id" style="width: 360px;" clearable placeholder="类型">
                         <el-option label="一级分类" :key="0" :value="0"></el-option>
                         <el-option v-for="(v,k) in params.parent_category"
                                    :label="v.name" :key="v.id" :value="v.id"></el-option>
@@ -92,12 +93,12 @@
                     <el-image v-if="data_from.full_url" :src="data_from.full_url"
                               style="width: 80px;height: 80px">
                     </el-image>
-                    <el-button type="primary" @click="selectFile">
+                    <el-button  size="mini" type="primary" @click="selectFile">
                         选择图片<i class="el-icon-upload el-icon--right"></i>
                     </el-button>
                 </el-form-item>
                 <el-form-item label="排序">
-                    <el-input v-model="data_from.sort" style="width: 360px;" clearable placeholder="排序"></el-input>
+                    <el-input size="mini" v-model="data_from.sort" style="width: 360px;" clearable placeholder="排序"></el-input>
                 </el-form-item>
                 <el-form-item label="是否首页显示">
                     <el-switch
@@ -119,8 +120,8 @@
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">取消</el-button>
-            <el-button type="primary" @click="saveCategory(data_from,true)">提交</el-button>
+            <el-button  size="mini" @click="dialogVisible = false">取消</el-button>
+            <el-button  size="mini" type="primary" @click="saveCategory(data_from,true)">提交</el-button>
             </span>
         </el-dialog>
 

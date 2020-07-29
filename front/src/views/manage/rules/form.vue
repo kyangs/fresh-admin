@@ -17,13 +17,13 @@
               <el-cascader v-model="pid" :options="getRulesList" :props="props_pid" placeholder="请选择" change-on-select @change="handleChange" />
             </el-form-item>
             <el-form-item label="名称" prop="title">
-              <el-input v-model="temp.title" clearable placeholder="例如：用户中心" />
+              <el-input size="mini" v-model="temp.title" clearable placeholder="例如：用户中心" />
             </el-form-item>
             <el-form-item label="标识" prop="name">
-              <el-input v-model="temp.name" clearable  placeholder="例如：xx/xx （用来权限控制标识）" />
+              <el-input size="mini" v-model="temp.name" clearable  placeholder="例如：xx/xx （用来权限控制标识）" />
             </el-form-item>
             <el-form-item label="图标" prop="icon">
-              <el-select value v-model="temp.icon" clearable filterable style="width: 100%">
+              <el-select size="mini" value v-model="temp.icon" clearable filterable style="width: 100%">
                 <el-option
                         v-for="icon in iconList"
                         :key="icon"
@@ -35,13 +35,13 @@
               </el-select>
             </el-form-item>
             <el-form-item label="路径" prop="path">
-              <el-input v-model="temp.path" clearable  placeholder="例如：list （用来确定路径，如果为子菜单，则url: 父路径/子路径）"  />
+              <el-input size="mini" v-model="temp.path" clearable  placeholder="例如：list （用来确定路径，如果为子菜单，则url: 父路径/子路径）"  />
             </el-form-item>
             <el-form-item label="组件" prop="component">
-              <el-input v-model="temp.component" clearable  placeholder="一般为layout"  />
+              <el-input size="mini" v-model="temp.component" clearable  placeholder="一般为layout"  />
             </el-form-item>
             <el-form-item label="跳转" prop="redirect">
-              <el-input v-model="temp.redirect" clearable />
+              <el-input size="mini" v-model="temp.redirect" clearable />
             </el-form-item>
             <el-form-item label="状态">
               <el-radio-group v-model="temp.status">
@@ -72,8 +72,8 @@
 
       </el-form>
       <div class="demo-drawer__footer" style="position:fixed;top:15px;right:30px;">
-        <el-button size="mini" @click="$refs.drawer.closeDrawer()">取 消</el-button>
-        <el-button size="mini" :loading="btnLoading" type="primary" @click="saveData()">保存</el-button>
+        <el-button  size="mini" @click="$refs.drawer.closeDrawer()">取 消</el-button>
+        <el-button  size="mini"  :loading="btnLoading" type="primary" @click="saveData()">保存</el-button>
       </div>
     </div>
   </el-drawer>

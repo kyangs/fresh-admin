@@ -4,29 +4,29 @@
     <div v-if="showSearch" class="filter-container">
       <el-form :inline="true" :model="listQuery" class="form-inline">
         <el-form-item label="">
-          <el-input v-model="listQuery.username" placeholder="用户名" clearable size="small" />
+          <el-input size="mini" v-model="listQuery.username" placeholder="用户名" clearable  />
         </el-form-item>
         <el-form-item label="">
-          <el-input v-model="listQuery.phone" placeholder="手机号" clearable size="small" />
+          <el-input size="mini" v-model="listQuery.phone" placeholder="手机号" clearable  />
         </el-form-item>
         <el-form-item label="">
-          <el-input v-model="listQuery.realname" placeholder="姓名" clearable size="small" />
+          <el-input size="mini" v-model="listQuery.realname" placeholder="姓名" clearable  />
         </el-form-item>
         <el-form-item label="">
-          <el-select v-model="listQuery.is_enabled" placeholder="状态" clearable size="small">
+          <el-select size="mini" v-model="listQuery.is_enabled" placeholder="状态" clearable >
             <el-option label="全部" value="-1" />
             <el-option label="正常" value="1" />
             <el-option label="禁用" value="0" />
           </el-select>
         </el-form-item>
         <el-form-item label="">
-          <el-date-picker v-model="dateTime" :picker-options="pickerOptions" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" align="right" clearable size="small" />
+          <el-date-picker size="mini" v-model="dateTime" :picker-options="pickerOptions" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" align="right" clearable />
         </el-form-item>
         <el-form-item>
-          <el-button v-waves type="primary" icon="el-icon-search" size="small" @click="handleFilter">搜索</el-button>
+          <el-button  size="mini" v-waves type="primary" icon="el-icon-search"  @click="handleFilter">搜索</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button v-waves type="warning" icon="el-icon-refresh" size="small" @click="handleFilterClear">重置</el-button>
+          <el-button  size="mini" v-waves type="warning" icon="el-icon-refresh" @click="handleFilterClear">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -35,20 +35,20 @@
     <el-row style="margin-bottom: 10px;">
       <el-col :xs="24" :sm="24" :lg="24">
         <el-tooltip content="刷新" placement="top">
-          <el-button v-waves type="warning" icon="el-icon-refresh" circle @click="handleFilterClear" />
+          <el-button  size="mini" v-waves type="warning" icon="el-icon-refresh" circle @click="handleFilterClear" />
         </el-tooltip>
         <el-tooltip content="添加" placement="top">
-          <el-button v-waves type="success" icon="el-icon-plus" circle @click="handleCreate" />
+          <el-button  size="mini" v-waves type="success" icon="el-icon-plus" circle @click="handleCreate" />
         </el-tooltip>
         <el-tooltip content="搜索" placement="top">
-          <el-button v-waves type="primary" icon="el-icon-search" circle @click="showSearch = !showSearch" />
+          <el-button  size="mini" v-waves type="primary" icon="el-icon-search" circle @click="showSearch = !showSearch" />
         </el-tooltip>
         <el-tooltip content="删除" placement="top">
-          <el-button v-waves :loading="deleting" :disabled="buttonDisabled" type="danger" icon="el-icon-delete" circle @click="handleDeleteAll()" />
+          <el-button  size="mini" v-waves :loading="deleting" :disabled="buttonDisabled" type="danger" icon="el-icon-delete" circle @click="handleDeleteAll()" />
         </el-tooltip>
         <el-tooltip content="更多" placement="top">
           <el-dropdown trigger="click" placement="bottom" style="margin-left: 10px;" @command="handleCommand">
-            <el-button :disabled="buttonDisabled" type="Info" circle>
+            <el-button  size="mini" :disabled="buttonDisabled" type="Info" circle>
               <i class="el-icon-more" />
             </el-button>
             <el-dropdown-menu slot="dropdown">
@@ -67,6 +67,7 @@
       :data="list"
       border
       fit
+      size="mini"
       highlight-current-row
       style="width: 100%;"
       @selection-change="handleSelectionChange"
@@ -132,13 +133,13 @@
           <span>{{ scope.row.create_time }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="120px" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column label="操作" align="center" width="120px" class-name="small-padding" fixed="right">
         <template slot-scope="scope">
           <el-tooltip content="编辑" placement="top">
-            <el-button v-waves type="primary" icon="el-icon-edit-outline" circle @click="handleUpdate(scope.$index,scope.row.id)" />
+            <el-button  size="mini" v-waves type="primary" icon="el-icon-edit-outline" circle @click="handleUpdate(scope.$index,scope.row.id)" />
           </el-tooltip>
           <el-tooltip content="删除" placement="top">
-            <el-button v-waves :loading="scope.row.delete" type="danger" icon="el-icon-delete" circle @click="handleDelete(scope.$index,scope.row.id)" />
+            <el-button  size="mini" v-waves :loading="scope.row.delete" type="danger" icon="el-icon-delete" circle @click="handleDelete(scope.$index,scope.row.id)" />
           </el-tooltip>
         </template>
       </el-table-column>

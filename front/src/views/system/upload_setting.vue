@@ -10,19 +10,19 @@
                 </span>
                 <el-form ref="form" :model="uploadForm.aliyun" label-width="220px" size="mini">
                     <el-form-item label="阿里云（accessKeyId ）">
-                        <el-input v-model="uploadForm.aliyun.accessKeyId"></el-input>
+                        <el-input size="mini" v-model="uploadForm.aliyun.accessKeyId"></el-input>
                     </el-form-item>
                     <el-form-item label="阿里云（accessKeySecret ）">
-                        <el-input v-model="uploadForm.aliyun.accessKeySecret"></el-input>
+                        <el-input size="mini" v-model="uploadForm.aliyun.accessKeySecret"></el-input>
                     </el-form-item>
                     <el-form-item label="阿里云（Endpoint ）">
-                        <el-input v-model="uploadForm.aliyun.endpoint"></el-input>
+                        <el-input size="mini" v-model="uploadForm.aliyun.endpoint"></el-input>
                     </el-form-item>
                     <el-form-item label="阿里云（BucketName ）">
-                        <el-input v-model="uploadForm.aliyun.bucket"></el-input>
+                        <el-input size="mini" v-model="uploadForm.aliyun.bucket"></el-input>
                     </el-form-item>
                     <el-form-item label="阿里云（Http路径 ）">
-                        <el-input v-model="uploadForm.aliyun.http"></el-input>
+                        <el-input size="mini" v-model="uploadForm.aliyun.http"></el-input>
                     </el-form-item>
                     <el-form-item label="是否默认使用">
                         <el-radio v-model="uploadForm.default" label="aliyun">默认</el-radio>
@@ -36,19 +36,19 @@
                     </span>
                 <el-form ref="form" :model="uploadForm.qiniuyun" label-width="220px" size="mini">
                     <el-form-item label="七牛云（Access_Key ）">
-                        <el-input v-model="uploadForm.qiniuyun.accessKeyId"></el-input>
+                        <el-input size="mini" v-model="uploadForm.qiniuyun.accessKeyId"></el-input>
                     </el-form-item>
                     <el-form-item label="七牛云（Secret_Key ）">
-                        <el-input v-model="uploadForm.qiniuyun.accessKeySecret"></el-input>
+                        <el-input size="mini" v-model="uploadForm.qiniuyun.accessKeySecret"></el-input>
                     </el-form-item>
                     <el-form-item label="七牛云（Endpoint ）">
-                        <el-input v-model="uploadForm.qiniuyun.endpoint"></el-input>
+                        <el-input size="mini" v-model="uploadForm.qiniuyun.endpoint"></el-input>
                     </el-form-item>
                     <el-form-item label="七牛云（BucketName ）">
-                        <el-input v-model="uploadForm.qiniuyun.bucket"></el-input>
+                        <el-input size="mini" v-model="uploadForm.qiniuyun.bucket"></el-input>
                     </el-form-item>
                     <el-form-item label="七牛云（Http路径 ）">
-                        <el-input v-model="uploadForm.qiniuyun.http"></el-input>
+                        <el-input size="mini" v-model="uploadForm.qiniuyun.http"></el-input>
                     </el-form-item>
                     <el-form-item label="是否默认使用">
                         <el-radio v-model="uploadForm.default" label="qiniuyun">默认</el-radio>
@@ -61,19 +61,19 @@
                 </span>
                 <el-form ref="form" :model="uploadForm.minio" label-width="220px" size="mini">
                     <el-form-item label="Minio（用户名 ）">
-                        <el-input v-model="uploadForm.minio.userName"></el-input>
+                        <el-input size="mini" v-model="uploadForm.minio.userName"></el-input>
                     </el-form-item>
                     <el-form-item label="Minio（密码 ）">
-                        <el-input v-model="uploadForm.minio.password"></el-input>
+                        <el-input size="mini" v-model="uploadForm.minio.password"></el-input>
                     </el-form-item>
                     <el-form-item label="Minio（上传地址 ）">
-                        <el-input v-model="uploadForm.minio.endpoint"></el-input>
+                        <el-input size="mini" v-model="uploadForm.minio.endpoint"></el-input>
                     </el-form-item>
                     <el-form-item label="Minio（BucketName ）">
-                        <el-input v-model="uploadForm.minio.bucket"></el-input>
+                        <el-input size="mini" v-model="uploadForm.minio.bucket"></el-input>
                     </el-form-item>
                     <el-form-item label="Minio（Http路径 ）">
-                        <el-input v-model="uploadForm.minio.http"></el-input>
+                        <el-input size="mini" v-model="uploadForm.minio.http"></el-input>
                     </el-form-item>
                     <el-form-item label="是否默认使用">
                         <el-radio v-model="uploadForm.default" label="minio">默认</el-radio>
@@ -83,7 +83,7 @@
         </el-tabs>
         <el-footer>
             <el-row>
-                <el-button type="primary" round @click="onSubmit">保存</el-button>
+                <el-button  size="mini" type="primary" round @click="onSubmit">保存</el-button>
             </el-row>
         </el-footer>
         </el-container>

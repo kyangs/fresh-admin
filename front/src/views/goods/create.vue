@@ -7,10 +7,10 @@
                         <span class="form-header">基本信息</span>
                     </template>
                     <el-form-item label="商品名称">
-                        <el-input v-model="form.goods_name"></el-input>
+                        <el-input size="mini" v-model="form.goods_name"></el-input>
                     </el-form-item>
                     <el-form-item label="商品分类">
-                        <el-select v-model="form.cate_id"
+                        <el-select size="mini" v-model="form.cate_id"
                                    clearable
                                    filterable
                                    @change="selectCate">
@@ -18,7 +18,7 @@
                                        :key="v.id" :label="v.name"
                                        :value="v.id"></el-option>
                         </el-select>
-                        <el-select v-if="init.children_list.length > 0"
+                        <el-select size="mini" v-if="init.children_list.length > 0"
                                    clearable
                                    filterable
                                    v-model="form.child_cate_id">
@@ -116,12 +116,12 @@
                         </el-row>
                         <el-row :gutter="20" style="padding: 5px" v-for="(attr,index) in form.attr_list">
                             <el-col :span="6">
-                                <el-input v-model="attr.attr_name">
+                                <el-input size="mini" v-model="attr.attr_name">
                                     <template slot="prepend">属性名</template>
                                 </el-input>
                             </el-col>
                             <el-col :span="6">
-                                <el-input v-model="attr.attr_value">
+                                <el-input size="mini" v-model="attr.attr_value">
                                     <template slot="prepend">属性值</template>
                                 </el-input>
                             </el-col>
@@ -133,8 +133,7 @@
 
                     </el-form-item>
                     <el-form-item label="商品详情">
-                        <el-input
-                                type="textarea"
+                        <el-input size="mini"                                 type="textarea"
                                 placeholder="请输入商品详情"
                                 v-model="form.detail"
                                 :rows="10"
@@ -146,7 +145,7 @@
             </el-form>
         </el-collapse>
         <p style="float: right">
-            <el-button type="success" @click="createGoods">提 交</el-button>
+            <el-button  size="mini" type="success" @click="createGoods">提 交</el-button>
         </p>
         <File ref="file_upload_1" @getMainFileList="getMainFileList"></File>
         <File ref="file_upload_2" @getFileList="getFileList"></File>

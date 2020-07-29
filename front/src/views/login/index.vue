@@ -10,8 +10,7 @@
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
-        <el-input
-          ref="username"
+        <el-input size="mini"           ref="username"
           v-model="loginForm.username"
           placeholder="用户名称"
           name="username"
@@ -25,8 +24,7 @@
         <span class="svg-container">
           <svg-icon icon-class="password" />
         </span>
-        <el-input
-          :key="passwordType"
+        <el-input size="mini"           :key="passwordType"
           ref="password"
           v-model="loginForm.password"
           :type="passwordType"
@@ -41,7 +39,7 @@
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
+      <el-button  size="mini" :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
 
     </el-form>
 

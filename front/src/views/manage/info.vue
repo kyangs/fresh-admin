@@ -2,13 +2,13 @@
   <div class="app-container">
     <el-form ref="dataForm" :model="temp" label-position="left" label-width="70px" style="width: 50%; ">
       <el-form-item label="角色" prop="group_id">
-        <el-input v-model="group" :disabled="true" />
+        <el-input size="mini" v-model="group" :disabled="true" />
       </el-form-item>
       <el-form-item label="账号" prop="username">
-        <el-input v-model="name" :disabled="true" />
+        <el-input size="mini" v-model="name" :disabled="true" />
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input v-model="temp.password" clearable placeholder="不修改，则留空" />
+        <el-input size="mini" v-model="temp.password" clearable placeholder="不修改，则留空" />
       </el-form-item>
       <el-form-item label="头像" prop="img">
         <el-upload
@@ -21,16 +21,16 @@
         </el-upload>
       </el-form-item>
       <el-form-item label="姓名" prop="realname">
-        <el-input v-model="temp.realname" clearable />
+        <el-input size="mini" v-model="temp.realname" clearable />
       </el-form-item>
       <el-form-item label="手机" prop="phone">
-        <el-input v-model="temp.phone" clearable />
+        <el-input size="mini" v-model="temp.phone" clearable />
       </el-form-item>
       <el-form-item label="邮箱" prop="email">
-        <el-input v-model="temp.email" clearable />
+        <el-input size="mini" v-model="temp.email" clearable />
       </el-form-item>
     </el-form>
-    <el-button :loading="btnLoading" type="primary" @click="saveData()">保存</el-button>
+    <el-button  size="mini" :loading="btnLoading" type="primary" @click="saveData()">保存</el-button>
   </div>
 </template>
 

@@ -3,11 +3,10 @@
         <!-- 搜索 -->
         <el-form :inline="true" :model="query_from" class="demo-form-inline">
             <el-form-item label="创建人">
-                <el-input v-model="query_from.username" placeholder="创建人" clearable></el-input>
+                <el-input size="mini" v-model="query_from.username" placeholder="创建人" clearable></el-input>
             </el-form-item>
             <el-form-item label="生效时间">
-                <el-date-picker
-                        clearable
+                <el-date-picker size="mini"                         clearable
                         v-model="query_from.time_range"
                         type="datetimerange"
                         format="yyyy-MM-dd HH:mm:ss"
@@ -18,8 +17,8 @@
                 </el-date-picker>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="listQuery">查询</el-button>
-                <el-button type="primary" @click="saveNotice({},false)">新增</el-button>
+                <el-button  size="mini" type="primary" @click="listQuery">查询</el-button>
+                <el-button  size="mini" type="primary" @click="saveNotice({},false)">新增</el-button>
             </el-form-item>
         </el-form>
         <!--数据-->
@@ -27,6 +26,7 @@
                 :data="table.list"
                 height="550"
                 border
+                size="mini"
                 style="width: 100%">
 
             <el-table-column label="标题" prop="title"></el-table-column>
@@ -82,15 +82,14 @@
                      label-position="right"
                      label-width="120px">
                 <el-form-item label="标题">
-                    <el-input v-model="data_from.title" style="width: 360px;" clearable placeholder="链接"></el-input>
+                    <el-input size="mini" v-model="data_from.title" style="width: 360px;" clearable placeholder="链接"></el-input>
                 </el-form-item>
                 <el-form-item label="标签">
-                    <el-input v-model="data_from.tag" style="width: 360px;" clearable placeholder="链接"></el-input>
+                    <el-input size="mini" v-model="data_from.tag" style="width: 360px;" clearable placeholder="链接"></el-input>
                 </el-form-item>
 
                 <el-form-item label="生效时间">
-                    <el-date-picker
-                            clearable
+                    <el-date-picker size="mini"                             clearable
                             style="width: 360px;"
                             v-model="data_from.time_range"
                             type="datetimerange"
@@ -102,7 +101,7 @@
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item label="内容">
-                    <el-input v-model="data_from.content"
+                    <el-input size="mini" v-model="data_from.content"
                               style="width: 360px;"
                               type="textarea"
                               :rows="15"
@@ -112,7 +111,7 @@
                 </el-form-item>
 
                 <el-form-item label="排序">
-                    <el-input v-model="data_from.sort" style="width: 360px;" clearable placeholder="排序"></el-input>
+                    <el-input size="mini" v-model="data_from.sort" style="width: 360px;" clearable placeholder="排序"></el-input>
                 </el-form-item>
 
                 <el-form-item label="状态">
@@ -128,8 +127,8 @@
 
             </el-form>
             <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="saveNotice(data_from,true)">确 定</el-button>
+            <el-button  size="mini" @click="dialogVisible = false">取 消</el-button>
+            <el-button  size="mini" type="primary" @click="saveNotice(data_from,true)">确 定</el-button>
             </span>
         </el-dialog>
     </div>
