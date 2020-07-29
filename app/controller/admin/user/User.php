@@ -52,5 +52,16 @@ class User extends Base
             return json_error(10002, $exception->getMessage());
         }
     }
+    /**
+     * 保存登录用户
+     * @Route("delete", method="POST")
+     */
+    public function deleteUser(){
+        try {
+            return json_ok(UserMiniService::deleteUser($this->params));
+        } catch (\Exception $exception) {
+            return json_error(10002, $exception->getMessage());
+        }
+    }
 
 }

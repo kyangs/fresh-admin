@@ -43,18 +43,25 @@
                     </el-image>
                 </template>
             </el-table-column>
-            <el-table-column label="手机号" width="100" prop="phone"></el-table-column>
-            <el-table-column label="地址" width="200" prop="link"></el-table-column>
-            <el-table-column label="地址" width="160">
+            <el-table-column label="手机号" width="120" prop="phone"></el-table-column>
+            <el-table-column label="地址" width="200">
                 <template slot-scope="scope">
                     {{scope.row.country}} {{scope.row.province}} {{scope.row.city}}
                 </template>
             </el-table-column>
             <el-table-column label="最新登录时间" prop="login_time"></el-table-column>
-            <el-table-column
-                    prop="create_time"
-                    label="创建时间"
-                    width="160">
+            <el-table-column prop="create_time" label="创建时间" width="160">
+            </el-table-column>
+            <el-table-column>
+                <template slot-scope="scope">
+                <el-switch v-model="scope.row.is_enabled"
+                           active-text="启用"
+                           :active-value="1"
+                           :inactive-value="0"
+                           @change="switchEnabled(scope.row)"
+                           inactive-text="禁用">
+                </el-switch>
+                </template>
             </el-table-column>
             <el-table-column label="操作" width="120">
                 <template slot-scope="scope">
@@ -81,11 +88,11 @@
             <el-form :model="data_from"
                      label-position="right"
                      label-width="120px">
-                <el-form-item label="用户名">
-                    <el-input v-model="data_from.username" style="width: 360px;" clearable placeholder="用户名"></el-input>
+                <el-form-item label="用户昵称">
+                    <el-input  maxlength="10" show-word-limit v-model="data_from.nickname"  style="width: 360px;" clearable placeholder="用户名"></el-input>
                 </el-form-item>
                 <el-form-item label="真实姓名">
-                    <el-input v-model="data_from.real_name" style="width: 360px;" clearable placeholder="真实姓名"></el-input>
+                    <el-input maxlength="5" show-word-limit v-model="data_from.real_name" style="width: 360px;" clearable placeholder="真实姓名"></el-input>
                 </el-form-item>
                 <el-form-item label="登录密码">
                     <el-input v-model="data_from.password" style="width: 360px;" clearable placeholder="登录密码"></el-input>
@@ -107,7 +114,7 @@
                             action=""
                             :show-file-list="false"
                             :http-request="uploadImage">
-                        <img v-if="data_from.full_path" :src="data_from.full_path" class="avatar">
+                        <img v-if="data_from.full_avatar" :src="data_from.full_avatar" class="avatar">
                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
                 </el-form-item>
@@ -159,7 +166,7 @@
                 data_from: {
                     id: '',
                     is_enabled: 1,
-                    username: '',
+                    nickname: '',
                     real_name: '',
                     password: '',
                     phone: '',
@@ -171,7 +178,7 @@
                 origin_data_from: {
                     id: '',
                     is_enabled: 1,
-                    username: '',
+                    nickname: '',
                     real_name: '',
                     password: '',
                     phone: '',
@@ -216,14 +223,14 @@
             },
             switchEnabled: function (row) {
                 const _this = this
+
                 request({
-                    url: '/admin/user/enable',
+                    url: '/admin/user/save',
                     method: 'post',
                     data: row
                 }).then(function (res) {
                     if (res.code === 10000) {
                         _this.$message.success('操作成功')
-                        row.is_enabled = res.data.is_enabled
                         return
                     }
                     _this.$message.error('操作失败')

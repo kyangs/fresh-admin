@@ -9,6 +9,7 @@ use app\repository\system\SystemSettingRepository;
 use app\repository\user\UserRepository;
 use app\service\BaseService;
 use app\service\UserService;
+use app\validate\UserValidate;
 use think\facade\Config;
 use EasyWeChat\Factory;
 use think\facade\Db;
@@ -202,20 +203,41 @@ class UserMiniService extends BaseService
     public static function adminSaveUser($request)
     {
         $data = [
-            'nickname'   => $request->username,
+            'nickname'   => $request->nickname,
             'real_name'  => $request->real_name,
             'avatar'     => $request->avatar,
             'image_key'  => $request->image_key,
             'phone'      => $request->phone,
             'gender'     => $request->gender,
             'is_enabled' => $request->is_enabled,
-            'password'   => think_encrypt($request->password),
         ];
+        $phoneRule='unique:user,phone';
+        if (isset($request->id) && !empty($request->id)){
+            $phoneRule.=','.$request->id;
+        }
+        if (isset($request->password) && !empty($request->password)) {
+            $data['password'] = think_encrypt($request->password);
+        }
+        validate(UserValidate::class)->rule('phone',$phoneRule)->check($data);
         if ($request->id && !empty($request->id)) {
-
             return UserRepository::edit($request->id, $data);
         }
         return UserRepository::add($data);
+    }
+
+
+    /**删除用户
+     * @param $request
+     * @return int
+     * @throws \Exception
+     */
+    public static function deleteUser($request)
+    {
+        if ($request->id && !empty($request->id)) {
+
+            return UserRepository::del($request->id);
+        }
+        throw new \Exception('传入参数错误', 1);
     }
 
 }

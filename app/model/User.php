@@ -21,7 +21,7 @@ class User extends Model
     //软删除时间
     protected $deleteTime = 'delete_time';
     //软删除字段的默认值
-    protected $defaultSoftDelete = 0;
+    protected $defaultSoftDelete = null;
     //只读字段，不允许被更改
     protected $readonly = [];
     //数据输出隐藏的属性
@@ -32,7 +32,7 @@ class User extends Model
 
     //查询类型转换, 与Model 中的type类型转化功能相同，只是新增字符串类型
     protected $selectType = [
-        'id' => 'string',
+//        'id' => 'string',
     ];
 
     use ModelTrait;
