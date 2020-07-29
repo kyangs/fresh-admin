@@ -243,7 +243,7 @@ CREATE TABLE `auth_group` (
 
 LOCK TABLES `auth_group` WRITE;
 /*!40000 ALTER TABLE `auth_group` DISABLE KEYS */;
-INSERT INTO `auth_group` VALUES (1,'超级管理员',1,'60,61,58,59,55,57,56,53,54,51,52,49,50,45,48,47,46,43,44,39,40,1,38,7,2',1595903987,1544881719),(2,'普通管理员',1,'70622770253402113,70622988382375937,68328234063892481,68328450783580160,67745401595367425,67745734388224001,7246645603471361,7247512280895489,7247267136409601,7247034964905985',1594558953,1542787522);
+INSERT INTO `auth_group` VALUES (1,'超级管理员',1,'60,61,58,62,59,55,57,56,53,54,51,52,49,50,45,48,47,46,43,44,39,40,1,38,7,2',1596003045,1544881719),(2,'普通管理员',1,'70622770253402113,70622988382375937,68328234063892481,68328450783580160,67745401595367425,67745734388224001,7246645603471361,7247512280895489,7247267136409601,7247034964905985',1594558953,1542787522);
 /*!40000 ALTER TABLE `auth_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -274,7 +274,7 @@ CREATE TABLE `auth_rule` (
   `create_time` int(10) unsigned DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `name` (`name`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8 COMMENT='规则表';
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8 COMMENT='规则表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -283,7 +283,7 @@ CREATE TABLE `auth_rule` (
 
 LOCK TABLES `auth_rule` WRITE;
 /*!40000 ALTER TABLE `auth_rule` DISABLE KEYS */;
-INSERT INTO `auth_rule` VALUES (1,'manage','权限管理',1,1,'',0,0,'component',1593867807,'/manage','layout',0,0,1,'',0),(2,'manage/admin','管理员列表',1,1,'',1,0,'user',1541666364,'admin','manage/admin',0,0,0,'',0),(7,'manage/rules','权限列表',1,1,'',1,0,'lock',1542353476,'rules','manage/rules',0,0,0,'',0),(38,'manage/roles','角色列表',1,1,'',1,0,'list',1542602805,'roles','manage/roles',0,0,0,'',0),(39,'log','日志管理',1,1,'',0,0,'component',1579436605,'/log','layout',0,0,1,'',0),(40,'log/log','登陆日志',1,1,'',39,0,'list',1593868512,'log','log/log',0,0,0,'',0),(43,'icon','图标管理',1,1,'',0,0,'component',1579436588,'/icon','layout',0,0,0,'',0),(44,'icon/index','图标列表',1,1,'',43,0,'list',0,'index','icons/index',0,0,0,'',0),(45,'article','文章管理',1,1,'',0,0,'component',1579440670,'/article','layout',0,0,1,'',1579440670),(46,'article/categery','分类列表',1,1,'',45,0,'list',1579440763,'categery','article/categery',0,0,0,'',1579440763),(47,'article/column','栏目列表',1,1,'',45,0,'list',1579440819,'column','article/column',0,0,0,'',1579440819),(48,'article/blog','文章列表',1,1,'',45,0,'list',1579440877,'blog','article/blog',0,0,0,'',1579440877),(49,'adv','广告管理',1,1,'',0,0,'component',1593864868,'/adv','layout',0,1,1,'',1593864698),(50,'adv/list','广告列表',1,1,'',49,0,'list',1593871402,'list','adv/list',0,1,0,'noredirect',1593864777),(51,'category','分类管理',1,1,'',0,0,'component',1594003681,'category','layout',0,1,1,'',1594003656),(52,'category/list','分类列表',1,1,'',51,0,'list',1594003762,'list','layout',0,1,0,'noredirect',1594003708),(53,'system_notice','公告管理',1,1,'',0,0,'component',1594554195,'system_notice','layout',0,1,1,'',1594550716),(54,'system_notice/list','公告列表',1,1,'',53,0,'list',1594554201,'list','layout',0,1,0,'noredirect',1594550768),(55,'goods','商品管理',1,1,'',0,0,'component',1595055683,'goods','layout',0,1,1,'noredirect',1595055368),(56,'goods/list','商品列表',1,1,'',55,0,'list',1595055714,'list','layout',0,1,0,'noredirect',1595055714),(57,'goods/create','添加商品',1,1,'',55,0,'form',1595056037,'create','layout',0,1,0,'noredirect',1595056005),(58,'system','系统设置',1,1,'',0,0,'component',1595672334,'system','layout',0,1,1,'',1595672132),(59,'system/upload','上传设置',1,1,'',58,0,'documentation',1595672342,'upload','layout',0,1,0,'noredirect',1595672171),(60,'user','用户管理',1,1,'',0,0,'component',1595903973,'user','layout',0,1,1,'',1595903874),(61,'user/list','用户列表',1,1,'',60,0,'list',1595904044,'list','layout',0,1,0,'noredirect',1595903956);
+INSERT INTO `auth_rule` VALUES (1,'manage','权限管理',1,1,'',0,0,'component',1593867807,'/manage','layout',0,0,1,'',0),(2,'manage/admin','管理员列表',1,1,'',1,0,'user',1541666364,'admin','manage/admin',0,0,0,'',0),(7,'manage/rules','权限列表',1,1,'',1,0,'lock',1542353476,'rules','manage/rules',0,0,0,'',0),(38,'manage/roles','角色列表',1,1,'',1,0,'list',1542602805,'roles','manage/roles',0,0,0,'',0),(39,'log','日志管理',1,1,'',0,0,'component',1579436605,'/log','layout',0,0,1,'',0),(40,'log/log','登陆日志',1,1,'',39,0,'list',1593868512,'log','log/log',0,0,0,'',0),(43,'icon','图标管理',1,1,'',0,0,'component',1579436588,'/icon','layout',0,0,0,'',0),(44,'icon/index','图标列表',1,1,'',43,0,'list',0,'index','icons/index',0,0,0,'',0),(45,'article','文章管理',1,1,'',0,0,'component',1579440670,'/article','layout',0,0,1,'',1579440670),(46,'article/categery','分类列表',1,1,'',45,0,'list',1579440763,'categery','article/categery',0,0,0,'',1579440763),(47,'article/column','栏目列表',1,1,'',45,0,'list',1579440819,'column','article/column',0,0,0,'',1579440819),(48,'article/blog','文章列表',1,1,'',45,0,'list',1579440877,'blog','article/blog',0,0,0,'',1579440877),(49,'adv','广告管理',1,1,'',0,0,'component',1593864868,'/adv','layout',0,1,1,'',1593864698),(50,'adv/list','广告列表',1,1,'',49,0,'list',1593871402,'list','adv/list',0,1,0,'noredirect',1593864777),(51,'category','分类管理',1,1,'',0,0,'component',1594003681,'category','layout',0,1,1,'',1594003656),(52,'category/list','分类列表',1,1,'',51,0,'list',1594003762,'list','layout',0,1,0,'noredirect',1594003708),(53,'system_notice','公告管理',1,1,'',0,0,'component',1594554195,'system_notice','layout',0,1,1,'',1594550716),(54,'system_notice/list','公告列表',1,1,'',53,0,'list',1594554201,'list','layout',0,1,0,'noredirect',1594550768),(55,'goods','商品管理',1,1,'',0,0,'component',1595055683,'goods','layout',0,1,1,'noredirect',1595055368),(56,'goods/list','商品列表',1,1,'',55,0,'list',1595055714,'list','layout',0,1,0,'noredirect',1595055714),(57,'goods/create','添加商品',1,1,'',55,0,'form',1595056037,'create','layout',0,1,0,'noredirect',1595056005),(58,'system','系统设置',1,1,'',0,0,'component',1595672334,'system','layout',0,1,1,'',1595672132),(59,'system/upload','上传设置',1,1,'',58,0,'documentation',1595672342,'upload','layout',0,1,0,'noredirect',1595672171),(60,'user','用户管理',1,1,'',0,0,'component',1595903973,'user','layout',0,1,1,'',1595903874),(61,'user/list','用户列表',1,1,'',60,0,'list',1595904044,'list','layout',0,1,0,'noredirect',1595903956),(62,'applets/setting','小程序设置',1,1,'',58,0,'edit',1596002566,'applets','layout',0,1,0,'noredirect',1596002566);
 /*!40000 ALTER TABLE `auth_rule` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -781,12 +781,12 @@ DROP TABLE IF EXISTS `system_setting`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `system_setting` (
-  `unique_key` varchar(30) NOT NULL COMMENT '设置项标示',
-  `intro` varchar(255) NOT NULL DEFAULT '' COMMENT '设置项描述',
+  `unique_key` varchar(20) NOT NULL DEFAULT '' COMMENT '设置key',
   `value` mediumtext NOT NULL COMMENT '设置内容（json格式）',
+  `intro` varchar(255) NOT NULL DEFAULT '' COMMENT '描述',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  UNIQUE KEY `unique_key` (`unique_key`)
+  PRIMARY KEY (`unique_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -796,7 +796,7 @@ CREATE TABLE `system_setting` (
 
 LOCK TABLES `system_setting` WRITE;
 /*!40000 ALTER TABLE `system_setting` DISABLE KEYS */;
-INSERT INTO `system_setting` VALUES ('upload','上传设置','{\"aliyun\":{\"accessKeyId\":\"LTAI4GFioN3HVHhvugbhLzxm\",\"accessKeySecret\":\"gBTo0ElWFad9suSwbfjoJr5Ln5IL8c\",\"endpoint\":\"oss-cn-beijing.aliyuncs.com\",\"bucket\":\"fresh-kyang\",\"http\":\"http:\\/\\/fresh-kyang.oss-cn-beijing.aliyuncs.com\"},\"qiniuyun\":{\"accessKeyId\":\"5JsGXDMCZx9rJCXkB6VZr2_RVVdzWC4q2-ETgsuz\",\"accessKeySecret\":\"UeD1CFDNMBf7z7N28LOl5STa6IS8_6sUoGiofnVf\",\"endpoint\":\"s3-cn-east-1.qiniucs.com\",\"bucket\":\"fresh-kyangs\",\"http\":\"http:\\/\\/qe4knhsk2.bkt.clouddn.com\"},\"txyun\":{\"accessKeyId\":\"\",\"accessKeySecret\":\"\",\"endpoint\":\"\",\"region\":\"\",\"token\":\"\"},\"minio\":{\"userName\":\"kyangs\",\"password\":\"a3lhbmdzX21pbmlv\",\"endpoint\":\"http:\\/\\/yl8134.cn:9999\",\"bucket\":\"fresh\",\"http\":\"http:\\/\\/yl8134.cn:9999\"},\"default\":\"minio\",\"signature\":\"ed6d741584f1a2022f5af64e50032a4c\"}','2020-07-28 01:37:56','2020-07-25 13:09:45');
+INSERT INTO `system_setting` VALUES ('applets','{\"base\":{\"appID\":\"wxd9931ae0230cd8d6\",\"appSecret\":\"e5838f016a6c502f528b0eac81ec8e7b\"},\"pay\":{\"mchID\":\"1588072051\",\"apiKey\":\"81f7d977c49aaa00fb2cd0d35fed6a9a\"}}','小程序信号设置','2020-07-29 07:08:57','2020-07-29 07:07:17'),('upload','{\"aliyun\":{\"accessKeyId\":\"LTAI4GFioN3HVHhvugbhLzxm\",\"accessKeySecret\":\"gBTo0ElWFad9suSwbfjoJr5Ln5IL8c\",\"endpoint\":\"oss-cn-beijing.aliyuncs.com\",\"bucket\":\"fresh-kyang\",\"http\":\"http:\\/\\/fresh-kyang.oss-cn-beijing.aliyuncs.com\"},\"qiniuyun\":{\"accessKeyId\":\"5JsGXDMCZx9rJCXkB6VZr2_RVVdzWC4q2-ETgsuz\",\"accessKeySecret\":\"UeD1CFDNMBf7z7N28LOl5STa6IS8_6sUoGiofnVf\",\"endpoint\":\"s3-cn-east-1.qiniucs.com\",\"bucket\":\"fresh-kyangs\",\"http\":\"http:\\/\\/qe4knhsk2.bkt.clouddn.com\"},\"txyun\":{\"accessKeyId\":\"\",\"accessKeySecret\":\"\",\"endpoint\":\"\",\"region\":\"\",\"token\":\"\"},\"minio\":{\"userName\":\"kyangs\",\"password\":\"a3lhbmdzX21pbmlv\",\"endpoint\":\"http:\\/\\/yl8134.cn:9999\",\"bucket\":\"fresh\",\"http\":\"http:\\/\\/yl8134.cn:9999\"},\"default\":\"minio\",\"signature\":\"ed6d741584f1a2022f5af64e50032a4c\"}','上传设置','2020-07-29 06:49:50','2020-07-25 13:09:45');
 /*!40000 ALTER TABLE `system_setting` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -828,13 +828,13 @@ CREATE TABLE `user` (
   `login_ip` varchar(20) NOT NULL DEFAULT '' COMMENT 'IP',
   `login_time` timestamp NULL DEFAULT NULL COMMENT '登录时间',
   `sign` varchar(200) NOT NULL DEFAULT '' COMMENT '个性签名',
-  `delete_time` int(11) NOT NULL DEFAULT '0' COMMENT '删除时间',
+  `delete_time` timestamp NULL DEFAULT NULL COMMENT '删除时间',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `openid` (`open_id`),
   KEY `create_time` (`create_time`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -843,7 +843,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'','kyang','杨坤','8D2CD4A0DC80D728C65C1D7E6B9559C3MDAwMDAwMDAwMIOIfN6FfIaW','16602112169','fresh/2020-07/emoji.jpg','minio','男','','','',0,0,1,'','','',NULL,'',0,'0000-00-00 00:00:00','0000-00-00 00:00:00');
+INSERT INTO `user` VALUES (1,'','杨s','杨坤','8D2CD4A0DC80D728C65C1D7E6B9559C3MDAwMDAwMDAwMIOIfN6FfIaW','16602112169','fresh/2020-07/emoji.jpg','minio','男','','','',0,0,1,'','','',NULL,'',NULL,'2020-07-29 02:24:21','2020-07-29 03:17:03'),(2,'','212','','','16602112161','fresh/2020-07/0dba32ec834c8327ae56433051d44b5f6c74cafe.png','minio','保密','','','',0,0,1,'','','',NULL,'','2020-07-29 03:18:29','2020-07-29 02:46:22','2020-07-29 03:18:29');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -890,4 +890,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-28 20:14:09
+-- Dump completed on 2020-07-29 15:13:06

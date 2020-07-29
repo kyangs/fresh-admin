@@ -31,7 +31,6 @@ class Setting extends Base
     public function uploadSetting()
     {
         try {
-
             return json_ok(SystemSettingService::saveSetting($this->params, 'upload'));
         } catch (\Exception $exception) {
             return json_error(10001, $exception->getMessage());
@@ -40,13 +39,30 @@ class Setting extends Base
 
     /**
      *获取设置
-     * @Route("setting", method="POST")
+     * @Route("/setting/:key", method="GET")
+     * @param $key
+     * @return \json
      */
-    public function setting()
+    public function setting($key)
     {
         try {
 
-            return json_ok(SystemSettingService::setting($this->params->key));
+            return json_ok(SystemSettingService::setting($key));
+        } catch (\Exception $exception) {
+            return json_error(10001, $exception->getMessage());
+        }
+    }
+
+    /**
+     *保存或者更新设置
+     * @Route("setting/:key", method="POST")
+     * @param string $key
+     * @return \json
+     */
+    public function settingSave($key)
+    {
+        try {
+            return json_ok(SystemSettingService::settingSave($key, $this->request->post('form'),$this->request->post('intro')));
         } catch (\Exception $exception) {
             return json_error(10001, $exception->getMessage());
         }

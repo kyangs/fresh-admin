@@ -31,7 +31,6 @@
                 :props="defaultProps"
                 default-expand-all
                 show-checkbox
-                check-strictly
                 node-key="id"
                 @check="checkHandle"
               />

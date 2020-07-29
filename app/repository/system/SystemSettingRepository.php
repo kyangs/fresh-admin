@@ -15,6 +15,12 @@ use app\traits\RepositoryTrait;
  */
 class SystemSettingRepository
 {
+    //模型，带命名空间
+    public static $model = 'app\model\common\SystemSetting';
+    //模型主键
+    public static $pk = 'unique_key';
+    public static $showField = ['*'];
+
     use RepositoryTrait;
 
     public static function saveSetting($key, $value, $describe = '')

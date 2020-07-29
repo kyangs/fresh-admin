@@ -23,4 +23,18 @@ class SystemSettingService extends BaseService
     {
         return SystemSettingRepository::setting($key);
     }
+
+    public static function settingSave($key, $value, $intro = '')
+    {
+        $row  = self::setting($key);
+        $data = [
+            'unique_key' => $key,
+            'value'      => is_string($value) ? $value : json_encode($value),
+            'intro'      => $intro,
+        ];
+        if (!empty($row)) {
+            return SystemSettingRepository::edit($key, $data);
+        }
+        return SystemSettingRepository::add($data);
+    }
 }

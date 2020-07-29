@@ -1,13 +1,14 @@
 <template>
     <div class="app-container">
         <!--数据-->
+        <el-container>
         <el-tabs v-model="activeName">
             <el-tab-pane name="aliyun">
                 <span slot="label"><i class="el-icon-document"/>
                     阿里云
                     <span v-if="uploadForm.default==='aliyun'">(默认)</span>
                 </span>
-                <el-form ref="form" :model="uploadForm.aliyun" label-width="300px">
+                <el-form ref="form" :model="uploadForm.aliyun" label-width="220px">
                     <el-form-item label="阿里云（accessKeyId ）">
                         <el-input v-model="uploadForm.aliyun.accessKeyId"></el-input>
                     </el-form-item>
@@ -33,7 +34,7 @@
                     七牛云
                     <span v-if="uploadForm.default==='qiniuyun'">(默认)</span>
                     </span>
-                <el-form ref="form" :model="uploadForm.qiniuyun" label-width="300px">
+                <el-form ref="form" :model="uploadForm.qiniuyun" label-width="220px">
                     <el-form-item label="七牛云（Access_Key ）">
                         <el-input v-model="uploadForm.qiniuyun.accessKeyId"></el-input>
                     </el-form-item>
@@ -54,40 +55,11 @@
                     </el-form-item>
                 </el-form>
             </el-tab-pane>
-<!--            <el-tab-pane name="txyun">-->
-<!--                <span slot="label"><i class="el-icon-document"></i>-->
-<!--                    腾讯云-->
-<!--                <span v-if="uploadForm.default==='txyun'">(默认)</span>-->
-<!--                </span>-->
-<!--                <el-form ref="form" :model="uploadForm.txyun" label-width="300px">-->
-<!--                    <el-form-item label="腾讯云（SecretId ）">-->
-<!--                        <el-input v-model="uploadForm.txyun.accessKeyId"></el-input>-->
-<!--                    </el-form-item>-->
-<!--                    <el-form-item label="腾讯云（SecretKey ）">-->
-<!--                        <el-input v-model="uploadForm.txyun.accessKeySecret"></el-input>-->
-<!--                    </el-form-item>-->
-<!--                    <el-form-item label="腾讯云（Endpoint ）">-->
-<!--                        <el-input v-model="uploadForm.txyun.endpoint"></el-input>-->
-<!--                    </el-form-item>-->
-<!--                    <el-form-item label="腾讯云（Region ）">-->
-<!--                        <el-input v-model="uploadForm.txyun.region"></el-input>-->
-<!--                    </el-form-item>-->
-<!--                    <el-form-item label="腾讯云（Token ）">-->
-<!--                        <el-input v-model="uploadForm.txyun.token"></el-input>-->
-<!--                    </el-form-item>-->
-<!--                    <el-form-item label="腾讯云（Http路径 ）">-->
-<!--                        <el-input v-model="uploadForm.txyun.http"></el-input>-->
-<!--                    </el-form-item>-->
-<!--                    <el-form-item label="是否默认使用">-->
-<!--                        <el-radio v-model="uploadForm.default" label="txyun">默认</el-radio>-->
-<!--                    </el-form-item>-->
-<!--                </el-form>-->
-<!--            </el-tab-pane>-->
             <el-tab-pane name="minio">
                 <span slot="label"><i class="el-icon-document"></i>
                 Minio<span v-if="uploadForm.default==='minio'">(默认)</span>
                 </span>
-                <el-form ref="form" :model="uploadForm.minio" label-width="300px">
+                <el-form ref="form" :model="uploadForm.minio" label-width="220px">
                     <el-form-item label="Minio（用户名 ）">
                         <el-input v-model="uploadForm.minio.userName"></el-input>
                     </el-form-item>
@@ -109,9 +81,12 @@
                 </el-form>
             </el-tab-pane>
         </el-tabs>
-        <el-row>
-            <el-button type="primary" @click="onSubmit">保存</el-button>
-        </el-row>
+        <el-footer>
+            <el-row>
+                <el-button type="primary" round @click="onSubmit">保存</el-button>
+            </el-row>
+        </el-footer>
+        </el-container>
     </div>
 
 </template>
@@ -162,9 +137,9 @@
             getSetting() {
                 const _this = this
                 request({
-                    url: '/admin/system/setting',
-                    method: 'post',
-                    data: {key: "upload"}
+                    url: '/admin/system/setting/upload',
+                    method: 'get',
+                    data: {}
                 }).then(function (res) {
                     if (res.code === 10000) {
                         console.log(res.data)

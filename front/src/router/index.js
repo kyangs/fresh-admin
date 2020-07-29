@@ -156,6 +156,12 @@ export const constantRoutes = [
         name: '/system/upload/',
         meta: { title: '上传设置', icon: 'dashboard' }
       },
+      {
+        path: '/system/applets',
+        component: () => import('@/views/system/applets'),
+        name: '/system/applets/',
+        meta: { title: '小程序设置', icon: 'dashboard' }
+      },
     ]
   },
   {
