@@ -24,7 +24,7 @@
 
                 </el-form-item>
             </el-form>
-            <el-container style="height: 500px;">
+            <el-container style="height: 400px;">
                 <el-aside width="200px" style="background-color: #545c64">
                     <el-main>
                         <el-menu @select="handleSelect"
@@ -104,7 +104,12 @@
                 </el-container>
             </el-container>
             <span slot="footer" class="dialog-footer" >
-            <el-link @click="deleteSelectImage" v-if="check_list.length > 0" type="danger">删除</el-link>
+                <el-popconfirm
+                        v-if="check_list.length > 0"
+                        @onConfirm="deleteSelectImage"
+                        title="选中的图片会被删除，您确定吗？">
+                        <el-button  size="mini" slot="reference" type="danger">删除</el-button>
+                    </el-popconfirm>
             <el-button  size="mini" @click="fileDialogVisible = false">取消</el-button>
             <el-button  size="mini" type="primary" @click="handleSelectImage">确定</el-button>
             </span>
@@ -188,12 +193,18 @@
             },
             deleteSelectImage() {
                 const _this = this
+
+                let group = Object.assign({},_this.group_data)
+                if (_this.group_data.id === '' && _this.group_list.length > 0){
+                    Object.assign(group,_this.group_list[0])
+                }
+
                 const param = {
                     id_list: [],
                     group: Object.assign({
                         pageSize: _this.file_page.per_page,
                         page: _this.file_page.current_page
-                    }, _this.group_data),
+                    }, group),
                 }
                 _this.check_list.forEach(v => {
                     param.id_list.push(_this.file_page.data[v].id)
@@ -236,6 +247,7 @@
                 const _this = this
                 _this.check_all = false
                 _this.default_active = key.toString()
+
                 this.file_page.current_page = 1
                 _this.queryFileList()
                 _this.check_list = []

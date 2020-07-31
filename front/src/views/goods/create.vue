@@ -41,8 +41,13 @@
                             <el-col :span="3">
                                 <i class="el-icon-plus avatar-uploader-icon" @click="selectFile"></i>
                             </el-col>
-                            <el-col v-for="(v) in form.image_list" :span="3">
-                                <img :src="v.full_url" class="avatar"></el-col>
+                            <draggable v-model="form.image_id_list">
+                                <transition-group>
+                                    <el-col v-for="element in form.image_list" :key="element.id" :span="3">
+                                        <img :src="element.full_url" class="avatar">
+                                    </el-col>
+                                </transition-group>
+                            </draggable>
                         </el-row>
                     </el-form-item>
                 </el-collapse-item>
@@ -104,8 +109,14 @@
                             <el-col :span="3">
                                 <i class="el-icon-plus avatar-uploader-icon" @click="selectDetailFile"></i>
                             </el-col>
-                            <el-col v-for="(v) in form.detail_images" :span="3">
-                                <img :src="v.full_url" class="avatar"></el-col>
+
+                            <draggable v-model="form.detail_images_id">
+                                <transition-group>
+                                    <el-col v-for="element in form.detail_images" :key="element.id" :span="3">
+                                        <img :src="element.full_url" class="avatar">
+                                    </el-col>
+                                </transition-group>
+                            </draggable>
                         </el-row>
                     </el-form-item>
                     <el-form-item label="商品属性">
@@ -157,10 +168,11 @@
     import File from '@/components/File'
 
     import request from '@/utils/jsonrequest'
+    import draggable from 'vuedraggable'
 
     export default {
         name: 'Create',
-        components: {File},
+        components: {File,draggable},
         data() {
             return {
                 activeNames: ['1', '2', '3'],
