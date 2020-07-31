@@ -24,8 +24,9 @@ class HomeService extends BaseService
      */
     public function home($request)
     {
+        $data      = [];
         $advList   = (new Adv)->findAbleAdv(self::time());
-        $imageList = FileSystemRepository::findByIds(array_column($advList, 'image_id'));
+        $imageList = FileSystemRepository::findByIds(array_column($advList, 'image_id'),true);
         foreach ($advList as $item) {
             $item['full_path'] = '';
             if (isset($imageList[$item['image_id']])) {
@@ -34,7 +35,7 @@ class HomeService extends BaseService
             $data[$item['position']][] = $item;
         }
         return [
-            'adv_list'      => $advList,
+            'adv_list'      => $data,
             'category_list' => CategoryService::showHomeAndEnable(),
             'notice_list'   => NoticeService::enableList(),
         ];
