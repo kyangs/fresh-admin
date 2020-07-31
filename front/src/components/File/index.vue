@@ -110,7 +110,7 @@
                         v-if="check_list.length > 0"
                         @onConfirm="deleteSelectImage"
                         title="选中的图片会被删除，您确定吗？">
-                        <el-button size="mini" slot="reference" type="danger">删除</el-button>
+                        <el-link size="mini" slot="reference" type="danger">删除</el-link>
                     </el-popconfirm>
             </span>
         </el-dialog>
