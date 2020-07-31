@@ -76,14 +76,6 @@ class GoodsService extends BaseService
                 ];
             }
         }
-        if ($request->detail_images_id) {
-            foreach ($request->detail_images_id as $did) {
-                $introImageList[] = [
-                    'goods_id' => $request->id,
-                    'image_id' => $did,
-                ];
-            }
-        }
         if (isset($request->attr_list) && !empty($request->attr_list)) {
             foreach ($request->attr_list as $attr) {
                 $attrList[] = [
@@ -159,7 +151,7 @@ class GoodsService extends BaseService
         $goods['main_image_id']    = $goods['main_image'];
         $goods['main_image']       = FileSystemRepository::findById($goods['main_image'], true);
         $goods['image_id_list']    = $carouselImageIds;
-        $goods['detail_images_id'] = array_unique($detailImageIds);
+        $goods['detail_images_id'] = $detailImageIds;
         $goods['detail_images']    = array_values($detailImage);
         $goods['image_list']       = array_values($carouselImage);
         $goods['mouth_sale']       = GoodsSales::getMothSalesByGoodsID($goods['id']);

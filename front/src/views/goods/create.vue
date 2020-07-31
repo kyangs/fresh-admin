@@ -1,7 +1,7 @@
 <template>
     <div class="app-container">
         <el-collapse v-model="activeNames">
-            <el-form ref="form" :model="form" label-width="180px" style="border-radius: 4px">
+            <el-form ref="form" :model="form" label-width="180px">
                 <el-collapse-item title="商品详情" name="1">
                     <template slot="title">
                         <span class="form-header">基本信息</span>
@@ -41,10 +41,15 @@
                             <el-col :span="3">
                                 <i class="el-icon-plus avatar-uploader-icon" @click="selectFile"></i>
                             </el-col>
-                            <draggable v-model="form.image_id_list">
+                            <draggable v-model="form.image_list">
                                 <transition-group>
-                                    <el-col v-for="element in form.image_list" :key="element.id" :span="3">
-                                        <img :src="element.full_url" class="avatar">
+                                    <el-col v-for="(element,index) in form.image_list" :key="element.id" :span="3">
+                                        <el-image :src="element.full_url"
+                                                  :preview-src-list="[element.full_url]"
+                                                  class="avatar">
+                                        </el-image>
+                                        <el-link size="mini" type="danger" @click="deleteList(form.image_list,index)"
+                                                 class="el-icon-delete"></el-link>
                                     </el-col>
                                 </transition-group>
                             </draggable>
@@ -109,18 +114,19 @@
                             <el-col :span="3">
                                 <i class="el-icon-plus avatar-uploader-icon" @click="selectDetailFile"></i>
                             </el-col>
-
-                            <draggable v-model="form.detail_images_id">
-                                <transition-group>
-                                    <el-col v-for="element in form.detail_images" :key="element.id" :span="3">
-                                        <img :src="element.full_url" class="avatar">
-                                    </el-col>
-                                </transition-group>
+                            <draggable v-model="form.detail_images">
+                                <el-col v-for="(element,index) in form.detail_images" :key="element.id" :span="3">
+                                    <el-image :src="element.full_url" :preview-src-list="[element.full_url]" class="avatar">
+                                    </el-image>
+                                        <el-link size="mini" type="danger" @click="deleteList(form.detail_images,index)"
+                                                 class="el-icon-delete">
+                                        </el-link>
+                                </el-col>
                             </draggable>
                         </el-row>
                     </el-form-item>
                     <el-form-item label="商品属性">
-                        <el-row  :gutter="20">
+                        <el-row :gutter="20">
                             <el-col :span="6">
                                 <el-link type="primary" @click="addAttr">新增</el-link>
                             </el-col>
@@ -144,19 +150,19 @@
 
                     </el-form-item>
                     <el-form-item label="商品详情">
-                        <el-input size="mini"                                 type="textarea"
-                                placeholder="请输入商品详情"
-                                v-model="form.detail"
-                                :rows="10"
-                                :autosize="{ minRows: 10, maxRows: 20}"
-                                show-word-limit>
+                        <el-input size="mini" type="textarea"
+                                  placeholder="请输入商品详情"
+                                  v-model="form.detail"
+                                  :rows="10"
+                                  :autosize="{ minRows: 10, maxRows: 20}"
+                                  show-word-limit>
                         </el-input>
                     </el-form-item>
                 </el-collapse-item>
             </el-form>
         </el-collapse>
         <p style="float: right">
-            <el-button  size="mini" type="success" @click="createGoods">提 交</el-button>
+            <el-button size="mini" type="success" @click="createGoods">提 交</el-button>
         </p>
         <File ref="file_upload_1" @getMainFileList="getMainFileList"></File>
         <File ref="file_upload_2" @getFileList="getFileList"></File>
@@ -172,7 +178,7 @@
 
     export default {
         name: 'Create',
-        components: {File,draggable},
+        components: {File, draggable},
         data() {
             return {
                 activeNames: ['1', '2', '3'],
@@ -239,6 +245,9 @@
             }
         },
         methods: {
+            deleteList(rows,index){
+                rows.splice(index,1)
+            },
             addAttr() {
                 const _this = this
                 _this.form.attr_list.push({
@@ -252,6 +261,14 @@
             },
             createGoods() {
                 const _this = this
+                _this.form.image_id_list = []
+                _this.form.image_list.forEach(row => {
+                    _this.form.image_id_list.push(row.id)
+                })
+                _this.form.detail_images_id = []
+                _this.form.detail_images.forEach(row => {
+                    _this.form.detail_images_id.push(row.id)
+                })
                 request({
                     url: "/admin/goods/save",
                     method: 'post',
@@ -281,17 +298,9 @@
             },
             getFileList(rows) {
                 this.form.image_list = rows
-                const _this = this
-                _this.form.image_list.forEach(row => {
-                    _this.form.image_id_list.push(row.id)
-                })
             },
             getDetailFiles(rows) {
                 this.form.detail_images = rows
-                const _this = this
-                _this.form.detail_images.forEach(row => {
-                    _this.form.detail_images_id.push(row.id)
-                })
             },
             addGoodsTag() {
                 if (this.form.tag === '') return
@@ -328,7 +337,7 @@
     .avatar-uploader-icon {
         font-size: 16px;
         cursor: pointer;
-        border: 1px solid darkgray;
+        border: 1px dashed darkgray;
         color: #8c939d;
         width: 108px;
         height: 108px;

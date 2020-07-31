@@ -5,6 +5,7 @@ namespace app\repository\file;
 
 use app\model\common\File;
 use app\model\common\SystemSetting;
+use think\db\Raw;
 
 /**
  * 管理员
@@ -51,8 +52,10 @@ class FileSystemRepository
     {
         $imgList = [];
         if (empty($imageIds)) return $imgList;
+        $imageIds = array_unique($imageIds);
+        $orderRaw = new Raw('field(id,'.implode(',',$imageIds).')');
         $httpMapping = SystemSetting::uploadSettingMapping();
-        foreach (File::where(['id' => $imageIds])->select()->toArray() as &$item) {
+        foreach (File::where(['id' => $imageIds])->order($orderRaw)->select()->toArray() as &$item) {
             $item['full_url']     = $httpMapping[$item['config_key']]['http'] . $item['file_url'];
             $imgList[$item['id']] = $onlyUrl ? $item['full_url'] : $item;
         }
