@@ -13,13 +13,13 @@
                     <el-input size="mini" v-model="group_data.sort" placeholder="排序"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button  size="mini"  type="primary" @click="addFileGroup(group_data,true)">保存组</el-button>
+                    <el-button size="mini" type="primary" @click="addFileGroup(group_data,true)">保存组</el-button>
 
                     <el-popconfirm
                             v-if="group_data.id"
                             @onConfirm="deleteFileGroup(group_data)"
                             title="当前组被删除后，此组里的图片会被同时删除，您确定吗？">
-                        <el-button  size="mini" slot="reference" type="danger">删除组</el-button>
+                        <el-button size="mini" slot="reference" type="danger">删除组</el-button>
                     </el-popconfirm>
 
                 </el-form-item>
@@ -52,7 +52,7 @@
                                         action=""
                                         :show-file-list="false"
                                         :http-request="uploadImage">
-                                    <el-button  size="mini" type="success">点击开始上传</el-button>
+                                    <el-button size="mini" type="success">点击开始上传</el-button>
                                 </el-upload>
                             </el-form-item>
                             <el-form-item>
@@ -103,15 +103,15 @@
                     </el-footer>
                 </el-container>
             </el-container>
-            <span slot="footer" class="dialog-footer" >
+            <span slot="footer" class="dialog-footer">
+            <el-button size="mini" @click="fileDialogVisible = false">取消</el-button>
+            <el-button size="mini" type="primary" @click="handleSelectImage">确定</el-button>
                 <el-popconfirm
                         v-if="check_list.length > 0"
                         @onConfirm="deleteSelectImage"
                         title="选中的图片会被删除，您确定吗？">
-                        <el-button  size="mini" slot="reference" type="danger">删除</el-button>
+                        <el-button size="mini" slot="reference" type="danger">删除</el-button>
                     </el-popconfirm>
-            <el-button  size="mini" @click="fileDialogVisible = false">取消</el-button>
-            <el-button  size="mini" type="primary" @click="handleSelectImage">确定</el-button>
             </span>
         </el-dialog>
 
@@ -194,9 +194,9 @@
             deleteSelectImage() {
                 const _this = this
 
-                let group = Object.assign({},_this.group_data)
-                if (_this.group_data.id === '' && _this.group_list.length > 0){
-                    Object.assign(group,_this.group_list[0])
+                let group = Object.assign({}, _this.group_data)
+                if (_this.group_data.id === '' && _this.group_list.length > 0) {
+                    Object.assign(group, _this.group_list[0])
                 }
 
                 const param = {
