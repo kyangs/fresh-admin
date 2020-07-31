@@ -30,8 +30,9 @@
                                 <el-input size="mini" v-model="temp.title" clearable/>
                             </el-form-item>
                             <el-form-item label="封面" prop="img">
-                                <img :src="temp.full_path"  @click="selectFile"
+                                <img v-if="temp.full_path" :src="temp.full_path"  @click="selectFile"
                                      style="width: 178px;height: 178px;cursor: pointer"/>
+                                <i v-else class="el-icon-plus avatar-uploader-icon" @click="selectFile"></i>
                             </el-form-item>
                             <el-form-item label="排序" prop="sorts">
                                 <el-input size="mini" v-model="temp.sorts" clearable/>
