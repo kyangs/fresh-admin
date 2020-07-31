@@ -3,30 +3,25 @@
         <!--数据-->
         <el-container>
             <el-tabs v-model="activeName">
-                <el-tab-pane name="base" label="小程序设置">
-                    <el-form ref="form" label-position="left" :model="form.base" label-width="200px" size="mini">
-                        <el-form-item label="AppID 小程序ID">
-                            <el-input size="mini" v-model="form.base.appID"></el-input>
+                <el-tab-pane name="base" label="高德地图API设置">
+                    <el-form ref="form" v-for="(form,index) in formList" :model="form"
+                             :key="index" :inline="true" size="mini">
+                        <el-form-item label="应用Key名称">
+                            <el-input size="mini" placeholder="" v-model="form.keyName"></el-input>
                         </el-form-item>
-                        <el-form-item label="AppSecret 小程序密钥">
-                            <el-input size="mini" v-model="form.base.appSecret"></el-input>
+                        <el-form-item label="应用Key">
+                            <el-input size="mini" style="width: 100%" placeholder="一串加密的东西"  v-model="form.key"></el-input>
                         </el-form-item>
-                    </el-form>
-                </el-tab-pane>
-                <el-tab-pane name="pay" label="微信支付设置">
-                    <el-form ref="form" label-position="left" :model="form.pay" label-width="200px" size="mini">
-                        <el-form-item label="微信支付商户号 MCHID">
-                            <el-input size="mini" v-model="form.pay.mchID"></el-input>
-                        </el-form-item>
-                        <el-form-item label="微信支付密钥 APIKEY">
-                            <el-input size="mini" v-model="form.pay.apiKey"></el-input>
+                        <el-form-item label="">
+                            <el-link class="el-icon-delete" size="mini" type="danger" @click="deleteSetting(index)" round v-if="index>0"></el-link>
                         </el-form-item>
                     </el-form>
                 </el-tab-pane>
             </el-tabs>
             <el-footer>
                 <el-row>
-                    <el-button  size="mini" type="primary" round @click="onSubmit">保存</el-button>
+                    <el-button size="mini" round @click="addSetting">新增</el-button>
+                    <el-button size="mini" type="primary" round @click="onSubmit">保存</el-button>
                 </el-row>
             </el-footer>
         </el-container>
@@ -43,44 +38,51 @@
             return {
                 activeName: 'base',
                 newForm: {},
-                form: {
-                    base: {
-                        appID: '',
-                        appSecret: '',
-                    },
-                    pay: {
-                        mchID: '',
-                        apiKey: '',
-                    },
-                },
+                formList: [
+                    {
+                        keyName: '',
+                        key: '',
+                    }
+                ],
             }
         },
         created() {
             this.getSetting()
         },
         methods: {
+
+            addSetting(){
+                this.formList.push({
+                    keyName: '',
+                    key: '',
+                })
+            },
+
+            deleteSetting(index){
+                this.formList.splice(index,1)
+            },
             getSetting() {
                 const _this = this
                 request({
-                    url: '/admin/system/setting/applets',
+                    url: '/admin/system/setting/map',
                     method: 'get',
                     data: {}
                 }).then(function (res) {
                     if (res.code === 10000) {
                         console.log(res.data)
                         if (Object.keys(res.data).length === 0) return
-                        _this.form = res.data
+                        _this.formList = res.data
                     }
                 })
             },
             onSubmit() {
                 const _this = this
                 let param = {
-                    form: _this.form,
-                    intro: '小程序设置'
+                    form: _this.formList,
+                    intro: '地图API设置'
                 }
                 request({
-                    url: '/admin/system/setting/applets',
+                    url: '/admin/system/setting/map',
                     method: 'post',
                     data: param
                 }).then(function (res) {

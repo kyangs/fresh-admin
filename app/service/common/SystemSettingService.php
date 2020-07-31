@@ -7,6 +7,7 @@ namespace app\service\common;
 use app\model\common\Category;
 use app\model\common\File;
 use app\model\common\FileGroup;
+use app\model\common\SystemSetting;
 use app\repository\system\SystemSettingRepository;
 use app\service\BaseService;
 use app\service\UploadService;
@@ -26,7 +27,7 @@ class SystemSettingService extends BaseService
 
     public static function settingSave($key, $value, $intro = '')
     {
-        $row  = self::setting($key);
+        $row  = SystemSetting::getSettingByKey($key);
         $data = [
             'unique_key' => $key,
             'value'      => is_string($value) ? $value : json_encode($value),

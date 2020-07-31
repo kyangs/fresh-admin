@@ -162,6 +162,12 @@ export const constantRoutes = [
         name: '/system/applets/',
         meta: { title: '小程序设置', icon: 'dashboard' }
       },
+      {
+        path: '/system/map',
+        component: () => import('@/views/system/map'),
+        name: '/system/map/',
+        meta: { title: '地图API设置', icon: 'dashboard' }
+      },
     ]
   },
   {

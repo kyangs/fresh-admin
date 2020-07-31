@@ -28,6 +28,9 @@ class SystemSettingRepository
         return SystemSetting::saveSetting($key, $value, $describe);
     }
 
+    public static function getSetting($key){
+        return (new SystemSetting)->where('unique_key',$key)->find();
+    }
 
     public static function setting($key)
     {
