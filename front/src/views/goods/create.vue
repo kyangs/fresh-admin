@@ -125,7 +125,7 @@
                                 <el-link type="primary" @click="addAttr">新增</el-link>
                             </el-col>
                         </el-row>
-                        <el-row :gutter="20" style="padding: 5px" v-for="(attr,index) in form.attr_list">
+                        <el-row :gutter="20" style="padding: 5px" v-for="(attr,index) in form.attr_list" :key="index">
                             <el-col :span="6">
                                 <el-input size="mini" v-model="attr.attr_name">
                                     <template slot="prepend">属性名</template>
