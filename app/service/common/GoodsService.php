@@ -159,9 +159,9 @@ class GoodsService extends BaseService
         $goods['main_image_id']    = $goods['main_image'];
         $goods['main_image']       = FileSystemRepository::findById($goods['main_image'], true);
         $goods['image_id_list']    = $carouselImageIds;
-        $goods['detail_images_id'] = $detailImageIds;
-        $goods['detail_images']    = $detailImage;
-        $goods['image_list']       = $carouselImage;
+        $goods['detail_images_id'] = array_unique($detailImageIds);
+        $goods['detail_images']    = array_values($detailImage);
+        $goods['image_list']       = array_values($carouselImage);
         $goods['mouth_sale']       = GoodsSales::getMothSalesByGoodsID($goods['id']);
         $goods['tag_list']         = array_column($tagList, 'name');
         return $goods;
