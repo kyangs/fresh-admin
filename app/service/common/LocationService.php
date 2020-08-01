@@ -4,6 +4,8 @@
 namespace app\service\common;
 
 
+use app\model\common\SystemSetting;
+use app\repository\system\SystemSettingRepository;
 use app\service\BaseService;
 use utils\Utils;
 
@@ -46,15 +48,16 @@ class LocationService extends BaseService
      */
     public static function location($request)
     {
-        $res = Utils::getRequest(config('system.map_api.baidu.url'), [
-            'ak'        => config('system.map_api.baidu.ak'),
-            'output'    => config('system.map_api.baidu.output'),
-            'coordtype' => config('system.map_api.baidu.coordtype'),
-            'location'  => $request->latitude . ',' . $request->longitude,
+        $setVal = SystemSettingRepository::setting(SystemSetting::SETTING_MAP);
+        $res    = Utils::getRequest($setVal['url'], [
+            'key'        => $setVal['key'],
+            'output'     => 'json',
+            'radius'     => '500',
+            'extensions' => 'all',
+            'location'   => $request->longitude . ',' . $request->latitude,
         ]);
-
         return [
-            'location' => !empty($res) && isset($res->result) ? $res->result : '',
+            'location' => !empty($res) && isset($res->regeocode) ? $res->regeocode : '',
         ];
     }
 }

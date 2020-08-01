@@ -14,6 +14,10 @@ class SystemSetting extends Model
     protected $table = 'system_setting';
     use ModelTrait;
 
+    const SETTING_MAP = 'map';
+    const SETTING_UPLOAD = 'upload';
+    const SETTING_APPLETS = 'applets';
+
     /**
      * @param $key
      * @return array
@@ -27,17 +31,18 @@ class SystemSetting extends Model
         return empty($row) ? [] : $row->toArray();
     }
 
-    public static function uploadSettingMapping(){
+    public static function uploadSettingMapping()
+    {
         $row = self::where('unique_key', 'upload')->find();
         if (empty($row)) return [];
 
-        $array = json_decode($row['value'],true);
+        $array = json_decode($row['value'], true);
 
         foreach ($array as &$item) {
 
-           if (isset($item['http'])){
-               $item['http'] = rtrim($item['http'],'/').'/';
-           }
+            if (isset($item['http'])) {
+                $item['http'] = rtrim($item['http'], '/') . '/';
+            }
         }
         return $array;
     }
@@ -55,7 +60,7 @@ class SystemSetting extends Model
         if (empty($row)) {
             return [];
         }
-        $row = json_decode($row['value'],true);
+        $row = json_decode($row['value'], true);
         return isset($row[$row['default']]) ? $row[$row['default']] : [];
     }
 

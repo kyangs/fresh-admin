@@ -100,6 +100,21 @@ trait RepositoryTrait
         return self::$model::destroy($id);
     }
 
+    /**
+     * 删除
+     * @param $account
+     * @param $phone
+     * @return object
+     */
+    public static function getByAccountOrPhone($account, $phone)
+    {
+        return self::$model::where([
+            'account' => $account,
+        ])->whereOr([
+            'phone' => $phone,
+        ])->find();
+    }
+
 
     public static function paginate($where, $order, $page = 1, $pageSize = 20, $field = [], $toArray = true)
     {

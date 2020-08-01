@@ -18,7 +18,7 @@ class SystemSettingRepository
     //模型，带命名空间
     public static $model = 'app\model\common\SystemSetting';
     //模型主键
-    public static $pk = 'unique_key';
+    public static $pk        = 'unique_key';
     public static $showField = ['*'];
 
     use RepositoryTrait;
@@ -28,8 +28,9 @@ class SystemSettingRepository
         return SystemSetting::saveSetting($key, $value, $describe);
     }
 
-    public static function getSetting($key){
-        return (new SystemSetting)->where('unique_key',$key)->find();
+    public static function getSetting($key)
+    {
+        return (new SystemSetting)->where('unique_key', $key)->find();
     }
 
     public static function setting($key)
@@ -44,6 +45,9 @@ class SystemSettingRepository
 
     public static function fullPath($path, $configKey)
     {
+        if (strpos($path, 'http') === 0) {
+            return $path;
+        }
         $settingMapping = SystemSetting::uploadSettingMapping();
         $setting        = [];
         if (isset($settingMapping[$configKey])) {

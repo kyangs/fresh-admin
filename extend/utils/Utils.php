@@ -14,12 +14,12 @@ class Utils
      */
     public static function getRequest($url, $params)
     {
-        $ch = curl_init();
+        $ch      = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url . '?' . http_build_query($params));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
         curl_setopt($ch, CURLOPT_TIMEOUT, 60);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
         $result = curl_exec($ch);
         curl_close($ch);
         return json_decode($result);

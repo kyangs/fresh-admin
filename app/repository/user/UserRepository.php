@@ -4,6 +4,8 @@
 namespace app\repository\user;
 
 
+use app\model\common\SystemSetting;
+use app\repository\system\SystemSettingRepository;
 use app\traits\RepositoryTrait;
 
 class UserRepository

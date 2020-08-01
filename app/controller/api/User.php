@@ -4,6 +4,7 @@ declare (strict_types=1);
 namespace app\controller\api;
 
 use app\controller\api\Center;
+use app\service\UserService;
 use think\annotation\route\Middleware;
 use think\annotation\route\Group;
 use think\annotation\Route;
@@ -25,5 +26,16 @@ class User extends Center
     {
         echo 'user';
         var_dump($this->user->id);
+    }
+    /**
+     * @Route("login", method="POST")
+     */
+    public function login()
+    {
+        try {
+            return json_ok(UserService::userLogin($this->request->post()));
+        }catch (\Exception $exception){
+            return json_error(10001,$exception->getMessage());
+        }
     }
 }

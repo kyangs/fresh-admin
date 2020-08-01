@@ -3,6 +3,8 @@ declare (strict_types=1);
 
 namespace app\service;
 
+use app\repository\system\SystemSettingRepository;
+use app\repository\user\UserRepository;
 use app\traits\ServiceTrait;
 use app\util\JwtUtil;
 
@@ -24,7 +26,7 @@ class UserService
      * 获取用户身份token
      * @param $user 用户信息
      */
-    public static function getToken($uid,$time)
+    public static function getToken($uid, $time)
     {
         //登录事件
         event('UserLogin', [$uid, $time]);
@@ -44,6 +46,22 @@ class UserService
     public static function getInfoByPhone($phone, $field = [])
     {
         return self::$repository::getInfoByPhone($phone, $field);
+    }
+
+
+    public static function userLogin($post)
+    {
+        $userRow = UserRepository::getByAccountOrPhone($post['account'], $post['account']);
+
+        if (empty($userRow)) throw new \Exception('用户不存在或账号密码错误', 1);
+
+        if (!empty($userRow)) {
+            $userRow['full_avatar'] = SystemSettingRepository::fullPath($userRow['avatar'], $userRow['image_key']);
+        }
+        if (think_decrypt($userRow['password']) != $post['password']) {
+            throw new \Exception('用户不存在或账号密码错误', 1);
+        }
+        return $userRow;
     }
 
 }

@@ -53,7 +53,7 @@
             <el-table-column label="最新登录时间" prop="login_time"></el-table-column>
             <el-table-column prop="create_time" label="创建时间" width="160">
             </el-table-column>
-            <el-table-column>
+            <el-table-column label="状态"  width="160">
                 <template slot-scope="scope">
                     <el-switch v-model="scope.row.is_enabled"
                                active-text="启用"
