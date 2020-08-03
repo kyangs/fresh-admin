@@ -17,6 +17,7 @@ class SystemSetting extends Model
     const SETTING_MAP = 'map';
     const SETTING_UPLOAD = 'upload';
     const SETTING_APPLETS = 'applets';
+    const SETTING_DEFAULT_AVATAR = 'default_avatar';
 
     /**
      * @param $key

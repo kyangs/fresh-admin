@@ -3,6 +3,7 @@ declare (strict_types=1);
 
 namespace app\service;
 
+use app\model\common\SystemSetting;
 use app\repository\system\SystemSettingRepository;
 use app\repository\user\UserRepository;
 use app\traits\ServiceTrait;
@@ -62,6 +63,19 @@ class UserService
             throw new \Exception('用户不存在或账号密码错误', 1);
         }
         return $userRow;
+    }
+
+    /**
+     * @param $get
+     * @return array|mixed
+     */
+    public static function defaultAvatar($get)
+    {
+        $settingRow = SystemSettingRepository::setting(SystemSetting::SETTING_DEFAULT_AVATAR);
+        if (!empty($settingRow)) {
+            $settingRow['avatar'] = SystemSettingRepository::fullPath($settingRow['avatar'], $settingRow['image_key']);
+        }
+        return $settingRow;
     }
 
 }

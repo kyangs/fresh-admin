@@ -47,13 +47,4 @@ return [
         //模板
         'con'  => '【咖盟】您的验证码为：@，有效时间10分钟'
     ],
-    // 百度地图api
-    'map_api'            => [
-        'baidu' => [
-            'url'       => 'http://api.map.baidu.com/reverse_geocoding/v3/',
-            'ak'        => 'tWTG7PqBUsDa6BvGF3N2GNvzqOw6OCHT',
-            'output'    => 'json',
-            'coordtype' => 'wgs84ll',
-        ],
-    ]
 ];

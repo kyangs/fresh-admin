@@ -113,60 +113,64 @@ class UserMiniService extends BaseService
      * 小程序code换取session_key
      * @param $code
      * @return array
-     * @throws \app\MyException
+     * @throws \Exception
      */
     public static function getSessionByCode($code)
     {
-        $option = Config::get("app.wechat_mini");
-        $app    = Factory::miniProgram($option);
+        $settingRow  = SystemSettingRepository::setting(SystemSetting::SETTING_APPLETS);
+        $baseSetting = isset($settingRow['base']) ? $settingRow['base'] : [];
+        $option      = [
 
+            'app_id'        => $baseSetting['appID'],
+            'secret'        => $baseSetting['appSecret'],
+            'response_type' => 'array',
+        ];
+        $app         = Factory::miniProgram($option);
         try {
             $res = $app->auth->session($code);
-            $res = json_decode(json_encode($res), true);
             if (isset($res) && isset($res['openid']) && $res['session_key']) {
-
-                return ['key' => $res['session_key'], 'openid' => $res['openid']];
-
-            } else {
-                throw new \app\MyException(12003);
+                return $res;
             }
+            throw new \Exception('请求出错', 1);
         } catch (\Exception $e) {
-            throw new \app\MyException(12003);
+            throw  $e;
         }
     }
 
     /**
      * 解析数据
-     * @param $key
+     * @param $sessionKey
      * @param $rawData
      * @param $sign
      * @param $encryptedData
      * @param $iv
      * @return array
-     * @throws \think\Exception
+     * @throws \Exception
      */
-    public static function getDecryptData($key, $rawData, $sign, $encryptedData, $iv)
+    public static function getDecryptData($sessionKey, $rawData, $sign, $encryptedData, $iv)
     {
         //1.校验数据的完整性
-        $session_key = think_decrypt($key);
-        if (empty($session_key)) {
-            throw new \app\MyException(12004);
-        }
-        $signature = sha1($rawData . $session_key);
+        $signature = sha1($rawData . $sessionKey);
         if ($signature !== $sign) {
-            throw new \app\MyException(12005);
+            throw new \Exception('签名错误', 1);
         }
 
-        $option = Config::get("app.wechat_mini");
-        $app    = Factory::miniProgram($option);
+        $settingRow  = SystemSettingRepository::setting(SystemSetting::SETTING_APPLETS);
+        $baseSetting = isset($settingRow['base']) ? $settingRow['base'] : [];
+        $option      = [
+
+            'app_id' => $baseSetting['appID'],
+            'secret' => $baseSetting['appSecret'],
+        ];
+        $app         = Factory::miniProgram($option);
         try {
-            $decryptedData = $app->encryptor->decryptData($session_key, $iv, $encryptedData);
+            $decryptedData = $app->encryptor->decryptData($sessionKey, $iv, $encryptedData);
             if (empty($decryptedData) || empty($decryptedData['openId'])) {
-                throw new \app\MyException(12006);
+                throw new \Exception('解析错误', 1);
             }
             return $decryptedData;
         } catch (\Exception $e) {
-            throw new \app\MyException(12006);
+            throw $e;
         }
     }
 
