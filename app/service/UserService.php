@@ -69,13 +69,15 @@ class UserService
      * @param $get
      * @return array|mixed
      */
-    public static function defaultAvatar($get)
+    public static function defaultIconList($get)
     {
         $settingRow = SystemSettingRepository::setting(SystemSetting::SETTING_DEFAULT_AVATAR);
         if (!empty($settingRow)) {
             $settingRow['avatar'] = SystemSettingRepository::fullPath($settingRow['avatar'], $settingRow['image_key']);
         }
-        return $settingRow;
+        return [
+            'avatar' => $settingRow,
+        ];
     }
 
 }

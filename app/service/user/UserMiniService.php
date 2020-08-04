@@ -119,13 +119,11 @@ class UserMiniService extends BaseService
     {
         $settingRow  = SystemSettingRepository::setting(SystemSetting::SETTING_APPLETS);
         $baseSetting = isset($settingRow['base']) ? $settingRow['base'] : [];
-        $option      = [
-
+        $app         = Factory::miniProgram([
             'app_id'        => $baseSetting['appID'],
             'secret'        => $baseSetting['appSecret'],
             'response_type' => 'array',
-        ];
-        $app         = Factory::miniProgram($option);
+        ]);
         try {
             $res = $app->auth->session($code);
             if (isset($res) && isset($res['openid']) && $res['session_key']) {
@@ -157,12 +155,12 @@ class UserMiniService extends BaseService
 
         $settingRow  = SystemSettingRepository::setting(SystemSetting::SETTING_APPLETS);
         $baseSetting = isset($settingRow['base']) ? $settingRow['base'] : [];
-        $option      = [
 
-            'app_id' => $baseSetting['appID'],
-            'secret' => $baseSetting['appSecret'],
-        ];
-        $app         = Factory::miniProgram($option);
+        $app         = Factory::miniProgram([
+            'app_id'        => $baseSetting['appID'],
+            'secret'        => $baseSetting['appSecret'],
+            'response_type' => 'array',
+        ]);
         try {
             $decryptedData = $app->encryptor->decryptData($sessionKey, $iv, $encryptedData);
             if (empty($decryptedData) || empty($decryptedData['openId'])) {
@@ -176,27 +174,30 @@ class UserMiniService extends BaseService
 
     /**
      * 解析手机号数据
-     * @param $key
+     * @param $sessionKey
      * @param $encryptedData
      * @param $iv
      * @return array
-     * @throws \think\Exception
+     * @throws \Exception
      */
-    public static function getDecryptPhone($key, $encryptedData, $iv)
+    public static function getDecryptPhone($sessionKey, $encryptedData, $iv)
     {
         //1.校验数据的完整性
-        $session_key = think_decrypt($key);
-
-        $option = Config::get("app.wechat_mini");
-        $app    = Factory::miniProgram($option);
+        $settingRow  = SystemSettingRepository::setting(SystemSetting::SETTING_APPLETS);
+        $baseSetting = isset($settingRow['base']) ? $settingRow['base'] : [];
+        $app    = Factory::miniProgram([
+            'app_id'        => $baseSetting['appID'],
+            'secret'        => $baseSetting['appSecret'],
+            'response_type' => 'array',
+        ]);
         try {
-            $decryptedData = $app->encryptor->decryptData($session_key, $iv, $encryptedData);
-            if (empty($decryptedData) || empty($decryptedData['phoneNumber'])) {
-                throw new \app\MyException(12006);
+            $decryptedData = $app->encryptor->decryptData($sessionKey, $iv, $encryptedData);
+            if (empty($decryptedData)) {
+                throw new \Exception('解析出错',1);
             }
             return $decryptedData;
         } catch (\Exception $e) {
-            throw new \app\MyException(12006);
+            throw $e;
         }
     }
 

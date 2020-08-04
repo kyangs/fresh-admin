@@ -43,12 +43,12 @@ class User extends Center
     }
 
     /**
-     * @Route("default-avatar", method="GET")
+     * @Route("default-icon", method="GET")
      */
-    public function defaultAvatar()
+    public function defaultIcon()
     {
         try {
-            return json_ok(UserService::defaultAvatar($this->request->get()));
+            return json_ok(UserService::defaultIconList($this->request->get()));
         } catch (\Exception $exception) {
             return json_error(10001, $exception->getMessage());
         }
@@ -60,10 +60,10 @@ class User extends Center
     public function wxLogin()
     {
         try {
-            $uerInfo    = $this->request->post('uerInfo');
             $loginRes   = $this->request->post('loginRes');
+            $phoneRow   = $this->request->post('phoneRow');
             $sessionRow = UserMiniService::getSessionByCode($loginRes['code']);
-            return json_ok(UserMiniService::getDecryptData($sessionRow['session_key'], $uerInfo['rawData'], $uerInfo['signature'], $uerInfo['encryptedData'], $uerInfo['iv']));
+            return json_ok(UserMiniService::getDecryptPhone($sessionRow['session_key'], $phoneRow['encryptedData'], $phoneRow['iv']));
         } catch (\Exception $exception) {
             return json_error(10001, $exception->getMessage());
         }
