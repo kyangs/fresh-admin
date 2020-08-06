@@ -8,6 +8,7 @@ use app\repository\system\SystemSettingRepository;
 use app\repository\user\UserRepository;
 use app\traits\ServiceTrait;
 use app\util\JwtUtil;
+use app\validate\UserValidate;
 
 /**
  * 用户
@@ -93,6 +94,7 @@ class UserService
         $update = [
             'nickname'  => $userInfo['nickname'],
             'phone'     => $userInfo['phone'],
+            'account'   => $userInfo['account'],
             'real_name' => $userInfo['real_name'],
             'birth'     => $userInfo['birth'],
             'gender'    => $userInfo['gender'],
@@ -108,7 +110,14 @@ class UserService
             $update['image_key'] = $data['config_key'];
             $update['avatar']    = $data['path'];
         }
-        $userInfo = UserRepository::edit($id, $update);
+        $validate = validate(UserValidate::class);
+        $validate->rule('phone', 'unique:user,phone,' . $id);
+        $validate->rule('account', 'unique:user,account,' . $id);
+        if (isset($userInfo['password']) && !empty($userInfo['password'])) {
+            $update['password'] = think_encrypt($userInfo['password']);
+        }
+        $validate->check($update);
+        $userInfo                = UserRepository::edit($id, $update);
         $userInfo['full_avatar'] = SystemSettingRepository::fullPath($userInfo['avatar'], $userInfo['image_key']);
         $userInfo['id']          = $id;
         return $userInfo;
