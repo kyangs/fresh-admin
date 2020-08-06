@@ -51,6 +51,11 @@ class UserService
     }
 
 
+    /**
+     * @param $post
+     * @return object
+     * @throws \Exception
+     */
     public static function userLogin($post)
     {
         $userRow = UserRepository::getByAccountOrPhone($post['account'], $post['account']);
@@ -60,9 +65,15 @@ class UserService
         if (!empty($userRow)) {
             $userRow['full_avatar'] = SystemSettingRepository::fullPath($userRow['avatar'], $userRow['image_key']);
         }
-        if (think_decrypt($userRow['password']) != $post['password']) {
+
+        if ($post['loginMode'] == 'PASS' && think_decrypt($userRow['password']) != $post['password']) {
             throw new \Exception('用户不存在或账号密码错误', 1);
         }
+
+        if ($post['loginMode'] == 'SMS' && cache($post['account']) != $post['smsCode']) {
+            throw new \Exception('验证码错误', 1);
+        }
+
         return $userRow;
     }
 

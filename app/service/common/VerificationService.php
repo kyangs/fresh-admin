@@ -30,6 +30,7 @@ class VerificationService extends BaseService
         if (cache($tag)) {
             throw new \Exception('发送验证码过于频繁，请稍后重试', 1);
         }
+
         cache($k, null);
         $code = Str::random(6, 1);
         cache($k, $code, ['expire' => self::CODE_EXPIRE]);
