@@ -80,4 +80,38 @@ class UserService
         ];
     }
 
+    /**
+     * @param $userInfo
+     * @param array $file
+     * @return array|mixed
+     * @throws \Exception
+     */
+    public static function modifyUserInfo($userInfo, $file = [])
+    {
+        if (!isset($userInfo['id'])) throw new \Exception('登录已经失效,请重新登录', 1);
+        $id     = $userInfo['id'];
+        $update = [
+            'nickname'  => $userInfo['nickname'],
+            'phone'     => $userInfo['phone'],
+            'real_name' => $userInfo['real_name'],
+            'birth'     => $userInfo['birth'],
+            'gender'    => $userInfo['gender'],
+            'image_key' => $userInfo['image_key'],
+            'avatar'    => $userInfo['avatar'],
+        ];
+        $file   = empty($file) ? [] : $file;
+        if (empty($file) && isset($_FILES['file'])) {
+            $file = $_FILES['file'];
+        }
+        if (isset($file['tmp_name'])) {
+            $data                = UploadService::upload($file['tmp_name'], $file['name'], $file['type']);
+            $update['image_key'] = $data['config_key'];
+            $update['avatar']    = $data['path'];
+        }
+        $userInfo = UserRepository::edit($id, $update);
+        $userInfo['full_avatar'] = SystemSettingRepository::fullPath($userInfo['avatar'], $userInfo['image_key']);
+        $userInfo['id']          = $id;
+        return $userInfo;
+    }
+
 }

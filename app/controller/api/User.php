@@ -53,6 +53,17 @@ class User extends Center
             return json_error(10001, $exception->getMessage());
         }
     }
+    /**
+     * @Route("info", method="POST")
+     */
+    public function modifyUserInfo()
+    {
+        try {
+            return json_ok(UserService::modifyUserInfo($this->request->post()));
+        } catch (\Exception $exception) {
+            return json_error(10001, $exception->getMessage());
+        }
+    }
 
     /**
      * @Route("wx-login", method="POST")
