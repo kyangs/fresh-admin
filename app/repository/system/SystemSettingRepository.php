@@ -37,7 +37,6 @@ class SystemSettingRepository
     {
         $setting = SystemSetting::getSettingByKey($key);
         if (!empty($setting)) {
-
             return json_decode($setting['value'], true);
         }
         return [];
