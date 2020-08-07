@@ -40,7 +40,7 @@ CREATE TABLE `admin` (
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `delete_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '删除时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='管理员用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='管理员用户表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -87,7 +87,7 @@ CREATE TABLE `adv` (
 
 LOCK TABLES `adv` WRITE;
 /*!40000 ALTER TABLE `adv` DISABLE KEYS */;
-INSERT INTO `adv` VALUES (8,'admini',4,'/pages/class/class?category_id=6','home','2020-07-12 03:22:34',1,'2020-07-11 06:56:32',NULL,'2020-07-01 16:00:00','2020-07-23 16:00:00',1),(9,'admini',1,'/pages/search/search','home','2020-07-12 02:44:37',1,'2020-07-11 06:57:20',NULL,'2020-06-30 16:00:00','2020-07-30 16:00:00',100),(10,'admini',33,'','home','2020-07-11 06:57:42',1,'2020-07-11 06:57:42',NULL,'2020-07-01 16:00:00','2020-07-30 16:00:00',100),(11,'admini',6,'/pages/shopping/shopping','home_notice','2020-07-12 02:45:05',1,'2020-07-11 07:02:51',NULL,'2020-06-30 16:00:00','2020-07-16 16:00:00',100);
+INSERT INTO `adv` VALUES (8,'admini',4,'/pages/class/class?category_id=6','home','2020-07-31 09:43:49',1,'2020-07-11 06:56:32',NULL,'2020-07-23 16:00:00','2020-08-28 16:00:00',1),(9,'admini',1,'/pages/search/search','home','2020-07-31 09:43:59',1,'2020-07-11 06:57:20',NULL,'2020-07-02 16:00:00','2020-08-28 16:00:00',100),(10,'admini',33,'','home','2020-07-31 09:44:10',1,'2020-07-11 06:57:42',NULL,'2020-07-29 16:00:00','2020-08-30 16:00:00',100),(11,'admini',6,'/pages/shopping/shopping','home_notice','2020-07-31 09:44:18',1,'2020-07-11 07:02:51',NULL,'2020-07-16 16:00:00','2020-08-30 16:00:00',100);
 /*!40000 ALTER TABLE `adv` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -831,7 +831,7 @@ CREATE TABLE `system_setting` (
 
 LOCK TABLES `system_setting` WRITE;
 /*!40000 ALTER TABLE `system_setting` DISABLE KEYS */;
-INSERT INTO `system_setting` VALUES ('applets','{\"base\":{\"appID\":\"wxd9931ae0230cd8d6\",\"appSecret\":\"e5838f016a6c502f528b0eac81ec8e7b\"},\"pay\":{\"mchID\":\"1588072051\",\"apiKey\":\"81f7d977c49aaa00fb2cd0d35fed6a9a\"}}','小程序信号设置','2020-07-31 09:02:37','2020-07-29 07:07:17'),('map','[{\"keyName\":\"loaction-web\",\"key\":\"10ebda1059be2945a6e1e10c9abd647c\"},{\"keyName\":\"location-user\",\"key\":\"a550cefd01730f6de9e091a0e5935a55\"}]','地图API设置','2020-07-31 09:24:30','2020-07-31 09:16:32'),('upload','{\"aliyun\":{\"accessKeyId\":\"LTAI4GFioN3HVHhvugbhLzxm\",\"accessKeySecret\":\"gBTo0ElWFad9suSwbfjoJr5Ln5IL8c\",\"endpoint\":\"oss-cn-beijing.aliyuncs.com\",\"bucket\":\"fresh-kyang\",\"http\":\"http:\\/\\/fresh-kyang.oss-cn-beijing.aliyuncs.com\"},\"qiniuyun\":{\"accessKeyId\":\"5JsGXDMCZx9rJCXkB6VZr2_RVVdzWC4q2-ETgsuz\",\"accessKeySecret\":\"UeD1CFDNMBf7z7N28LOl5STa6IS8_6sUoGiofnVf\",\"endpoint\":\"s3-cn-east-1.qiniucs.com\",\"bucket\":\"fresh-kyangs\",\"http\":\"http:\\/\\/qe4knhsk2.bkt.clouddn.com\"},\"txyun\":{\"accessKeyId\":\"\",\"accessKeySecret\":\"\",\"endpoint\":\"\",\"region\":\"\",\"token\":\"\"},\"minio\":{\"userName\":\"kyangs\",\"password\":\"a3lhbmdzX21pbmlv\",\"endpoint\":\"http:\\/\\/yl8134.cn:9999\",\"bucket\":\"fresh\",\"http\":\"http:\\/\\/yl8134.cn:9999\"},\"default\":\"minio\",\"signature\":\"ed6d741584f1a2022f5af64e50032a4c\"}','上传设置','2020-07-29 06:49:50','2020-07-25 13:09:45');
+INSERT INTO `system_setting` VALUES ('applets','{\"base\":{\"appID\":\"wxd9931ae0230cd8d6\",\"appSecret\":\"e5838f016a6c502f528b0eac81ec8e7b\"},\"pay\":{\"mchID\":\"1588072051\",\"apiKey\":\"81f7d977c49aaa00fb2cd0d35fed6a9a\"}}','小程序信号设置','2020-07-31 09:02:37','2020-07-29 07:07:17'),('default_avatar','{\"avatar\":\"fresh/default/default.jpg\",\"image_key\":\"minio\"}','默认用户头像','2020-08-03 05:52:34','2020-08-03 05:31:48'),('map','{\"keyName\":\"loaction-web\",\"key\":\"10ebda1059be2945a6e1e10c9abd647c\",\"url\":\"	\r\nhttps://restapi.amap.com/v3/geocode/geo\"}','地图API设置','2020-08-03 06:01:31','2020-07-31 09:16:32'),('upload','{\"aliyun\":{\"accessKeyId\":\"LTAI4GFioN3HVHhvugbhLzxm\",\"accessKeySecret\":\"gBTo0ElWFad9suSwbfjoJr5Ln5IL8c\",\"endpoint\":\"oss-cn-beijing.aliyuncs.com\",\"bucket\":\"fresh-kyang\",\"http\":\"http:\\/\\/fresh-kyang.oss-cn-beijing.aliyuncs.com\"},\"qiniuyun\":{\"accessKeyId\":\"5JsGXDMCZx9rJCXkB6VZr2_RVVdzWC4q2-ETgsuz\",\"accessKeySecret\":\"UeD1CFDNMBf7z7N28LOl5STa6IS8_6sUoGiofnVf\",\"endpoint\":\"s3-cn-east-1.qiniucs.com\",\"bucket\":\"fresh-kyangs\",\"http\":\"http:\\/\\/qe4knhsk2.bkt.clouddn.com\"},\"txyun\":{\"accessKeyId\":\"\",\"accessKeySecret\":\"\",\"endpoint\":\"\",\"region\":\"\",\"token\":\"\"},\"minio\":{\"userName\":\"kyangs\",\"password\":\"a3lhbmdzX21pbmlv\",\"endpoint\":\"http:\\/\\/yl8134.cn:9999\",\"bucket\":\"fresh\",\"http\":\"http:\\/\\/yl8134.cn:9999\"},\"default\":\"minio\",\"signature\":\"ed6d741584f1a2022f5af64e50032a4c\"}','上传设置','2020-07-29 06:49:50','2020-07-25 13:09:45');
 /*!40000 ALTER TABLE `system_setting` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -870,7 +870,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   KEY `openid` (`open_id`),
   KEY `create_time` (`create_time`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -879,7 +879,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'kyang','','杨s1','杨坤','8D2CD4A0DC80D728C65C1D7E6B9559C3MDAwMDAwMDAwMIOIfN6FfIaW','16602112169','fresh/2020-07/emoji.jpg','minio','男','','','',0,0,1,'','','',NULL,'',NULL,'2020-07-29 02:24:21','2020-07-29 09:18:00'),(2,'','','212','','','16602112161','fresh/2020-07/0dba32ec834c8327ae56433051d44b5f6c74cafe.png','minio','保密','','','',0,0,1,'','','',NULL,'','2020-07-29 03:18:29','2020-07-29 02:46:22','2020-07-29 03:18:29');
+INSERT INTO `user` VALUES (1,'kyang','','杨22','杨坤','2DE7A01E9DB4A2559354A723045A0DB4MDAwMDAwMDAwMIOIeNyEjHbc','16602112160','fresh/2020-08/backgorund.jpg','minio','男','','','',0,0,1,'2020-08-06','','',NULL,'',NULL,'2020-07-29 02:24:21','2020-08-06 09:48:49'),(7,'16602112165','','无名者也','','','16602112165','fresh/2020-08/backgorund.jpg','minio','保密','','','',0,0,1,'','127.0.0.1','127.0.0.1','2020-08-07 02:31:16','',NULL,'2020-08-07 02:29:13','2020-08-07 02:54:31');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -926,4 +926,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-31 17:34:50
+-- Dump completed on 2020-08-07 10:57:17

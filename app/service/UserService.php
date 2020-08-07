@@ -58,7 +58,30 @@ class UserService
      */
     public static function userLogin($post)
     {
-        $userRow = UserRepository::getByAccountOrPhone($post['account'], $post['account']);
+        $userInfo = null;
+        switch ($post['loginMode']) {
+            case UserRepository::LOGIN_MODE_MODE:
+                $userInfo = self::passwordLogin($post['account'], $post['password']);
+                break;
+            case UserRepository::LOGIN_MODE_SMS:
+                $userInfo = self::smsLogin($post['account'], $post['smsCode']);
+                break;
+        }
+        if (empty($userInfo)) throw new \Exception('登录失败', 1);
+        self::loginEvent($userInfo['id']);
+        return $userInfo;
+
+    }
+
+    /**
+     * @param $account
+     * @param $password
+     * @return object
+     * @throws \Exception
+     */
+    public static function passwordLogin($account, $password)
+    {
+        $userRow = UserRepository::getByAccountOrPhone($account, $account);
 
         if (empty($userRow)) throw new \Exception('用户不存在或账号密码错误', 1);
 
@@ -66,15 +89,51 @@ class UserService
             $userRow['full_avatar'] = SystemSettingRepository::fullPath($userRow['avatar'], $userRow['image_key']);
         }
 
-        if ($post['loginMode'] == 'PASS' && think_decrypt($userRow['password']) != $post['password']) {
+        if (think_decrypt($userRow['password']) != $password) {
             throw new \Exception('用户不存在或账号密码错误', 1);
         }
-
-        if ($post['loginMode'] == 'SMS' && cache($post['account']) != $post['smsCode']) {
-            throw new \Exception('验证码错误', 1);
-        }
-
         return $userRow;
+    }
+
+    /**
+     * @param $phone
+     * @param $code
+     * @throws \Exception
+     */
+    public static function smsLogin($phone, $code)
+    {
+        $cacheCode = cache($phone);
+        if (empty($cacheCode)) {
+            throw new \Exception('验证码已失效', 1);
+        }
+        if ($cacheCode != $code) {
+            throw new \Exception('验证码错误');
+        }
+        $userRow = UserRepository::getByAccountOrPhone($phone, $phone);
+        if (empty($userRow)) { // 如果 为空说明是新用户，此时要自动创建一条用户记录，以便登录
+            $userRow = UserRepository::add([
+                'account' => $phone,
+                'phone'   => $phone,
+                'reg_ip'  => request()->ip(),
+            ]);
+        }
+        if (empty($userRow)) throw new \Exception('登录失败', 1);
+
+        if (isset($userRow['full_avatar']) && !empty($userRow['full_avatar'])) {
+            $userRow['full_avatar'] = SystemSettingRepository::fullPath($userRow['avatar'], $userRow['image_key']);
+        }
+        return $userRow;
+    }
+
+    /** 登录事件
+     * @param $uid
+     */
+    public static function loginEvent($uid)
+    {
+        UserRepository::edit($uid, [
+            'login_ip'   => request()->ip(),
+            'login_time' => date('Y-m-d H:i:s'),
+        ]);
     }
 
     /**
@@ -111,6 +170,7 @@ class UserService
             'gender'    => $userInfo['gender'],
             'image_key' => $userInfo['image_key'],
             'avatar'    => $userInfo['avatar'],
+            'sign'      => $userInfo['sign'],
         ];
         $file   = empty($file) ? [] : $file;
         if (empty($file) && isset($_FILES['file'])) {
