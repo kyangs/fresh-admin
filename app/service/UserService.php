@@ -122,6 +122,7 @@ class UserService
         if (isset($userRow['full_avatar']) && !empty($userRow['full_avatar'])) {
             $userRow['full_avatar'] = SystemSettingRepository::fullPath($userRow['avatar'], $userRow['image_key']);
         }
+        cache($phone, null);
         return $userRow;
     }
 
@@ -163,7 +164,6 @@ class UserService
         $id     = $userInfo['id'];
         $update = [
             'nickname'  => $userInfo['nickname'],
-            'phone'     => $userInfo['phone'],
             'account'   => $userInfo['account'],
             'real_name' => $userInfo['real_name'],
             'birth'     => $userInfo['birth'],
@@ -182,7 +182,20 @@ class UserService
             $update['avatar']    = $data['path'];
         }
         $validate = validate(UserValidate::class);
-        $validate->rule('phone', 'unique:user,phone,' . $id);
+        if ($userInfo['modifyPhone']) {
+            if (!isset($userInfo['smsCode']) || empty($userInfo['smsCode'])) {
+                throw new \Exception('请输入验证码', 1);
+            }
+            $cacheCode = cache($userInfo['phone']);
+            if (empty($cacheCode)) {
+                throw new \Exception('验证码已失效', 1);
+            }
+            if ($cacheCode != $userInfo['smsCode']) {
+                throw new \Exception('验证码不正确', 1);
+            }
+            $update['phone'] = $userInfo['phone'];
+            $validate->rule('phone', 'unique:user,phone,' . $id);
+        }
         $validate->rule('account', 'unique:user,account,' . $id);
         if (isset($userInfo['password']) && !empty($userInfo['password'])) {
             $update['password'] = think_encrypt($userInfo['password']);
@@ -191,6 +204,7 @@ class UserService
         $userInfo                = UserRepository::edit($id, $update);
         $userInfo['full_avatar'] = SystemSettingRepository::fullPath($userInfo['avatar'], $userInfo['image_key']);
         $userInfo['id']          = $id;
+        cache($userInfo['phone'], null);
         return $userInfo;
     }
 

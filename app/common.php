@@ -88,9 +88,10 @@ function think_decrypt($data, $key = '')
 
 /**
  * 请求正确返回
- * @param string $msg
  * @param array $data
- * @return json
+ * @param int $code
+ * @param string $msg
+ * @return \think\response\Json
  */
 function json_ok($data = [], $code = 10000, $msg = '')
 {
