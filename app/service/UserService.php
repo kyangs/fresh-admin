@@ -182,7 +182,7 @@ class UserService
             $update['avatar']    = $data['path'];
         }
         $validate = validate(UserValidate::class);
-        if ($userInfo['modifyPhone']) {
+        if (isset($userInfo['modifyPhone']) && $userInfo['modifyPhone']) {
             if (!isset($userInfo['smsCode']) || empty($userInfo['smsCode'])) {
                 throw new \Exception('请输入验证码', 1);
             }
