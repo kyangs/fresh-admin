@@ -25,8 +25,11 @@ class Adv extends Model
         'home_notice' => '首页公告位置',
     ];
 
-    public function findAbleAdv($time, $position = ['home', 'home_notice'])
+    public function findAbleAdv($time, $position = [])
     {
+        if (empty($position)) {
+            $position = ['home', 'home_notice'];
+        }
         return $this->where('start_time', '<=', $time)
             ->where('end_time', '>=', $time)
             ->where(['position' => $position])

@@ -5,6 +5,7 @@ namespace app\service;
 
 
 use app\model\Adv;
+use app\repository\adv\AdvRepository;
 use app\repository\file\FileSystemRepository;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -94,5 +95,22 @@ class AdvService extends BaseService
         return [
             'is_enabled' => (new Adv)->enable($request->id, $request->is_enabled),
         ];
+    }
+
+
+    /**
+     * @param $param
+     * @return array|mixed
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public static function advListByPosition($param)
+    {
+        if (!isset($param['position'])) {
+            return [];
+        }
+        $position = is_array($param['position']) ? $param['position'] : explode(',', $param['position']);
+        return AdvRepository::findAbleAdv(self::time(), $position);
     }
 }
