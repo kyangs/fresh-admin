@@ -122,6 +122,7 @@ class UserService
         if (isset($userRow['full_avatar']) && !empty($userRow['full_avatar'])) {
             $userRow['full_avatar'] = SystemSettingRepository::fullPath($userRow['avatar'], $userRow['image_key']);
         }
+        if (!isset($userRow['nickname']) || empty($userRow['nickname'])) $userRow['nickname'] = '未设置';
         cache($phone, null);
         return $userRow;
     }
