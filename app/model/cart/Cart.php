@@ -1,10 +1,9 @@
 <?php
 declare (strict_types=1);
 
-namespace app\cart;
+namespace app\model\cart;
 
 use think\Model;
-use think\model\concern\SoftDelete;
 use app\traits\ModelTrait;
 
 /**

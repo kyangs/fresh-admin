@@ -3,7 +3,8 @@
 
 namespace app\controller\api\cart;
 
-use app\cart\CartService;
+
+use app\service\cart\CartService;
 use app\service\common\CategoryService;
 use think\annotation\route\Group;
 use think\annotation\Route;
@@ -20,12 +21,24 @@ class Cart extends Base
 {
 
     /**
-     * @Route("enter", method="POST")
+     * @Route("/enter", method="POST")
      */
     public function enter()
     {
         try {
             return json_ok(CartService::addCart($this->request->post()));
+        } catch (\Exception $exception) {
+            return json_error(10001, $exception->getMessage());
+        }
+    }
+
+    /**
+     * @Route("/list", method="POST")
+     */
+    public function cartList()
+    {
+        try {
+            return json_ok(CartService::cartList($this->request->post()));
         } catch (\Exception $exception) {
             return json_error(10001, $exception->getMessage());
         }

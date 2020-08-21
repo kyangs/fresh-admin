@@ -115,7 +115,7 @@ class GoodsService extends BaseService
             $item['carousel']       = isset($introResult[$item['id']]) ? $introResult[$item['id']] : [];
             $item['detail']         = isset($detailResult[$item['id']]) ? $detailResult[$item['id']] : [];
             $item['tag_list']       = [];
-            $item['self_sale']      = empty($item['store_id']) ? '平台自营' : '';
+            $item['self_sale']      = empty($item['store_id']) ? '自营' : '';
         }
         return $page;
     }
