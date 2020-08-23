@@ -35,6 +35,6 @@ class CartRepository
     {
         return (new  Cart())->where([
             'user_id'  => $userID,
-        ])->order(['create_time','desc'])->select();
+        ])->order('create_time','desc')->select();
     }
 }

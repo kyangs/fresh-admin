@@ -16,7 +16,7 @@ class Goods extends Model
     use ModelTrait;
 
     protected $table = 'goods';
-
+    public static $showField=[];
     public static function goodsList($request)
     {
         $_this = new self();

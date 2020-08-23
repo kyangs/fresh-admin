@@ -43,4 +43,37 @@ class Cart extends Base
             return json_error(10001, $exception->getMessage());
         }
     }
+    /**
+     * @Route("/item", method="DELETE")
+     */
+    public function deleteItem()
+    {
+        try {
+            return json_ok(CartService::deleteItem($this->request->post()));
+        } catch (\Exception $exception) {
+            return json_error(10001, $exception->getMessage());
+        }
+    }
+    /**
+     * @Route("/item", method="PUT")
+     */
+    public function updateCartItem()
+    {
+        try {
+            return json_ok(CartService::updateCartItem($this->request->post()));
+        } catch (\Exception $exception) {
+            return json_error(10001, $exception->getMessage());
+        }
+    }
+    /**
+     * @Route("/price", method="POST")
+     */
+    public function cartPrice()
+    {
+        try {
+            return json_ok(CartService::cartPrice($this->request->post()));
+        } catch (\Exception $exception) {
+            return json_error(10001, $exception->getMessage());
+        }
+    }
 }

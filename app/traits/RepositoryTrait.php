@@ -51,14 +51,17 @@ trait RepositoryTrait
 
     /**
      * 获取全部列表
-     * @param bool $where 查询条件
-     * @param array $myorder 排序
+     * @param array $where 查询条件
+     * @param array $order 排序
      * @param array $field 获取字段
      * @return mixed
      */
-    public static function getListsAll($where, $myorder, $field = [])
+    public static function getListsAll($where, $order, $field = [])
     {
-        return self::$model::where($where)->order($myorder)->field($field ?: self::$model::$showField)->select();
+        list($orderFiled, $orderAsc) = $order;
+        return self::$model::where($where)->order($orderFiled, $orderAsc)
+            ->field($field ?: self::$model::$showField)
+            ->select();
     }
 
     /**
