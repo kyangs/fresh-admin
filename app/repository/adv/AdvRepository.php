@@ -30,6 +30,7 @@ class AdvRepository
     {
         $advList   = (new Adv)->findAbleAdv($time,$position);
         $imageList = FileSystemRepository::findByIds(array_column($advList, 'image_id'), true);
+        $data      = [];
         foreach ($advList as $item) {
             $item['full_path'] = '';
             if (isset($imageList[$item['image_id']])) {
