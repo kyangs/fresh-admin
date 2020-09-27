@@ -58,10 +58,12 @@ trait RepositoryTrait
      */
     public static function getListsAll($where, $order, $field = [])
     {
-        list($orderFiled, $orderAsc) = $order;
-        return self::$model::where($where)->order($orderFiled, $orderAsc)
-            ->field($field ?: self::$model::$showField)
-            ->select();
+        $_this = self::$model::where($where)->field($field ?: self::$model::$showField);
+        if (!empty($order)){
+            $_this = $_this->order($order);
+        }
+
+        return $_this->select();
     }
 
     /**
